@@ -42,4 +42,10 @@ public class MainActivity extends AppCompatActivity {
             }
         }.start();
     }
+    public void go_without_login(View view){
+
+    }
+    public void login_button(View view){
+
+    }
 }
