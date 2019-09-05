@@ -55,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
         editText_pin4= findViewById(R.id.editText5);
         editText_pin5= findViewById(R.id.editText6);
         editText_pin6= findViewById(R.id.editText7);
+        editText_phone_no= findViewById(R.id.editText);
 
         imageView_logo = findViewById(R.id.imageView);
         linearLayout_login = findViewById(R.id.login_side);
@@ -142,6 +143,7 @@ public class MainActivity extends AppCompatActivity {
                     this,               // Activity (for callback binding)
                     mCallbacks);        // OnVerificationStateChangedCallbacks
             linearLayout_login.setVisibility(View.GONE);
+            linearLayout_pin.setVisibility(View.VISIBLE);
             linearLayout_pin.setAnimation(animation_top_to_down);
         }
     }

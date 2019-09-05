@@ -33,7 +33,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:id="@+id/login_layout"
-        android:visibility="visible">
+        android:visibility="gone">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -46,7 +46,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             android:layout_marginBottom="165dp"
             android:gravity="center"
-            android:visibility="gone"
+            android:visibility="visible"
             android:id="@+id/login_side">
 
 
@@ -101,7 +101,6 @@
                         android:layout_gravity="center"
                         android:gravity="center"
                         android:textSize="20dp"
-                        android:drawableLeft="@drawable/smartphone-call"
                         android:textColor="@color/colorPrimary"/>
 
                     <Space
@@ -152,7 +151,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             android:layout_marginBottom="165dp"
             android:gravity="center"
-            android:visibility="visible">
+            android:visibility="gone">
 
 
 
