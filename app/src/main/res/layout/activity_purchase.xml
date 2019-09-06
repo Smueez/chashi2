@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Purchase"
+    android:orientation="vertical">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:id="@+id/product_image">
+
+    </ImageView>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@id/product_name"
+            android:text="কলা"
+            android:textSize="28sp"
+            android:gravity="center"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="দামঃ ১০০ টাকা"
+            android:id="@+id/product_price"
+            android:textColor="@color/tint"
+            android:textSize="22sp"
+            android:gravity="center"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="20dp">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/product_description"
+                android:text="স্কক্সদকদস্ফফসজফাওইওেজ্রফাওপ্সিহদ্গপয়াশগপাউসদুফফসধুসাফধুফশুফশুফশুহুফাস ফসাফুয়াসধস দফাস্ফদফাস দফাসদজফহাসদফ আসদ
+ফাসজদফাসদুফ ওয়েফ সজফেইফহ সঘসদ গসিঘে গ সাদিজগ"
+                android:textSize="18sp"/>
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</LinearLayout>
