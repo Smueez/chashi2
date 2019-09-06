@@ -2,6 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.chashi">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_stat_name"
@@ -9,10 +13,12 @@
         android:roundIcon="@drawable/ic_stat_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".Product_category"></activity>
+        <activity android:name=".Product" />
         <activity
             android:name=".LandingPage"
             android:label="@string/title_activity_landing_page"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".Disease" />
         <activity android:name=".Order_activity" />
         <activity
