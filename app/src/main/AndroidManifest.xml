@@ -18,7 +18,8 @@
         android:roundIcon="@drawable/ic_stat_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Product_category"></activity>
+        <activity android:name=".Purchase"></activity>
+        <activity android:name=".Product_category" />
         <activity android:name=".Product" />
         <activity
             android:name=".LandingPage"

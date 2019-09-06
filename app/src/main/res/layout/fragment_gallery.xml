@@ -35,7 +35,8 @@
                 app:cardCornerRadius="5dp">
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:id="@+id/catagory_seeds">
                     <ImageView
                         android:layout_weight="1"
                         android:layout_gravity="center"
@@ -79,7 +80,8 @@
                 app:cardCornerRadius="5dp">
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:id="@+id/catagory_fert">
                     <ImageView
                         android:layout_weight="1"
                         android:layout_gravity="center"
@@ -121,7 +123,8 @@
                 app:cardCornerRadius="5dp">
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:id="@+id/catagory_eqp">
 
                     <ImageView
                         android:layout_width="50dp"
@@ -165,7 +168,8 @@
                 app:cardCornerRadius="5dp">
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:id="@+id/catagory_inst">
                     <ImageView
                         android:layout_weight="1"
                         android:layout_gravity="center"
@@ -196,48 +200,7 @@
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
         </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:padding="10dp">
-            <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:cardCornerRadius="5dp">
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-                    <ImageView
-                        android:layout_weight="1"
-                        android:layout_gravity="center"
-                        android:layout_width="50dp"
-                        android:tint="@color/tint"
-                        android:layout_height="50dp"
-                        android:src="@drawable/ic_plants">
 
-                    </ImageView>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_weight="3"
-                        android:text="চারা"
-                        android:textSize="25sp"
-                        android:gravity="center"
-                        android:layout_height="match_parent">
-
-                    </TextView>
-                    <ImageView
-                        android:layout_width="40dp"
-                        android:layout_weight="1"
-                        android:tint="@color/tint"
-                        android:layout_gravity="center|end"
-                        android:src="@drawable/ic_right"
-                        android:layout_height="40dp">
-
-                    </ImageView>
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
-        </LinearLayout>
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
