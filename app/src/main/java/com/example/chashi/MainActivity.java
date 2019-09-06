@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.util.Log;
@@ -131,6 +132,8 @@ public class MainActivity extends AppCompatActivity {
     }
     public void go_without_login(View view){
         // directly go to next intent or activity
+        Intent myIntent = new Intent(MainActivity.this, LandingPage.class);
+        MainActivity.this.startActivity(myIntent);
     }
     public void login_button(View view){
         String phone_no = editText_phone_no.getText().toString().trim();

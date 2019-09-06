@@ -5,4 +5,7 @@
     <color name="colorAccent">#D81B60</color>
     <color name="colorBack">#3BA50D</color>
     <color name="gainsboro">#DCDCDC</color>
+    <color name="toolBar">#5EFFFFFF</color>
+    <color name="main">#929292</color>
+    <color name="tint">#3BA50D</color>
 </resources>
