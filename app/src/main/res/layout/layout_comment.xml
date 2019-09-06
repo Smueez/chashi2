@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:elevation="5dp"
+    android:orientation="vertical"
+
+    app:cardCornerRadius="4dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textViewAnsTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxLines="2"
+            android:paddingBottom="3dp"
+            android:text="আমি ভালো নাই বল্লা না ক্যান? হুম? প্লিয প্লিয আমি ভালো নাই বল্লা না ক্যান? হুম? প্লিয প্লিয আমি ভালো নাই বল্লা না ক্যান? হুম? প্লিয প্লিয আমি ভালো নাই বল্লা না ক্যান? হুম? প্লিয প্লিয আমি ভালো নাই বল্লা না ক্যান? হুম? প্লিয প্লিয আমি ভালো নাই বল্লা না ক্যান? হুম? প্লিয প্লিয আমি ভালো নাই বল্লা না ক্যান? হুম? প্লিয প্লিয আমি ভালো নাই বল্লা না ক্যান? হুম? প্লিয প্লিয "
+            android:textColor="@android:color/black"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginBottom="5dp"
+            android:background="@color/gainsboro" />
+
+        <LinearLayout
+            android:id="@+id/linearLayoutAns"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginLeft="6dp"
+                android:src="@drawable/ic_check_black_24dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:text="উত্তর: "
+                android:textColor="#33CC00"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textViewNumAns"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" টি" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearLayoutNoAns"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginLeft="6dp"
+                android:src="@drawable/ic_clear_black_24dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:text="কোনো উত্তর নেই"
+                android:textColor="#990033"
+                android:textStyle="bold" />
+
+
+        </LinearLayout>
+    </LinearLayout>
+</androidx.cardview.widget.CardView>
