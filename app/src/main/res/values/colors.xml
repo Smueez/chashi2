@@ -4,4 +4,7 @@
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#3BA50D</color>
     <color name="colorBack">#3BA50D</color>
+    <color name="toolBar">#5EFFFFFF</color>
+    <color name="main">#929292</color>
+    <color name="tint">#3BA50D</color>
 </resources>
