@@ -18,6 +18,9 @@
         android:roundIcon="@drawable/ic_stat_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".Login_activity"></activity>
+        <activity android:name=".Description_activity" />
+        <activity android:name=".Disease" />
         <activity android:name=".Purchase"></activity>
         <activity android:name=".Product_category" />
         <activity android:name=".Product" />
