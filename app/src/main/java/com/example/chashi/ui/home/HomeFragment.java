@@ -28,7 +28,9 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.chashi.LandingPage;
 import com.example.chashi.R;
+import com.example.chashi.ui.forums.ForumFragment;
 import com.example.chashi.ui.gallery.GalleryFragment;
+import com.example.chashi.ui.scan.TestDiseaseFragment;
 import com.google.android.gms.common.api.ResolvableApiException;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationRequest;
@@ -54,8 +56,8 @@ public class HomeFragment extends Fragment {
     double lattitude;
     double longitude;
 
-    private TextView txt_temp_min,txt_temp_max,txt_humidity;
-    private LinearLayout linearLayout_product;
+    private TextView txt_temp_min, txt_temp_max, txt_humidity;
+    private LinearLayout linearLayout_product, linearLayout_scan, linearLayout_forum;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -67,15 +69,51 @@ public class HomeFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 
-        txt_temp_min = (TextView)view.findViewById(R.id.temp_min);
-        txt_temp_max = (TextView)view.findViewById(R.id.temp_max);
-        txt_humidity = (TextView)view.findViewById(R.id.humidity);
+        txt_temp_min = (TextView) view.findViewById(R.id.temp_min);
+        txt_temp_max = (TextView) view.findViewById(R.id.temp_max);
+        txt_humidity = (TextView) view.findViewById(R.id.humidity);
         linearLayout_product = view.findViewById(R.id.product_btn);
+        linearLayout_forum=view.findViewById(R.id.forum_btn);
+        linearLayout_scan = view.findViewById(R.id.disease_btn);
         linearLayout_product.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Create new fragment and transaction
                 Fragment newFragment = new GalleryFragment();
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+
+                // Replace whatever is in the fragment_container view with this fragment,
+                // and add the transaction to the back stack
+                transaction.replace(R.id.nav_host_fragment, newFragment);
+                transaction.addToBackStack(null);
+
+                // Commit the transaction
+                transaction.commit();
+            }
+        });
+
+        linearLayout_scan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Create new fragment and transaction
+                Fragment newFragment = new TestDiseaseFragment();
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+
+                // Replace whatever is in the fragment_container view with this fragment,
+                // and add the transaction to the back stack
+                transaction.replace(R.id.nav_host_fragment, newFragment);
+                transaction.addToBackStack(null);
+
+                // Commit the transaction
+                transaction.commit();
+            }
+        });
+
+        linearLayout_forum.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Create new fragment and transaction
+                Fragment newFragment = new ForumFragment();
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
 
                 // Replace whatever is in the fragment_container view with this fragment,
@@ -98,7 +136,7 @@ public class HomeFragment extends Fragment {
     private void findWeather() {
 
 
-        String url = "https://api.openweathermap.org/data/2.5/weather?lat="+lattitude+"&lon="+longitude+"&appid=8eded5f15907ac059aebe4f4faeeef9a&units=imperial";
+        String url = "https://api.openweathermap.org/data/2.5/weather?lat=" + lattitude + "&lon=" + longitude + "&appid=8eded5f15907ac059aebe4f4faeeef9a&units=imperial";
         JsonObjectRequest jobj = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
@@ -113,26 +151,26 @@ public class HomeFragment extends Fragment {
                     String city = response.getString("name");
 
                     double temp_min_int = Double.parseDouble(temp_min);
-                    double centi = (temp_min_int - 32)/1.8;
+                    double centi = (temp_min_int - 32) / 1.8;
                     centi = Math.round(centi);
                     txt_temp_min.setText(String.valueOf(centi));
 
                     double temp_max_int = Double.parseDouble(temp_max);
-                    centi = (temp_min_int - 32)/1.8;
+                    centi = (temp_min_int - 32) / 1.8;
                     centi = Math.round(centi);
                     txt_temp_max.setText(String.valueOf(centi));
                     txt_humidity.setText(humidity);
-                    Toast.makeText(getContext(),"hocche",Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), "hocche", Toast.LENGTH_LONG).show();
 
                 } catch (JSONException e) {
                     e.printStackTrace();
-                    Toast.makeText(getContext(),"error",Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), "error", Toast.LENGTH_LONG).show();
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getContext(),"error",Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(), "error", Toast.LENGTH_LONG).show();
             }
         });
 
@@ -186,7 +224,7 @@ public class HomeFragment extends Fragment {
         if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 
             return;
-        }else{
+        } else {
             fusedLocationClient.getLastLocation().addOnSuccessListener(getActivity(), new OnSuccessListener<android.location.Location>() {
                 @Override
                 public void onSuccess(android.location.Location location) {

@@ -6,21 +6,43 @@
 
     <EditText
         android:layout_width="match_parent"
-        android:layout_height="220dp"
+        android:layout_height="250dp"
         android:background="@drawable/flat_edittext_trq"
         android:gravity="top"
+        android:id="@+id/quesEditText"
         android:hint="আপনার প্রশ্নটি লিখুন..."
         android:padding="6dp" />
 
     <LinearLayout
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:gravity="center_vertical"
+        android:id="@+id/addImageLayout"
         android:background="@drawable/flat_edittext_trq"
-        android:layout_height="wrap_content">
-
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:padding="10dp">
+        <ImageView
+            android:layout_width="30dp"
+            android:id="@+id/imgPost"
+            android:src="@drawable/ic_add_a_photo_black_24dp"
+            android:layout_height="30dp"/>
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
+            android:layout_weight=".9"
             android:layout_height="wrap_content"
-            android:text="ছবি যোগ করুন" />
+            android:layout_marginStart="10dp"
+            android:text="ছবি যোগ করুন"
+            android:id="@+id/addImgMsg"
+            android:textColor="@android:color/black" />
+        <ImageView
+            android:layout_width="30dp"
+            android:id="@+id/crossImg"
+            android:src="@drawable/ic_clear_black_24dp"
+            android:visibility="gone"
+            android:layout_height="30dp"/>
     </LinearLayout>
 
     <Button
@@ -31,5 +53,6 @@
         android:layout_marginEnd="5dp"
         android:background="@drawable/rounded_btn_trq"
         android:text="প্রশ্ন করুন"
+        android:id="@+id/addQuesBtn"
         android:textColor="@android:color/white" />
 </LinearLayout>
