@@ -9,10 +9,10 @@
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
 
-    <string name="menu_home">Home</string>
+    <string name="menu_home">প্রধান পাতা</string>
     <string name="menu_gallery">কৃষি পণ্য</string>
-    <string name="menu_slideshow">Slideshow</string>
+    <string name="menu_slideshow">বালাইসমূহ</string>
     <string name="menu_tools">Tools</string>
-    <string name="menu_share">Share</string>
+    <string name="menu_share">অ্যাপ তথ্য</string>
     <string name="menu_send">Send</string>
 </resources>
