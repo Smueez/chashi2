@@ -19,6 +19,7 @@
             android:layout_marginStart="6dp"
             android:textColor="@android:color/black"
             android:textSize="16sp"
+            android:id="@+id/questitle"
             android:text="some tesct siadia adawd aeaenfef aefa"
             android:layout_height="wrap_content"/>
     </LinearLayout>

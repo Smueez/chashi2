@@ -26,6 +26,7 @@
         <activity android:name=".Purchase"></activity>
         <activity android:name=".Product_category" />
         <activity android:name=".Product" />
+        <activity android:name=".QuesActivity" />
         <activity
             android:name=".LandingPage"
             android:label="@string/title_activity_landing_page"
