@@ -76,8 +76,8 @@ public class HomeFragment extends Fragment {
     int position_item = -1;
     String news_link,news_heading,news_description;
 
-    private TextView txt_temp_min, txt_temp_max, txt_humidity;
-    private LinearLayout linearLayout_product, linearLayout_scan, linearLayout_forum;
+
+    private LinearLayout  linearLayout_scan, linearLayout_forum;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {

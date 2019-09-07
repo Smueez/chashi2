@@ -36,7 +36,7 @@
             android:layout_height="60dp" />
 
         <LinearLayout
-            android:layout_width="394dp"
+            android:layout_width="370dp"
             android:layout_height="150dp"
             android:background="@drawable/login_back"
             android:orientation="horizontal">
@@ -60,14 +60,13 @@
                     android:textSize="22dp"
                     android:textStyle="bold" />
 
-                <Space
-                    android:layout_width="match_parent"
-                    android:layout_height="15dp" />
+
                 <EditText
                     android:id="@+id/editText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
+                    android:layout_marginTop="5dp"
                     android:inputType="phone"
                     android:hint="01X XXXXXXXX"
                     android:layout_gravity="center"
@@ -77,7 +76,7 @@
 
                 <Space
                     android:layout_width="match_parent"
-                    android:layout_height="15dp" />
+                    android:layout_height="8dp" />
 
                 <Button
                     android:id="@+id/button"
