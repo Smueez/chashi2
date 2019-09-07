@@ -21,6 +21,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.example.chashi.LandingPage;
 import com.example.chashi.R;
 import com.example.chashi.ui.gallery.GalleryViewModel;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -56,6 +57,15 @@ public class TestDiseaseFragment extends Fragment {
         View root = inflater.inflate(R.layout.activity_detection, container, false);
         return root;
 
+
+    }
+
+    @Override
+    public void onResume() {
+        ((LandingPage) getActivity())
+                .setActionBarTitle("রোগ চিহ্নিতকরণ");
+
+        super.onResume();
 
     }
 

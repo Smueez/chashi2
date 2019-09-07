@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.example.chashi.LandingPage;
 import com.example.chashi.Product_category;
 import com.example.chashi.R;
 
@@ -30,9 +31,18 @@ public class GalleryFragment extends Fragment {
         return root;
     }
 
+    @Override
+    public void onResume() {
+        ((LandingPage) getActivity())
+                .setActionBarTitle("কৃষি পণ্য");
+
+        super.onResume();
+
+    }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        getActivity().setTitle("কৃষি পণ্য");
 
         fert = view.findViewById(R.id.catagory_fert);
         seeds = view.findViewById(R.id.catagory_seeds);

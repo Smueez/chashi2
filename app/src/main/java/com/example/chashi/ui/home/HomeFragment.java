@@ -87,6 +87,15 @@ public class HomeFragment extends Fragment {
     }
 
     @Override
+    public void onResume() {
+        ((LandingPage) getActivity())
+                .setActionBarTitle("প্রধান পাতা");
+
+        super.onResume();
+
+    }
+
+    @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 
         txt_temp_min = (TextView) view.findViewById(R.id.temp_min);
@@ -165,7 +174,7 @@ public class HomeFragment extends Fragment {
                     newsList.add(news);
                 }
                 News_adapter news_adapter = new News_adapter(getActivity(),newsList);
-                listView.setAdapter(news_adapter);
+                //listView.setAdapter(news_adapter);
 
             }
 
@@ -226,17 +235,17 @@ public class HomeFragment extends Fragment {
                     centi = Math.round(centi);
                     txt_temp_max.setText(String.valueOf(centi));
                     txt_humidity.setText(humidity);
-                    Toast.makeText(getContext(), "hocche", Toast.LENGTH_LONG).show();
+                    //Toast.makeText(getContext(), "hocche", Toast.LENGTH_LONG).show();
 
                 } catch (JSONException e) {
                     e.printStackTrace();
-                    Toast.makeText(getContext(), "error", Toast.LENGTH_LONG).show();
+                    //Toast.makeText(getContext(), "error", Toast.LENGTH_LONG).show();
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getContext(), "error", Toast.LENGTH_LONG).show();
+                //Toast.makeText(getContext(), "error", Toast.LENGTH_LONG).show();
             }
         });
 

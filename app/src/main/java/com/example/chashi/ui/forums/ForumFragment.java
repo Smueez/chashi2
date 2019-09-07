@@ -22,6 +22,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.chashi.AddPostActivity;
 import com.example.chashi.FirebaseUtilClass;
 import com.example.chashi.InventoryItemAdapter;
+import com.example.chashi.LandingPage;
 import com.example.chashi.Login_activity;
 import com.example.chashi.Ques;
 import com.example.chashi.R;
@@ -47,6 +48,15 @@ public class ForumFragment extends Fragment {
                 ViewModelProviders.of(this).get(ForumViewModel.class);
         View root = inflater.inflate(R.layout.fragment_forum, container, false);
         return root;
+    }
+
+    @Override
+    public void onResume() {
+        ((LandingPage) getActivity())
+                .setActionBarTitle("কৃষি জিজ্ঞাসা");
+
+        super.onResume();
+
     }
 
     private void initializeRecyclerView() {
