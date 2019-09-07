@@ -2,14 +2,18 @@ package com.example.chashi.ui.home;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.Intent;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,6 +31,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.chashi.LandingPage;
+import com.example.chashi.News;
+import com.example.chashi.News_adapter;
 import com.example.chashi.R;
 import com.example.chashi.ui.forums.ForumFragment;
 import com.example.chashi.ui.gallery.GalleryFragment;
@@ -41,11 +47,18 @@ import com.google.android.gms.location.SettingsClient;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.Executor;
 
 public class HomeFragment extends Fragment {
@@ -55,6 +68,13 @@ public class HomeFragment extends Fragment {
     private FusedLocationProviderClient fusedLocationClient;
     double lattitude;
     double longitude;
+    ListView listView;
+    List<News> newsList;
+    DatabaseReference databaseReference;
+    private TextView txt_temp_min,txt_temp_max,txt_humidity;
+    private LinearLayout linearLayout_product;
+    int position_item = -1;
+    String news_link,news_heading,news_description;
 
     private TextView txt_temp_min, txt_temp_max, txt_humidity;
     private LinearLayout linearLayout_product, linearLayout_scan, linearLayout_forum;
@@ -72,6 +92,12 @@ public class HomeFragment extends Fragment {
         txt_temp_min = (TextView) view.findViewById(R.id.temp_min);
         txt_temp_max = (TextView) view.findViewById(R.id.temp_max);
         txt_humidity = (TextView) view.findViewById(R.id.humidity);
+        listView = view.findViewById(R.id.news_view);
+        newsList = new ArrayList<>();
+        databaseReference = FirebaseDatabase.getInstance().getReference();
+        txt_temp_min = (TextView)view.findViewById(R.id.temp_min);
+        txt_temp_max = (TextView)view.findViewById(R.id.temp_max);
+        txt_humidity = (TextView)view.findViewById(R.id.humidity);
         linearLayout_product = view.findViewById(R.id.product_btn);
         linearLayout_forum=view.findViewById(R.id.forum_btn);
         linearLayout_scan = view.findViewById(R.id.diseaseCheck_btn);
@@ -129,8 +155,48 @@ public class HomeFragment extends Fragment {
 
         findWeather();
 
+        databaseReference.child("news").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                listView.setAdapter(null);
+                newsList.clear();
+                for (DataSnapshot ds : dataSnapshot.getChildren()){
+                    News news = ds.getValue(News.class);
+                    newsList.add(news);
+                }
+                News_adapter news_adapter = new News_adapter(getActivity(),newsList);
+                listView.setAdapter(news_adapter);
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
 
         super.onViewCreated(view, savedInstanceState);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                if (position_item == -1){
+                    position_item = i;
+                }
+                else {
+                    return;
+                }
+                news_link = newsList.get(i).getLinks();
+                Intent httpIntent = new Intent(Intent.ACTION_VIEW);
+                httpIntent.setData(Uri.parse(news_link));
+
+                startActivity(httpIntent);
+            }
+        });
     }
 
     private void findWeather() {
