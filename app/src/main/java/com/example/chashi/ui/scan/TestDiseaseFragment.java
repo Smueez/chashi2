@@ -1,6 +1,7 @@
 package com.example.chashi.ui.scan;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -41,7 +42,7 @@ import java.io.IOException;
 import java.util.List;
 
 public class TestDiseaseFragment extends Fragment {
-    private final int PICK_IMAGE = 1, REQ_IMG_READ = 2, PICK_REALTIME=3;
+    private final int PICK_IMAGE = 1, REQ_IMG_READ = 2, PICK_REALTIME=33;
     private final String LATE_BLIGHT="Potato_Late_blight",EARLY_BLIGHT="Potato_Early_blight",BACTERIAL_SPOT="Pepper_bell_Bacterial_spot";
 
     private Button openGlry;
@@ -132,12 +133,26 @@ public class TestDiseaseFragment extends Fragment {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == PICK_IMAGE && data!=null) {
-            runML(data);
-            openGlry.setText("পুনরায় রোগ নির্নয় করুন");
+        if (requestCode == PICK_IMAGE) {
+            if(data!=null){
+                runML(data);
+                openGlry.setText("পুনরায় রোগ নির্নয় করুন");
+            }else {
+                reset();
+            }
+
         }
-        if(data==null){
-            reset();
+        else if(requestCode==PICK_REALTIME){
+
+            if(resultCode == Activity.RESULT_OK){
+                Toast.makeText(getContext(), "laa", Toast.LENGTH_LONG).show();
+                String result=data.getStringExtra("result");
+                setMsg(result);
+
+            }
+            if (resultCode == Activity.RESULT_CANCELED) {
+                //Write your code if there's no result
+            }
         }
     }
 
@@ -157,31 +172,14 @@ public class TestDiseaseFragment extends Fragment {
 
             img.setImageURI(imageURI);
             final FirebaseVisionImage image = FirebaseVisionImage.fromFilePath(getContext(), imageURI);
-            labeler.processImage(image)
-                    .addOnSuccessListener(new OnSuccessListener<List<FirebaseVisionImageLabel>>() {
+            labeler.processImage(image).addOnSuccessListener(new OnSuccessListener<List<FirebaseVisionImageLabel>>() {
                         @Override
                         public void onSuccess(List<FirebaseVisionImageLabel> labels) {
 
                                 String text = labels.get(0).getText();
+                                setMsg(text);
                                // float confidence = label.getConfidence();
-                                switch (text){
-                                    case BACTERIAL_SPOT:
-                                        showError();
-                                        diseaseName.setText(getResources().getString(R.string.disease_spot));
-                                        break;
-                                    case EARLY_BLIGHT:
-                                        showError();
-                                        diseaseName.setText(getResources().getString(R.string.disease_agam_dhosha));
-                                        break;
-                                    case LATE_BLIGHT:
-                                        showError();
-                                        diseaseName.setText(getResources().getString(R.string.disease_morok));
-                                        break;
 
-
-                                        default:
-                                            showNotError();
-                                }
 
                                 //  Toast.makeText(TestDiseaseFragment.this, text + " " + confidence, Toast.LENGTH_LONG).show();
 
@@ -199,6 +197,27 @@ public class TestDiseaseFragment extends Fragment {
             Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
         } catch (IOException e) {
             Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private void setMsg(String text){
+        switch (text){
+            case BACTERIAL_SPOT:
+                showError();
+                diseaseName.setText(getResources().getString(R.string.disease_spot));
+                break;
+            case EARLY_BLIGHT:
+                showError();
+                diseaseName.setText(getResources().getString(R.string.disease_agam_dhosha));
+                break;
+            case LATE_BLIGHT:
+                showError();
+                diseaseName.setText(getResources().getString(R.string.disease_morok));
+                break;
+
+
+            default:
+                showNotError();
         }
     }
 
@@ -250,5 +269,7 @@ public class TestDiseaseFragment extends Fragment {
 
         }
     }
+
+
 
 }
