@@ -16,6 +16,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -43,7 +44,7 @@ public class Description_activity extends AppCompatActivity {
         textView_description = findViewById(R.id.description_text);
         textView_headings = findViewById(R.id.headings);
 
-        textView_headings.setText(item_name+" এর "+ disease_name +"রোগের বিবরণ");
+        textView_headings.setText(item_name+" এর "+ disease_name +" রোগ");
         databaseReference = FirebaseDatabase.getInstance().getReference();
         intent_go_back = new Intent(this,Disease.class);
 
@@ -53,16 +54,9 @@ public class Description_activity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-        try {
-            Bitmap bitmap = BitmapFactory.decodeStream((InputStream)new URL(image_url).getContent());
-            imageView.setImageBitmap(bitmap);
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        Picasso.get().load(image_url).into(imageView);
 
-        databaseReference.child("item").child(item_name).child("disease").child(disease_name).child("description").addValueEventListener(new ValueEventListener() {
+        databaseReference.child("item").child(item_name).child("disease").child("disease1").child("description").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 textView_description.setText(dataSnapshot.getValue(String.class));

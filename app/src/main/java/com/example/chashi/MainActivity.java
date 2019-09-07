@@ -46,18 +46,18 @@ public class MainActivity extends AppCompatActivity {
         intent1 = new Intent(this,LandingPage.class);
         imageView_logo = findViewById(R.id.imageView);
 
-        new CountDownTimer(3000, 1000) {
+        new CountDownTimer(2000, 1000) {
             @Override
             public void onTick(long l) {
-                imageView_logo.animate().alpha(1).setDuration(1500);
+                imageView_logo.animate().alpha(1).setDuration(1000);
             }
 
             @Override
             public void onFinish() {
-                new CountDownTimer(2000, 1000) {
+                new CountDownTimer(1000, 1000) {
                     @Override
                     public void onTick(long l) {
-                        imageView_logo.animate().alpha(0).setDuration(1500);
+                        imageView_logo.animate().alpha(0).setDuration(1000);
                     }
 
                     @Override

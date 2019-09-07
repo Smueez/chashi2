@@ -3,6 +3,7 @@ package com.example.chashi;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.example.chashi.ui.scan.TestDiseaseFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -24,7 +25,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.view.Menu;
 
-public class LandingPage extends AppCompatActivity {
+public class LandingPage extends AppCompatActivity implements BottomSheetOption.BottomSheetListener {
 
     private AppBarConfiguration mAppBarConfiguration;
 
@@ -72,4 +73,7 @@ public class LandingPage extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
     }
 
+    @Override
+    public void onButtonClicked(String text) {
+    }
 }

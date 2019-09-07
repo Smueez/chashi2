@@ -5,7 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    app:cardCornerRadius="10dp">
+    app:cardCornerRadius="5dp"
+    app:cardUseCompatPadding="true"
+    app:cardElevation="5dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -16,28 +18,24 @@
             android:id="@+id/disease_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text=""
+            android:text="sdfsdf"
+            android:gravity="center"
             android:textColor="@color/colorPrimary"
             android:textSize="30dp" />
-
-        <androidx.legacy.widget.Space
-            android:layout_width="match_parent"
-            android:layout_height="15dp" />
 
         <ImageView
             android:id="@+id/disease_img"
             android:layout_width="match_parent"
-            android:layout_height="150dp" />
-        <androidx.legacy.widget.Space
-            android:layout_width="match_parent"
-            android:layout_height="15dp" />
+            android:layout_height="150dp"
+            android:scaleType="centerCrop"/>
 
         <TextView
             android:id="@+id/dscription"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:maxLength="20"
+            android:layout_height="100dp"
+            android:maxLength="150"
             android:text=""
+            android:padding="10dp"
             android:textColor="@android:color/background_dark"
             android:textSize="18dp" />
 

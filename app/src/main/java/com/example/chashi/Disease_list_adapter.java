@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.firebase.database.annotations.Nullable;
+import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -46,14 +47,7 @@ public class Disease_list_adapter extends ArrayAdapter<Disease_list> {
         textView_description.setText(disease_list.getDescription());
         list_img = disease_list.getDisease_image_url();
 
-        try {
-            Bitmap bitmap = BitmapFactory.decodeStream((InputStream)new URL(list_img).getContent());
-            imageView.setImageBitmap(bitmap);
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        Picasso.get().load(list_img).into(imageView);
 
 
         return mylistview_disease;

@@ -31,7 +31,6 @@ public class Disease extends AppCompatActivity {
     DatabaseReference databaseReference;
     String TAG = "disease page ",item_name,disease_name,image_url_selected;
     boolean item_tabbed = true;
-    int position_item = -1;
     TextView textView_highlight;
     Intent intent;
 
@@ -46,11 +45,7 @@ public class Disease extends AppCompatActivity {
         disease_lists = new ArrayList<>();
         intent = new Intent(this,Description_activity.class);
         databaseReference = FirebaseDatabase.getInstance().getReference();
-        if (item_tabbed) {
-            item_list_function();
-        } else if(!item_tabbed && !item_name.isEmpty()) {
-            disease_list_function(item_name);
-        }
+        item_list_function();
     }
     public void item_list_function(){
         recyclerView.setAdapter(null);
@@ -62,6 +57,7 @@ public class Disease extends AppCompatActivity {
                     Item_list itemList = ds.getValue(Item_list.class);
                     item_lists.add(itemList);
                 }
+
                 Item_list_adapter item_list_adapter = new Item_list_adapter(Disease.this,item_lists);
                 recyclerView.setAdapter(item_list_adapter);
             }
@@ -75,8 +71,10 @@ public class Disease extends AppCompatActivity {
     }
     public void disease_list_function(String item_name_selected){
         recyclerView.setAdapter(null);
+        item_lists.clear();
         disease_lists.clear();
-        databaseReference.child("item").child(item_name_selected).addValueEventListener(new ValueEventListener() {
+        Log.d(TAG, "disease_list_function: "+item_name_selected);;
+        databaseReference.child("item").child(item_name_selected).child("disease").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot ds : dataSnapshot.getChildren()){
@@ -103,45 +101,25 @@ public class Disease extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 if (item_tabbed){
-                    if (position_item == -1){
-                        position_item = i;
-                    }
-                    else {
-                        return;
-                    }
+
 
                     item_name = item_lists.get(i).getName();
+                    //image_url_selected= item_lists.get(i).getImage_url();
+                    Log.d(TAG, "onItemClick: "+item_name);
                     textView_highlight.setText(item_name+" এর রোগ");
                     disease_list_function(item_name);
                     item_tabbed = false;
 
                 }
                 else {
-                    if (position_item == -1){
-                        position_item = i;
-                    }
-                    else {
-                        return;
-                    }
-                    disease_name = disease_lists.get(i).getDisease_name();
 
+                    disease_name = disease_lists.get(i).getDisease_name();
+                    image_url_selected= disease_lists.get(i).getDisease_image_url();
                     intent.putExtra("disease_name",disease_name);
                     intent.putExtra("item_name",item_name);
-
-                    databaseReference.child("item").child(item_name).child("disease").child(disease_name).child("disease_image_url").addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            image_url_selected = dataSnapshot.getValue(String.class);
-                            intent.putExtra("image_url",image_url_selected);
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                        }
-                    });
-
+                    intent.putExtra("image_url",image_url_selected);
                     startActivity(intent);
+
                 }
             }
         });
@@ -157,6 +135,8 @@ public class Disease extends AppCompatActivity {
         }
         else {
             // intent here to go to home activity
+            Intent intent1 = new Intent(this,LandingPage.class);
+            startActivity(intent1);
         }
     }
 }
