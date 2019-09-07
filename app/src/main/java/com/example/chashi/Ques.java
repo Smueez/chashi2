@@ -49,7 +49,7 @@ public class Ques {
         return comments;
     }
 
-    public void setComments(HashMap<String,Comments> comments) {
+    public void setComments(HashMap<String,Comments> comments ) {
         this.comments = comments;
     }
 

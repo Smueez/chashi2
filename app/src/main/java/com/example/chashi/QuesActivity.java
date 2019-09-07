@@ -55,9 +55,9 @@ public class QuesActivity extends AppCompatActivity {
         commentButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(FirebaseAuth.getInstance().getCurrentUser()!=null) {
+                if (FirebaseAuth.getInstance().getCurrentUser() != null) {
                     writeDataToFirebase(new Comments(FirebaseAuth.getInstance().getCurrentUser().getUid(), commentEditText.getText().toString(), System.currentTimeMillis()));
-                }else {
+                } else {
                     new AlertDialog.Builder(QuesActivity.this)
                             .setTitle("তথ্য")
                             .setMessage("প্রশ্ন জিজ্ঞেস করতে আপনার ফোন নাম্বার দিতে হবে। আপনি কি রাজি?")
@@ -76,7 +76,7 @@ public class QuesActivity extends AppCompatActivity {
                             .setIcon(android.R.drawable.ic_dialog_alert)
                             .show();
                 }
-                }
+            }
         });
 
         initializeRecyclerView();
@@ -112,7 +112,7 @@ public class QuesActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-             //   Toast.makeText(getContext(), databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+                //   Toast.makeText(getContext(), databaseError.getMessage(), Toast.LENGTH_SHORT).show();
                 //  refreshlayout.setRefreshing(false);
             }
         });

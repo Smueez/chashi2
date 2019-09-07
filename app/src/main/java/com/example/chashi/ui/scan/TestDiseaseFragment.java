@@ -23,6 +23,7 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.example.chashi.LandingPage;
 import com.example.chashi.R;
+import com.example.chashi.RealTimeActivity;
 import com.example.chashi.ui.gallery.GalleryViewModel;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -85,7 +86,9 @@ public class TestDiseaseFragment extends Fragment {
             public void onClick(View v) {
                 if (isReadStoragePermissionGranted()) {
 
-                    selectImage();
+                 //   selectImage();
+                    Intent intent1 = new Intent(getActivity(), RealTimeActivity.class);
+                    startActivity(intent1);
                     reset();
                     showLoading();
                 }

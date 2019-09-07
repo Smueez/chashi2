@@ -6,7 +6,7 @@
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
-
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
@@ -27,6 +27,7 @@
         <activity android:name=".Product_category" />
         <activity android:name=".Product" />
         <activity android:name=".QuesActivity" />
+        <activity android:name=".RealTimeActivity" />
         <activity
             android:name=".LandingPage"
             android:label="@string/title_activity_landing_page"
