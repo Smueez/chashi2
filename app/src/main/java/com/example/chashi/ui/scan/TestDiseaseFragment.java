@@ -21,6 +21,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.example.chashi.BottomSheetOption;
 import com.example.chashi.LandingPage;
 import com.example.chashi.R;
 import com.example.chashi.ui.gallery.GalleryViewModel;
@@ -83,12 +84,15 @@ public class TestDiseaseFragment extends Fragment {
         openGlry.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (isReadStoragePermissionGranted()) {
+//                if (isReadStoragePermissionGranted()) {
+//
+//                    selectImage();
+//                    reset();
+//                    showLoading();
+//                }
 
-                    selectImage();
-                    reset();
-                    showLoading();
-                }
+                BottomSheetOption bottomSheetOption = new BottomSheetOption(getContext());
+                bottomSheetOption.show(getChildFragmentManager(),"bottomsheet");
             }
         });
 
@@ -247,4 +251,7 @@ public class TestDiseaseFragment extends Fragment {
         }
     }
 
+    public void onButtonClicked(String text){
+        Toast.makeText(getContext(),text,Toast.LENGTH_SHORT).show();
+    }
 }

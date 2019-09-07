@@ -30,9 +30,11 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.chashi.Disease;
 import com.example.chashi.LandingPage;
 import com.example.chashi.News;
 import com.example.chashi.News_adapter;
+import com.example.chashi.PurchaseInfo;
 import com.example.chashi.R;
 import com.example.chashi.ui.forums.ForumFragment;
 import com.example.chashi.ui.gallery.GalleryFragment;
@@ -72,7 +74,7 @@ public class HomeFragment extends Fragment {
     List<News> newsList;
     DatabaseReference databaseReference;
     private TextView txt_temp_min,txt_temp_max,txt_humidity;
-    private LinearLayout linearLayout_product;
+    private LinearLayout linearLayout_product,linearLayout_disease;
     int position_item = -1;
     String news_link,news_heading,news_description;
 
@@ -110,6 +112,7 @@ public class HomeFragment extends Fragment {
         linearLayout_product = view.findViewById(R.id.product_btn);
         linearLayout_forum=view.findViewById(R.id.forum_btn);
         linearLayout_scan = view.findViewById(R.id.diseaseCheck_btn);
+        linearLayout_disease = view.findViewById(R.id.disease_btn);
         linearLayout_product.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -144,6 +147,14 @@ public class HomeFragment extends Fragment {
             }
         });
 
+        linearLayout_disease.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), Disease.class);
+                getContext().startActivity(intent);
+            }
+        });
+
         linearLayout_forum.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -164,6 +175,7 @@ public class HomeFragment extends Fragment {
 
         findWeather();
 
+
         databaseReference.child("news").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -174,7 +186,7 @@ public class HomeFragment extends Fragment {
                     newsList.add(news);
                 }
                 News_adapter news_adapter = new News_adapter(getActivity(),newsList);
-                //listView.setAdapter(news_adapter);
+                listView.setAdapter(news_adapter);
 
             }
 

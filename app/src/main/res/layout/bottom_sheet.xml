@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="20dp">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="যেকোনো একটি উপাই বেছে নিন"
+        android:textSize="22sp"
+        android:gravity="center"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center">
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_camera"
+            android:background="@drawable/rounded_btn_red_trq"
+            android:textColor="@android:color/white"
+            android:textStyle="bold"
+            android:paddingLeft="25dp"
+            android:paddingRight="25dp"
+            android:id="@+id/fromCamera"
+            android:text="ছবির জন্য ক্যামেরা ব্যাবহার করুণ"
+            android:layout_marginTop="10dp"/>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rounded_btn_red_trq"
+            android:textColor="@android:color/white"
+            android:textStyle="bold"
+            android:layout_marginTop="10dp"
+            android:paddingLeft="25dp"
+            android:paddingRight="25dp"
+            android:drawableLeft="@drawable/ic_image"
+            android:id="@+id/fromGallery"
+            android:text="ছবির জন্য গ্যালারি ব্যাবহার করুণ"/>
+    </LinearLayout>
+</LinearLayout>
