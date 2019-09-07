@@ -103,6 +103,9 @@ public class Login_activity extends AppCompatActivity {
     }
     public void go_without_login(View view){
         // directly go to next intent or activity
+        Intent k = new Intent(this, LandingPage.class);
+        startActivity(k);
+        finish();
     }
     public void login_button(View view){
         String phone_no = editText_phone_no.getText().toString().trim();

@@ -2,11 +2,13 @@ package com.example.chashi;
 
 import android.Manifest;
 import android.app.ActionBar;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -14,11 +16,22 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
 
 public class AddPostActivity extends AppCompatActivity {
     private final int PICK_IMAGE = 1, REQ_IMG_READ = 2;
@@ -28,6 +41,7 @@ public class AddPostActivity extends AppCompatActivity {
     private TextView textView;
     private Uri uri;
     private Button btn;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,17 +49,17 @@ public class AddPostActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("প্রশ্ন জিজ্ঞাসা করুন");
 
-        addImage=findViewById(R.id.addImageLayout);
-        quesEditText=findViewById(R.id.quesEditText);
-        img=findViewById(R.id.imgPost);
-        textView=findViewById(R.id.addImgMsg);
-        crossImg=findViewById(R.id.crossImg);
-        btn=findViewById(R.id.addQuesBtn);
+        addImage = findViewById(R.id.addImageLayout);
+        quesEditText = findViewById(R.id.quesEditText);
+        img = findViewById(R.id.imgPost);
+        textView = findViewById(R.id.addImgMsg);
+        crossImg = findViewById(R.id.crossImg);
+        btn = findViewById(R.id.addQuesBtn);
 
         addImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(isReadStoragePermissionGranted()){
+                if (isReadStoragePermissionGranted()) {
                     selectImage();
                 }
             }
@@ -54,7 +68,7 @@ public class AddPostActivity extends AppCompatActivity {
         crossImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                uri=null;
+                uri = null;
                 img.setImageDrawable(ContextCompat.getDrawable(AddPostActivity.this, R.drawable.ic_add_a_photo_black_24dp));
                 textView.setText("ছবি যোগ করুন");
                 crossImg.setVisibility(View.GONE);
@@ -65,9 +79,90 @@ public class AddPostActivity extends AppCompatActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               // FirebaseUtilClass.getDatabase().
+                final String pushId = FirebaseUtilClass.getDatabaseReference().child("Post").push().getKey();
+                writeDataToFirebase(new Ques(System.currentTimeMillis(), quesEditText.getText().toString(), pushId, FirebaseAuth.getInstance().getUid()));
             }
         });
+    }
+
+    public void writeDataToFirebase(final Ques item) {
+        loading();
+
+        Toast.makeText(AddPostActivity.this, item.getPushId(), Toast.LENGTH_SHORT).show();
+        FirebaseUtilClass.getDatabaseReference().child("Post").child(item.getPushId()).setValue(item).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                   Toast.makeText(AddPostActivity.this, "Updated", Toast.LENGTH_SHORT).show();
+                finish();
+                if (uri != null) {
+                    uploadFile(uri, item.getPushId());
+                } else {
+                    finish();
+                }
+
+            }
+
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(AddPostActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                notLoading();
+            }
+        });
+
+    }
+
+    private void uploadFile(Uri imgUri, String code) {
+        final ProgressDialog dialog = ProgressDialog.show(AddPostActivity.this, "",
+                "অপেক্ষা করুন...", true);
+        dialog.show();
+        if (imgUri != null) {
+            final StorageReference fileReference = FirebaseStorage.getInstance().getReference("uploads").child("Post").child(code);
+            UploadTask mUploadTask;
+            mUploadTask = (UploadTask) fileReference.putFile(imgUri)
+                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            Handler handler = new Handler();
+                            handler.postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    dialog.dismiss();
+                                }
+                            }, 500);
+
+
+                            Toast.makeText(AddPostActivity.this, "সম্পন্ন হয়েছে!", Toast.LENGTH_LONG).show();
+                            finish();
+
+
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(AddPostActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    })
+                    .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+                            double progress = (100.0 * taskSnapshot.getBytesTransferred() / taskSnapshot.getTotalByteCount());
+                            dialog.setMessage("ছবি আপলোড হচ্ছে: " + progress + "%");
+                        }
+                    });
+
+        } else {
+            Toast.makeText(this, "No file selected", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void loading() {
+        btn.setEnabled(false);
+    }
+
+    private void notLoading() {
+        btn.setEnabled(true);
     }
 
     @Override
@@ -108,13 +203,13 @@ public class AddPostActivity extends AppCompatActivity {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == PICK_IMAGE && data!=null) {
-            uri=data.getData();
+        if (requestCode == PICK_IMAGE && data != null) {
+            uri = data.getData();
             img.setImageURI(uri);
             textView.setText("ছবি যুক্ত হয়েছে...");
             crossImg.setVisibility(View.VISIBLE);
         }
-        if(data==null){
+        if (data == null) {
             //reset();
         }
     }

@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.chashi.AddPostActivity;
 import com.example.chashi.R;
 import com.example.chashi.ui.gallery.GalleryViewModel;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class ForumFragment extends Fragment {
     private ForumViewModel forumViewModel;
@@ -40,8 +41,13 @@ public class ForumFragment extends Fragment {
         addQuesTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent k = new Intent(getActivity(), AddPostActivity.class);
-                startActivity(k);
+                if(FirebaseAuth.getInstance()==null){
+
+                }else{
+                    Intent k = new Intent(getActivity(), AddPostActivity.class);
+                    startActivity(k);
+                }
+
             }
         });
 
