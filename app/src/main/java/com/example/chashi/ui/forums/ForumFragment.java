@@ -78,7 +78,7 @@ public class ForumFragment extends Fragment {
         addQuesTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(FirebaseAuth.getInstance()==null){
+                if(FirebaseAuth.getInstance().getCurrentUser()==null){
                     new AlertDialog.Builder(getContext())
                             .setTitle("তথ্য")
                             .setMessage("প্রশ্ন জিজ্ঞেস করতে আপনার ফোন নাম্বার দিতে হবে। আপনি কি রাজি?")

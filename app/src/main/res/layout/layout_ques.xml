@@ -12,6 +12,7 @@
         android:layout_height="wrap_content">
         <ImageView
             android:layout_width="70dp"
+            android:id="@+id/img"
             android:layout_height="70dp"/>
         <TextView
             android:layout_width="0dp"
@@ -23,12 +24,13 @@
             android:text="some tesct siadia adawd aeaenfef aefa"
             android:layout_height="wrap_content"/>
     </LinearLayout>
-    <view class="androidx.appcompat.app.AlertController$RecycleListView"
-        android:layout_below="@+id/l1"
+    <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:id="@+id/recyclerViewComments"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/l1">
 
-    </view>
+    </androidx.recyclerview.widget.RecyclerView>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_alignParentBottom="true"
@@ -40,11 +42,13 @@
             android:layout_height="wrap_content"
             android:padding="10dp"
             android:hint="এখানে উত্তর লিখুন"
+            android:id="@+id/commentEditText"
             android:background="@drawable/rounded_textview_trq"/>
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="আচ্ছা"
+            android:id="@+id/commentBtn"
             android:textColor="@android:color/white"
             android:background="@drawable/rounded_btn_trq"/>
     </LinearLayout>

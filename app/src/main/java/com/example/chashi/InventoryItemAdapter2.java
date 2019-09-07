@@ -1,30 +1,24 @@
 package com.example.chashi;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
-
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Filter;
-import android.widget.Filterable;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class InventoryItemAdapter extends RecyclerView.Adapter<InventoryItemAdapter.InventoryViewHolder>   {
-    private List<Ques> itemList;
+public class InventoryItemAdapter2 extends RecyclerView.Adapter<InventoryItemAdapter2.InventoryViewHolder>   {
+    private List<Comments> itemList;
     private Context context;
 
     public class InventoryViewHolder extends RecyclerView.ViewHolder {
         private TextView codeTextView;
-        private Ques item;
+        private Comments item;
         private LinearLayout parent;
 
         public InventoryViewHolder(View view) {
@@ -33,17 +27,17 @@ public class InventoryItemAdapter extends RecyclerView.Adapter<InventoryItemAdap
 
         }
 
-        public Ques getItem() {
+        public Comments getItem() {
             return item;
         }
 
-        public void setItem(Ques item) {
+        public void setItem(Comments item) {
             this.item = item;
         }
     }
 
 
-    public InventoryItemAdapter(List<Ques> moviesList, Context context) {
+    public InventoryItemAdapter2(List<Comments> moviesList, Context context) {
         this.itemList = moviesList;
 
         this.context=context;
@@ -52,7 +46,7 @@ public class InventoryItemAdapter extends RecyclerView.Adapter<InventoryItemAdap
     @Override
     public InventoryViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.layout_comment, parent, false);
+                .inflate(R.layout.layout_comment2, parent, false);
 
         return new InventoryViewHolder(itemView);
     }
@@ -61,17 +55,9 @@ public class InventoryItemAdapter extends RecyclerView.Adapter<InventoryItemAdap
 
     @Override
     public void onBindViewHolder(InventoryViewHolder holder, int position) {
-        final Ques item = itemList.get(position);
-        holder.codeTextView.setText(item.getQues());
-        holder.codeTextView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(context,QuesActivity.class);
-                intent.putExtra("itemData",item.getQues());
-                intent.putExtra("itemId",item.getPushId());
-                context.startActivity(intent);
-            }
-        });
+        final Comments item = itemList.get(position);
+        holder.codeTextView.setText(item.getMsg());
+
 
 
         holder.setItem(item);

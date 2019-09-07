@@ -1,5 +1,6 @@
 package com.example.chashi;
 
+import java.util.HashMap;
 import java.util.List;
 
 public class Ques {
@@ -7,13 +8,13 @@ public class Ques {
     private String ques;
     private String pushId;
     private String uid;
-    private List<Comments> comments;
+    private HashMap<String,Comments> comments;
 
     public Ques(){
 
     }
 
-    public Ques(long time, String ques, String pushId, String uid, List<Comments> comments) {
+    public Ques(long time, String ques, String pushId, String uid, HashMap<String,Comments> comments) {
         this.time = time;
         this.ques = ques;
         this.pushId = pushId;
@@ -44,11 +45,11 @@ public class Ques {
         this.ques = ques;
     }
 
-    public List<Comments> getComments() {
+    public HashMap<String,Comments> getComments() {
         return comments;
     }
 
-    public void setComments(List<Comments> comments) {
+    public void setComments(HashMap<String,Comments> comments) {
         this.comments = comments;
     }
 
