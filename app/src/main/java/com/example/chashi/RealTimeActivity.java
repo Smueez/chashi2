@@ -1,11 +1,13 @@
 package com.example.chashi;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Pair;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -29,12 +31,17 @@ import com.otaliastudios.cameraview.frame.Frame;
 import com.otaliastudios.cameraview.frame.FrameProcessor;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class RealTimeActivity extends AppCompatActivity {
-    private final int  REQ_IMG_READ=1;
-    private final String LATE_BLIGHT="Potato_Late_blight",EARLY_BLIGHT="Potato_Early_blight",BACTERIAL_SPOT="Pepper_bell_Bacterial_spot";
+    private final int REQ_IMG_READ = 1;
+    private final String LATE_BLIGHT = "Potato_Late_blight", EARLY_BLIGHT = "Potato_Early_blight", BACTERIAL_SPOT = "Pepper_bell_Bacterial_spot", OK = "OK";
+    private ArrayList<MyPair> mp;
+    private int it;
     private CameraView cameraView;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,19 +53,37 @@ public class RealTimeActivity extends AppCompatActivity {
                 .setAssetFilePath("plants/manifest.json")
                 .build();
         FirebaseModelManager.getInstance().registerLocalModel(localModel);
+        mp=new ArrayList<>();
+        mp.add(new MyPair(LATE_BLIGHT, 0));
+        mp.add(new MyPair(EARLY_BLIGHT, 0));
+        mp.add(new MyPair(BACTERIAL_SPOT, 0));
+        mp.add(new MyPair(OK, 0));
 
-
-        cameraView=findViewById(R.id.cameraView);
+        cameraView = findViewById(R.id.cameraView);
 
         isCameratoragePermissionGranted();
         isAudioPermissionGranted()
-                ;
+        ;
         cameraView.setLifecycleOwner(this);
         cameraView.addFrameProcessor(new FrameProcessor() {
             @Override
             public void process(@NonNull Frame frame) {
-              //  Toast.makeText(RealTimeActivity.this, "s1", Toast.LENGTH_SHORT).show();
-                runML(getVisionImageFromFrame(frame));
+                //  Toast.makeText(RealTimeActivity.this, "s1", Toast.LENGTH_SHORT).show();
+                if (it != 50) {
+                    runML(getVisionImageFromFrame(frame));
+                    it++;
+                } else {
+                    Collections.sort(mp);
+                    ;
+
+                    Intent returnIntent = new Intent();
+                    returnIntent.putExtra("result",mp.get(3).getStr());
+                    setResult(Activity.RESULT_OK,returnIntent);
+                    finish();
+
+                  //  Toast.makeText(RealTimeActivity.this, mp.get(3).getVal()+" "++" "+mp.get(2).getVal()+" "+mp.get(2).getStr(), Toast.LENGTH_SHORT).show();
+                }
+
 
             }
         });
@@ -71,7 +96,7 @@ public class RealTimeActivity extends AppCompatActivity {
                 new FirebaseVisionOnDeviceAutoMLImageLabelerOptions.Builder()
                         .setLocalModelName("model")    // Skip to not use a local model
 
-                        .setConfidenceThreshold(0)  // Evaluate your model in the Firebase console
+                        .setConfidenceThreshold(.1f)  // Evaluate your model in the Firebase console
                         // to determine an appropriate value.
                         .build();
         try {
@@ -84,24 +109,36 @@ public class RealTimeActivity extends AppCompatActivity {
 
                             String text = labels.get(0).getText();
                             // float confidence = label.getConfidence();
-                            switch (text){
+                            switch (text) {
                                 case BACTERIAL_SPOT:
-                             //       showError();
-                                    Toast.makeText(RealTimeActivity.this, "BACSPOT", Toast.LENGTH_SHORT).show();
+                                    int y = mp.get(2).getVal();
+                                    y++;
+                                    mp.get(2).setVal(y);
+                                    //       showError();
+                                    //  Toast.makeText(RealTimeActivity.this, "BACSPOT", Toast.LENGTH_SHORT).show();
                                     break;
                                 case EARLY_BLIGHT:
-                              //      showError();
-                                    Toast.makeText(RealTimeActivity.this, "EARLY", Toast.LENGTH_SHORT).show();
+                                    y = mp.get(1).getVal();
+                                    y++;
+                                    mp.get(1).setVal(y);
+                                    //      showError();
+                                    //    Toast.makeText(RealTimeActivity.this, "EARLY", Toast.LENGTH_SHORT).show();
                                     break;
                                 case LATE_BLIGHT:
-                              //      showError();
-                                    Toast.makeText(RealTimeActivity.this, "LATE", Toast.LENGTH_SHORT).show();
+                                    y = mp.get(0).getVal();
+                                    y++;
+                                    mp.get(0).setVal(y);
+                                    //      showError();
+                                    //    Toast.makeText(RealTimeActivity.this, "LATE", Toast.LENGTH_SHORT).show();
                                     break;
 
 
                                 default:
-                                    Toast.makeText(RealTimeActivity.this, "OK", Toast.LENGTH_SHORT).show();
-                               //     showNotError();
+                                    y = mp.get(3).getVal();
+                                    y++;
+                                    mp.get(3).setVal(y);
+                                    //     Toast.makeText(RealTimeActivity.this, "OK", Toast.LENGTH_SHORT).show();
+                                    //     showNotError();
                             }
 
                             //  Toast.makeText(TestDiseaseFragment.this, text + " " + confidence, Toast.LENGTH_LONG).show();
@@ -122,7 +159,7 @@ public class RealTimeActivity extends AppCompatActivity {
     }
 
 
-    private FirebaseVisionImage getVisionImageFromFrame(Frame frame)  {
+    private FirebaseVisionImage getVisionImageFromFrame(Frame frame) {
         //ByteArray for the captured frame
         byte[] bt = frame.getData();
 

@@ -41,7 +41,7 @@ import java.io.IOException;
 import java.util.List;
 
 public class TestDiseaseFragment extends Fragment {
-    private final int PICK_IMAGE = 1, REQ_IMG_READ = 2;
+    private final int PICK_IMAGE = 1, REQ_IMG_READ = 2, PICK_REALTIME=3;
     private final String LATE_BLIGHT="Potato_Late_blight",EARLY_BLIGHT="Potato_Early_blight",BACTERIAL_SPOT="Pepper_bell_Bacterial_spot";
 
     private Button openGlry;
@@ -88,7 +88,8 @@ public class TestDiseaseFragment extends Fragment {
 
                  //   selectImage();
                     Intent intent1 = new Intent(getActivity(), RealTimeActivity.class);
-                    startActivity(intent1);
+                    startActivityForResult(intent1, PICK_REALTIME);
+
                     reset();
                     showLoading();
                 }
