@@ -145,7 +145,7 @@ public class TestDiseaseFragment extends Fragment {
         else if(requestCode==PICK_REALTIME){
 
             if(resultCode == Activity.RESULT_OK){
-                Toast.makeText(getContext(), "laa", Toast.LENGTH_LONG).show();
+                //Toast.makeText(getContext(), "laa", Toast.LENGTH_LONG).show();
                 String result=data.getStringExtra("result");
                 setMsg(result);
 

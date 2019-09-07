@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Pair;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -40,6 +41,7 @@ public class RealTimeActivity extends AppCompatActivity {
     private final String LATE_BLIGHT = "Potato_Late_blight", EARLY_BLIGHT = "Potato_Early_blight", BACTERIAL_SPOT = "Pepper_bell_Bacterial_spot", OK = "OK";
     private ArrayList<MyPair> mp;
     private int it;
+    private TextView txt2;
     private CameraView cameraView;
 
     @Override
@@ -48,12 +50,12 @@ public class RealTimeActivity extends AppCompatActivity {
 
 
         setContentView(R.layout.layput_realtime);
-
+        txt2 = findViewById(R.id.camInfo);
         FirebaseLocalModel localModel = new FirebaseLocalModel.Builder("model")
                 .setAssetFilePath("plants/manifest.json")
                 .build();
         FirebaseModelManager.getInstance().registerLocalModel(localModel);
-        mp=new ArrayList<>();
+        mp = new ArrayList<>();
         mp.add(new MyPair(LATE_BLIGHT, 0));
         mp.add(new MyPair(EARLY_BLIGHT, 0));
         mp.add(new MyPair(BACTERIAL_SPOT, 0));
@@ -65,10 +67,25 @@ public class RealTimeActivity extends AppCompatActivity {
         isAudioPermissionGranted()
         ;
         cameraView.setLifecycleOwner(this);
+
         cameraView.addFrameProcessor(new FrameProcessor() {
             @Override
             public void process(@NonNull Frame frame) {
-                //  Toast.makeText(RealTimeActivity.this, "s1", Toast.LENGTH_SHORT).show();
+
+                int j = frame.getRotation();
+
+                if (j == 0) {
+                    //  Toast.makeText(RealTimeActivity.this, String.valueOf(j), Toast.LENGTH_SHORT).show();
+                    txt2.setText("অপেক্ষা করুন");
+                    txt2.invalidate();
+                } else {
+                    //   Toast.makeText(RealTimeActivity.this, String.valueOf(j), Toast.LENGTH_SHORT).show();
+                    txt2.setText("মোবাইলটি ঘুড়িয়ে ধরুন");
+                    txt2.invalidate();
+                    it=0;
+                }
+
+
                 if (it != 50) {
                     runML(getVisionImageFromFrame(frame));
                     it++;
@@ -77,11 +94,11 @@ public class RealTimeActivity extends AppCompatActivity {
                     ;
 
                     Intent returnIntent = new Intent();
-                    returnIntent.putExtra("result",mp.get(3).getStr());
-                    setResult(Activity.RESULT_OK,returnIntent);
+                    returnIntent.putExtra("result", mp.get(3).getStr());
+                    setResult(Activity.RESULT_OK, returnIntent);
                     finish();
 
-                  //  Toast.makeText(RealTimeActivity.this, mp.get(3).getVal()+" "++" "+mp.get(2).getVal()+" "+mp.get(2).getStr(), Toast.LENGTH_SHORT).show();
+                    //  Toast.makeText(RealTimeActivity.this, mp.get(3).getVal()+" "++" "+mp.get(2).getVal()+" "+mp.get(2).getStr(), Toast.LENGTH_SHORT).show();
                 }
 
 
