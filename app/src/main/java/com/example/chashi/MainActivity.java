@@ -35,14 +35,15 @@ import java.util.concurrent.TimeUnit;
 public class MainActivity extends AppCompatActivity {
 
     ImageView imageView_logo;
-
-    Intent intent;
+    FirebaseAuth auth;
+    Intent intent,intent1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        auth = FirebaseAuth.getInstance();
         intent = new Intent(this,Login_activity.class);
+        intent1 = new Intent(this,LandingPage.class);
         imageView_logo = findViewById(R.id.imageView);
 
         new CountDownTimer(3000, 1000) {
@@ -61,7 +62,12 @@ public class MainActivity extends AppCompatActivity {
 
                     @Override
                     public void onFinish() {
-                       startActivity(intent);
+                        if(auth.getCurrentUser() == null) {
+                            startActivity(intent);
+                        }
+                        else {
+                            startActivity(intent1);
+                        }
 
                     }
                 }.start();

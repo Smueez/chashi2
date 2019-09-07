@@ -24,8 +24,11 @@ import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.concurrent.TimeUnit;
 
@@ -38,11 +41,12 @@ public class Login_activity extends AppCompatActivity {
     FirebaseAuth mAuth;
     DatabaseReference databaseReference;
     Animation animation_top_to_down;
+    Intent intent;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_activity);
-
+        intent = new Intent(this,LandingPage.class);
         mAuth = FirebaseAuth.getInstance();
         databaseReference = FirebaseDatabase.getInstance().getReference();
         editText_pin1= findViewById(R.id.editText2);
@@ -147,7 +151,22 @@ public class Login_activity extends AppCompatActivity {
                             FirebaseUser user = task.getResult().getUser();
                             // [START_EXCLUDE]
                             // [END_EXCLUDE]
-                            databaseReference.child("profile").child(string_phone_no).child("phone").setValue(string_phone_no);
+                            databaseReference.child("profile").addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                    if (!dataSnapshot.hasChild(string_phone_no)){
+                                        ProfileClass profileClass = new ProfileClass("Anonymous",string_phone_no,"empty");
+                                        databaseReference.child("profile").child(string_phone_no).setValue(profileClass);
+                                    }
+
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                }
+                            });
+                            startActivity(intent);
                             Toast.makeText(getApplicationContext(),"Verification Completed!",Toast.LENGTH_LONG).show();
                             //startActivity(intent_map);
                         } else {

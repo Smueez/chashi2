@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="10dp"
+    android:paddingEnd="10dp">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:textSize="30dp"
+        android:textColor="@color/colorAccent"
+        android:paddingLeft="15dp"
+        android:id="@+id/news_heading"/>
+    <androidx.legacy.widget.Space
+        android:layout_width="match_parent"
+        android:layout_height="15dp"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20dp"
+        android:textColor="@color/common_google_signin_btn_text_dark_focused"
+        android:paddingLeft="15dp"
+        android:id="@+id/news_description"/>
+
+
+</LinearLayout>

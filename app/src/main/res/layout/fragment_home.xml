@@ -265,4 +265,13 @@
 
         </LinearLayout>
     </LinearLayout>
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/news_view"
+        android:listSelector="#A0A0A0"
+        android:choiceMode="singleChoice"/>
+
+
 </LinearLayout>
