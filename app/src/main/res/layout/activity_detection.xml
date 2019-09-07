@@ -127,16 +127,32 @@
             android:id="@+id/moreInfoButton"
             android:text="বিস্তারিত জানতে এখানে চাপুন"/>
     </LinearLayout>
+
+
     <Button
+        android:layout_width="250dp"
         android:id="@+id/btnOpenGallery"
-        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/ic_camera"
+        android:background="@drawable/rounded_btn_trq"
+        android:textColor="@android:color/white"
+        android:textStyle="bold"
         android:paddingLeft="25dp"
         android:paddingRight="25dp"
-        android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="10dp"
+        android:text="গ্যালারি থেকে ছবি বাছুন"
+        android:layout_marginTop="10dp"/>
+    <Button
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnOpenCamera"
         android:background="@drawable/rounded_btn_trq"
-        android:text="রোগ নির্নয় করতে এখানে চাপুন"
         android:textColor="@android:color/white"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:layout_marginTop="10dp"
+        android:paddingLeft="25dp"
+        android:paddingRight="25dp"
+        android:drawableLeft="@drawable/ic_image"
+        android:layout_gravity="center_horizontal"
+        android:text="ক্যামেরা থেকে ছবি বাছুন"/>
 </LinearLayout>

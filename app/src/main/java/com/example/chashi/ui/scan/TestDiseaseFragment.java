@@ -23,6 +23,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.chashi.BottomSheetOption;
+import com.example.chashi.Description_activity;
 import com.example.chashi.LandingPage;
 import com.example.chashi.R;
 import com.example.chashi.RealTimeActivity;
@@ -43,14 +44,15 @@ import java.io.IOException;
 import java.util.List;
 
 public class TestDiseaseFragment extends Fragment {
-    private final int PICK_IMAGE = 1, REQ_IMG_READ = 2, PICK_REALTIME=33;
-    private final String LATE_BLIGHT="Potato_Late_blight",EARLY_BLIGHT="Potato_Early_blight",BACTERIAL_SPOT="Pepper_bell_Bacterial_spot";
+    private final int PICK_IMAGE = 1, REQ_IMG_READ = 2, PICK_REALTIME = 33;
+    private final String LATE_BLIGHT = "Potato_Late_blight", EARLY_BLIGHT = "Potato_Early_blight", BACTERIAL_SPOT = "Pepper_bell_Bacterial_spot";
 
-    private Button openGlry;
+    private Button openGlry, openCam, gotoProblem;
     private ImageView img;
     private LinearLayout found, notFound, loading, init;
     private TestDiseaseViewModel galleryViewModel;
     private TextView diseaseName;
+    private Intent intent;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -79,37 +81,50 @@ public class TestDiseaseFragment extends Fragment {
         diseaseName = view.findViewById(R.id.diseaseName);
         notFound = view.findViewById(R.id.noDiseaseFoundInfo);
         found = view.findViewById(R.id.diseaseFoundInfo);
-        loading=view.findViewById(R.id.loadingInfo);
-        init=view.findViewById(R.id.initInfo);
+        loading = view.findViewById(R.id.loadingInfo);
+        gotoProblem=view.findViewById(R.id.moreInfoButton);
+        init = view.findViewById(R.id.initInfo);
+        openCam=view.findViewById(R.id.btnOpenCamera);
         reset();
 
         openGlry.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                if (isReadStoragePermissionGranted()) {
-//
-//                    selectImage();
-//                    reset();
-//                    showLoading();
-//                }
-
-                 //   selectImage();
-                    Intent intent1 = new Intent(getActivity(), RealTimeActivity.class);
-                    startActivityForResult(intent1, PICK_REALTIME);
-
-                    reset();
-                    showLoading();
-                }
-                BottomSheetOption bottomSheetOption = new BottomSheetOption(getContext());
-                bottomSheetOption.show(getChildFragmentManager(),"bottomsheet");
+                openGlry();
             }
+
+        });
+
+        openCam.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openCam();
+            }
+
         });
 
 
         FirebaseLocalModel localModel = new FirebaseLocalModel.Builder("model")
                 .setAssetFilePath("plants/manifest.json")
                 .build();
-        FirebaseModelManager.getInstance().registerLocalModel(localModel);
+        FirebaseModelManager.getInstance().
+
+                registerLocalModel(localModel);
+
+        intent = new Intent(getContext(), Description_activity.class);
+    }
+
+    public void openGlry() {
+        if (isReadStoragePermissionGranted()) {
+
+            selectImage();
+            reset();
+            showLoading();
+        }
+    }
+    public void openCam() {
+        Intent intent1 = new Intent(getActivity(), RealTimeActivity.class);
+        startActivityForResult(intent1, PICK_REALTIME);
     }
 
     private void selectImage() {
@@ -142,19 +157,18 @@ public class TestDiseaseFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == PICK_IMAGE) {
-            if(data!=null){
+            if (data != null) {
                 runML(data);
                 openGlry.setText("পুনরায় রোগ নির্নয় করুন");
-            }else {
+            } else {
                 reset();
             }
 
-        }
-        else if(requestCode==PICK_REALTIME){
+        } else if (requestCode == PICK_REALTIME) {
 
-            if(resultCode == Activity.RESULT_OK){
+            if (resultCode == Activity.RESULT_OK) {
                 //Toast.makeText(getContext(), "laa", Toast.LENGTH_LONG).show();
-                String result=data.getStringExtra("result");
+                String result = data.getStringExtra("result");
                 setMsg(result);
 
             }
@@ -181,19 +195,19 @@ public class TestDiseaseFragment extends Fragment {
             img.setImageURI(imageURI);
             final FirebaseVisionImage image = FirebaseVisionImage.fromFilePath(getContext(), imageURI);
             labeler.processImage(image).addOnSuccessListener(new OnSuccessListener<List<FirebaseVisionImageLabel>>() {
-                        @Override
-                        public void onSuccess(List<FirebaseVisionImageLabel> labels) {
+                @Override
+                public void onSuccess(List<FirebaseVisionImageLabel> labels) {
 
-                                String text = labels.get(0).getText();
-                                setMsg(text);
-                               // float confidence = label.getConfidence();
-
-
-                                //  Toast.makeText(TestDiseaseFragment.this, text + " " + confidence, Toast.LENGTH_LONG).show();
+                    String text = labels.get(0).getText();
+                    setMsg(text);
+                    // float confidence = label.getConfidence();
 
 
-                        }
-                    })
+                    //  Toast.makeText(TestDiseaseFragment.this, text + " " + confidence, Toast.LENGTH_LONG).show();
+
+
+                }
+            })
                     .addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
@@ -208,19 +222,44 @@ public class TestDiseaseFragment extends Fragment {
         }
     }
 
-    private void setMsg(String text){
-        switch (text){
+    private void setMsg(String text) {
+        switch (text) {
             case BACTERIAL_SPOT:
                 showError();
                 diseaseName.setText(getResources().getString(R.string.disease_spot));
+                gotoProblem.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                    }
+                });
                 break;
             case EARLY_BLIGHT:
                 showError();
                 diseaseName.setText(getResources().getString(R.string.disease_agam_dhosha));
+                gotoProblem.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        intent.putExtra("disease_name","আগাম ধ্বসা");
+                        intent.putExtra("item_name","আলু");
+                        intent.putExtra("image_url","https://cropscience.bayer.co.uk/media/102361687/early-blight-potatoes.jpg");
+                        startActivity(intent);
+                    }
+                });
                 break;
             case LATE_BLIGHT:
                 showError();
                 diseaseName.setText(getResources().getString(R.string.disease_morok));
+                gotoProblem.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        intent.putExtra("disease_name","মড়ক রোগ");
+                        intent.putExtra("item_name","আলু");
+                        intent.putExtra("image_url","http://ais.portal.gov.bd/sites/default/files/files/ais.portal.gov.bd/page/0fd1e9d1_a532_4ebd_a38d_542efb9ac3ee/LBleaf2INIA_0.jpg");
+                        startActivity(intent);
+                    }
+                });
                 break;
 
 
@@ -229,7 +268,7 @@ public class TestDiseaseFragment extends Fragment {
         }
     }
 
-    private void showError(){
+    private void showError() {
         found.setVisibility(View.VISIBLE);
         notFound.setVisibility(View.GONE);
         loading.setVisibility(View.GONE);
@@ -237,7 +276,7 @@ public class TestDiseaseFragment extends Fragment {
         init.setVisibility(View.GONE);
     }
 
-    private void showNotError(){
+    private void showNotError() {
         found.setVisibility(View.GONE);
         notFound.setVisibility(View.VISIBLE);
         loading.setVisibility(View.GONE);
@@ -245,7 +284,7 @@ public class TestDiseaseFragment extends Fragment {
         init.setVisibility(View.GONE);
     }
 
-    private void showLoading(){
+    private void showLoading() {
         found.setVisibility(View.GONE);
         notFound.setVisibility(View.GONE);
         loading.setVisibility(View.VISIBLE);
@@ -253,7 +292,7 @@ public class TestDiseaseFragment extends Fragment {
         init.setVisibility(View.GONE);
     }
 
-    private void reset(){
+    private void reset() {
         found.setVisibility(View.GONE);
         notFound.setVisibility(View.GONE);
         loading.setVisibility(View.GONE);
@@ -278,8 +317,8 @@ public class TestDiseaseFragment extends Fragment {
         }
     }
 
-    public void onButtonClicked(String text){
-        Toast.makeText(getContext(),text,Toast.LENGTH_SHORT).show();
+    public void onButtonClicked(String text) {
+        Toast.makeText(getContext(), text, Toast.LENGTH_SHORT).show();
     }
 
 

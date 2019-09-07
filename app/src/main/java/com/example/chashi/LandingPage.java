@@ -1,5 +1,6 @@
 package com.example.chashi;
 
+import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -9,7 +10,7 @@ import com.google.android.material.snackbar.Snackbar;
 
 import android.view.View;
 
-import androidx.fragment.app.Fragment;
+
 import androidx.fragment.app.FragmentManager;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -25,7 +26,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.view.Menu;
 
-public class LandingPage extends AppCompatActivity implements BottomSheetOption.BottomSheetListener {
+public class LandingPage extends AppCompatActivity  {
 
     private AppBarConfiguration mAppBarConfiguration;
 
@@ -73,7 +74,5 @@ public class LandingPage extends AppCompatActivity implements BottomSheetOption.
         super.onActivityResult(requestCode, resultCode, data);
     }
 
-    @Override
-    public void onButtonClicked(String text) {
-    }
+
 }

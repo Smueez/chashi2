@@ -80,7 +80,7 @@ public class RealTimeActivity extends AppCompatActivity {
                     txt2.invalidate();
                 } else {
                     //   Toast.makeText(RealTimeActivity.this, String.valueOf(j), Toast.LENGTH_SHORT).show();
-                    txt2.setText("মোবাইলটি ঘুড়িয়ে ধরুন");
+                    txt2.setText("মোবাইলটি ঘুরিয়ে ধরুন");
                     txt2.invalidate();
                     it=0;
                 }

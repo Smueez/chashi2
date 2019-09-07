@@ -14,16 +14,16 @@
 
     <TextView
         android:id="@+id/camInfo"
-        android:background="@android:color/white"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
         android:layout_gravity="center"
-        android:textColor="#000"
+        android:background="@android:color/white"
         android:gravity="center"
-        android:text="মোবাইলটি ঘুড়িয়ে ধরুন"
         android:padding="7dp"
+        android:text="মোবাইলটি ঘুড়িয়ে ধরুন"
+        android:textColor="#000"
         android:textSize="20sp"
         android:textStyle="bold" />
 
