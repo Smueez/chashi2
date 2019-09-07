@@ -74,7 +74,7 @@ public class HomeFragment extends Fragment {
         txt_humidity = (TextView) view.findViewById(R.id.humidity);
         linearLayout_product = view.findViewById(R.id.product_btn);
         linearLayout_forum=view.findViewById(R.id.forum_btn);
-        linearLayout_scan = view.findViewById(R.id.disease_btn);
+        linearLayout_scan = view.findViewById(R.id.diseaseCheck_btn);
         linearLayout_product.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
