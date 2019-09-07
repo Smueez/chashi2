@@ -178,7 +178,22 @@
                     android:clickable="true"
                     android:foreground="?android:attr/selectableItemBackground"
                     app:cardElevation="3dp">
-
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:id="@+id/disease_btn">
+                        <ImageView
+                            android:layout_width="90dp"
+                            android:layout_height="90dp"
+                            android:src="@drawable/disease"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="বালাই সমূহ"
+                            android:textSize="18sp" />
+                    </LinearLayout>
                 </androidx.cardview.widget.CardView>
             </LinearLayout>
         </LinearLayout>
@@ -199,7 +214,22 @@
                     android:clickable="true"
                     android:foreground="?android:attr/selectableItemBackground"
                     app:cardElevation="3dp">
-
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:id="@+id/forum_btn">
+                        <ImageView
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+                            android:src="@drawable/forum"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="কৃষি জিজ্ঞাসা"
+                            android:textSize="18sp" />
+                    </LinearLayout>
                 </androidx.cardview.widget.CardView>
             </LinearLayout>
             <LinearLayout
@@ -214,7 +244,22 @@
                     android:clickable="true"
                     android:foreground="?android:attr/selectableItemBackground"
                     app:cardElevation="3dp">
-
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:id="@+id/diseaseCheck_btn">
+                        <ImageView
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+                            android:src="@drawable/diseaseCheck"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="বালাই চিহ্নিতকরণ"
+                            android:textSize="18sp" />
+                    </LinearLayout>
                 </androidx.cardview.widget.CardView>
             </LinearLayout>
 
