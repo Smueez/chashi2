@@ -9,7 +9,9 @@ public class Ques {
     private String uid;
     private List<Comments> comments;
 
+    public Ques(){
 
+    }
 
     public Ques(long time, String ques, String pushId, String uid, List<Comments> comments) {
         this.time = time;

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:padding="8dp"
+        android:id="@+id/l1"
+        android:background="@android:color/white"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_width="70dp"
+            android:layout_height="70dp"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight=".7"
+            android:layout_marginStart="6dp"
+            android:textColor="@android:color/black"
+            android:textSize="16sp"
+            android:text="some tesct siadia adawd aeaenfef aefa"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+    <view class="androidx.appcompat.app.AlertController$RecycleListView"
+        android:layout_below="@+id/l1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </view>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal"
+        android:layout_height="wrap_content">
+        <EditText
+            android:layout_width="0dp"
+            android:layout_weight=".8"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:hint="এখানে উত্তর লিখুন"
+            android:background="@drawable/rounded_textview_trq"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="আচ্ছা"
+            android:textColor="@android:color/white"
+            android:background="@drawable/rounded_btn_trq"/>
+    </LinearLayout>
+</RelativeLayout>

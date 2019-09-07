@@ -33,12 +33,14 @@
             android:layout_height="2dp"
             android:layout_marginTop="2dp"
             android:layout_marginBottom="5dp"
+            android:visibility="gone"
             android:background="@color/gainsboro" />
 
         <LinearLayout
             android:id="@+id/linearLayoutAns"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:visibility="gone"
             android:gravity="center_vertical">
 
             <ImageView
@@ -71,6 +73,7 @@
             android:id="@+id/linearLayoutNoAns"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:visibility="gone"
             android:gravity="center_vertical">
 
             <ImageView

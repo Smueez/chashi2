@@ -6,6 +6,9 @@ public class Comments {
     private String name;
     private long time;
 
+    public Comments(){
+
+    }
     public Comments(String uid, String msg, String name, long time) {
         this.uid = uid;
         this.msg = msg;
