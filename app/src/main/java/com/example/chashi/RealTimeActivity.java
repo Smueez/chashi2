@@ -125,38 +125,40 @@ public class RealTimeActivity extends AppCompatActivity {
                         public void onSuccess(List<FirebaseVisionImageLabel> labels) {
 
                             String text = labels.get(0).getText();
-                            // float confidence = label.getConfidence();
-                            switch (text) {
-                                case BACTERIAL_SPOT:
-                                    int y = mp.get(2).getVal();
-                                    y++;
-                                    mp.get(2).setVal(y);
-                                    //       showError();
-                                    //  Toast.makeText(RealTimeActivity.this, "BACSPOT", Toast.LENGTH_SHORT).show();
-                                    break;
-                                case EARLY_BLIGHT:
-                                    y = mp.get(1).getVal();
-                                    y++;
-                                    mp.get(1).setVal(y);
-                                    //      showError();
-                                    //    Toast.makeText(RealTimeActivity.this, "EARLY", Toast.LENGTH_SHORT).show();
-                                    break;
-                                case LATE_BLIGHT:
-                                    y = mp.get(0).getVal();
-                                    y++;
-                                    mp.get(0).setVal(y);
-                                    //      showError();
-                                    //    Toast.makeText(RealTimeActivity.this, "LATE", Toast.LENGTH_SHORT).show();
-                                    break;
+                             float confidence = labels.get(0).getConfidence();
+
+                                 switch (text) {
+                                     case BACTERIAL_SPOT:
+                                         int y = mp.get(2).getVal();
+                                         y++;
+                                         mp.get(2).setVal(y);
+                                         //       showError();
+                                         //  Toast.makeText(RealTimeActivity.this, "BACSPOT", Toast.LENGTH_SHORT).show();
+                                         break;
+                                     case EARLY_BLIGHT:
+                                         y = mp.get(1).getVal();
+                                         y++;
+                                         mp.get(1).setVal(y);
+                                         //      showError();
+                                         //    Toast.makeText(RealTimeActivity.this, "EARLY", Toast.LENGTH_SHORT).show();
+                                         break;
+                                     case LATE_BLIGHT:
+                                         y = mp.get(0).getVal();
+                                         y++;
+                                         mp.get(0).setVal(y);
+                                         //      showError();
+                                         //    Toast.makeText(RealTimeActivity.this, "LATE", Toast.LENGTH_SHORT).show();
+                                         break;
 
 
-                                default:
-                                    y = mp.get(3).getVal();
-                                    y++;
-                                    mp.get(3).setVal(y);
-                                    //     Toast.makeText(RealTimeActivity.this, "OK", Toast.LENGTH_SHORT).show();
-                                    //     showNotError();
-                            }
+                                     default:
+                                         y = mp.get(3).getVal();
+                                         y++;
+                                         mp.get(3).setVal(y);
+                                         //     Toast.makeText(RealTimeActivity.this, "OK", Toast.LENGTH_SHORT).show();
+                                         //     showNotError();
+                                 }
+
 
                             //  Toast.makeText(TestDiseaseFragment.this, text + " " + confidence, Toast.LENGTH_LONG).show();
 
