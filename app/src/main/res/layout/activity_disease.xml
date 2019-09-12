@@ -1,46 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Disease">
+    tools:context=".Disease"
+    android:orientation="vertical">
 
-
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:layout_marginBottom="468dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/background" />
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="587dp"
-        android:layout_marginTop="144dp"
+        android:layout_height="150dp"
+        android:background="@drawable/backgound">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="রোগ সমূহ"
+            android:textColor="#FFFF"
+            android:gravity="center"
+            android:textColorHint="#000C0C0C"
+            android:textSize="32sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         android:paddingLeft="30dp"
         android:paddingRight="30dp">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="রোগ চিহ্নিত করন"
-            android:textColor="#FCFAFA"
-            android:textColorHint="#000C0C0C"
-            android:textSize="40dp"
-            android:textStyle="bold" />
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="40dp"/>
+
 
         <TextView
             android:id="@+id/highlight"
@@ -63,4 +54,4 @@
     </LinearLayout>
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

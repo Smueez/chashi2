@@ -26,10 +26,10 @@ public class News_adapter extends ArrayAdapter<News> {
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         LayoutInflater inflater = context.getLayoutInflater();
-        View mylistview_disease = inflater.inflate(R.layout.disease_list_view,null,true);
+        View mylistview_news = inflater.inflate(R.layout.news_layout,null,true);
 
-        TextView textView = mylistview_disease.findViewById(R.id.news_heading);
-        TextView textView_description = mylistview_disease.findViewById(R.id.news_description);
+        TextView textView = mylistview_news.findViewById(R.id.news_heading);
+        TextView textView_description = mylistview_news.findViewById(R.id.news_description);
 
         News news = list.get(position);
 
@@ -37,6 +37,6 @@ public class News_adapter extends ArrayAdapter<News> {
         textView_description.setText(news.getDescription());
 
 
-        return mylistview_disease;
+        return mylistview_news;
     }
 }

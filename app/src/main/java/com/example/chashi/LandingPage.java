@@ -1,13 +1,16 @@
 package com.example.chashi;
 
+import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
 
+import com.example.chashi.ui.scan.TestDiseaseFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
 import android.view.View;
 
-import androidx.fragment.app.Fragment;
+
 import androidx.fragment.app.FragmentManager;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -23,7 +26,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.view.Menu;
 
-public class LandingPage extends AppCompatActivity {
+public class LandingPage extends AppCompatActivity  {
 
     private AppBarConfiguration mAppBarConfiguration;
 
@@ -33,14 +36,7 @@ public class LandingPage extends AppCompatActivity {
         setContentView(R.layout.activity_landing_page);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
@@ -53,6 +49,10 @@ public class LandingPage extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+    }
+
+    public void setActionBarTitle(String title) {
+        getSupportActionBar().setTitle(title);
     }
 
     @Override
@@ -68,5 +68,11 @@ public class LandingPage extends AppCompatActivity {
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
     }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
 
 }
