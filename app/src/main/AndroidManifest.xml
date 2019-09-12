@@ -23,7 +23,7 @@
         <activity android:name=".Login_activity" android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
         <activity android:name=".Description_activity" />
         <activity android:name=".Disease" />
-        <activity android:name=".Purchase"></activity>
+
         <activity android:name=".Product_category" />
         <activity android:name=".Product" />
         <activity android:name=".QuesActivity" />
@@ -32,11 +32,7 @@
             android:name=".LandingPage"
             android:label="@string/title_activity_landing_page"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".Disease" />
-        <activity android:name=".Order_activity" />
-        <activity
-            android:name=".Home_activity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+
         <activity
             android:name=".MainActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
