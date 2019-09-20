@@ -41,9 +41,9 @@ The shop consists of seeds, medicines, insecticides and farming equipments. All 
 
 
 <p align="center">
-  <img src="/screenshots/7.png" width="150" title="From detected disease">
-  <img src="/screenshots/8.png" width="150" title="Browsing plants for disease">
-  <img src="/screenshots/9.png" width="150" title="Browsing disease">
+  <img src="/screenshots/7.png" width="150" title="In shop">
+  <img src="/screenshots/8.png" width="150" title="Seeds">
+  <img src="/screenshots/9.png" width="150" title="A particular seed">
 </p>
 
 # Forum
