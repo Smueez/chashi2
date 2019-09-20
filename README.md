@@ -25,7 +25,7 @@ Disease detection can be done from choosing image from gallery or directly from 
 The information of the detected disease is given in another activity with picture.
 
 <p align="center">
-  <img src="/screenshots/6.png" width="150" title="Options to detect disease">
-  <img src="/screenshots/4.png" width="150" title="Realtime detection">
-  <img src="/screenshots/5.png" width="150" title="Detected disease">
+  <img src="/screenshots/6.png" width="150" title="From detected disease">
+  <img src="/screenshots/5.png" width="150" title="Browsing plants for disease">
+  <img src="/screenshots/4.png" width="150" title="Browsing disease">
 </p>
