@@ -51,8 +51,8 @@ The shop consists of seeds, medicines, insecticides and farming equipments. All 
 The app has a forum section where any farmer can ask or browse question to get help from one another. Verified experts on agriculture also can give suggestions.
 
 <p align="center">
-  <img src="/screenshots/10.png" width="150" title="From detected disease">
-  <img src="/screenshots/11.png" width="150" title="Browsing plants for disease">
+  <img src="/screenshots/10.png" width="150" title="Questions">
+  <img src="/screenshots/11.png" width="150" title="Answers">
 </p>
 
 # Weather, News & Home
