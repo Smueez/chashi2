@@ -12,7 +12,7 @@ Chashi app can be used to:
 
 # App video 
 
-(Click to redirect to youtube)
+(Click to redirect to youtube) </br>
 [![Chashi](https://img.youtube.com/vi/RrEePtpJyfo/0.jpg)](https://www.youtube.com/watch?v=RrEePtpJyfo)
 
 # Offline disease detection
