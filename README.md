@@ -10,6 +10,9 @@ Chashi app can be used to:
 4. Get weather updates
 5. Get agricultural news update 
 
+# App video 
+
+(Click to redirect to youtube)
 [![Chashi](https://img.youtube.com/vi/RrEePtpJyfo/0.jpg)](https://www.youtube.com/watch?v=RrEePtpJyfo)
 
 # Offline disease detection
