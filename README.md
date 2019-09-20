@@ -60,8 +60,8 @@ The app has a forum section where any farmer can ask or browse question to get h
 One can get live weather updates based on location. Also can get agricultural news in home screen.
 
 <p align="center">
-  <img src="/screenshots/12.png" width="150" title="From detected disease">
-  <img src="/screenshots/13.png" width="150" title="Browsing plants for disease">
-  <img src="/screenshots/14.png" width="150" title="Browsing plants for disease">
+  <img src="/screenshots/12.png" width="150" title="Navigation Drawer">
+  <img src="/screenshots/13.png" width="150" title="Home - Weather">
+  <img src="/screenshots/14.png" width="150" title="Home - News">
 </p>
 
