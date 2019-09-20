@@ -35,4 +35,28 @@ The information of the detected disease is given in another activity with pictur
 The shop consists of seeds, medicines, insecticides and farming equipments. All items can be ordered using bkash or rocket. From a specific disease one can directly order from the suggestion.
 
 
+<p align="center">
+  <img src="/screenshots/7.png" width="150" title="From detected disease">
+  <img src="/screenshots/8.png" width="150" title="Browsing plants for disease">
+  <img src="/screenshots/9.png" width="150" title="Browsing disease">
+</p>
+
+# Forum
+
+The app has a forum section where any farmer can ask or browse question to get help from one another. Verified experts on agriculture also can give suggestions.
+
+<p align="center">
+  <img src="/screenshots/10.png" width="150" title="From detected disease">
+  <img src="/screenshots/11.png" width="150" title="Browsing plants for disease">
+</p>
+
+# Weather, News & Home
+
+One can get live weather updates based on location. Also can get agricultural news in home screen.
+
+<p align="center">
+  <img src="/screenshots/12.png" width="150" title="From detected disease">
+  <img src="/screenshots/13.png" width="150" title="Browsing plants for disease">
+  <img src="/screenshots/14.png" width="150" title="Browsing plants for disease">
+</p>
 
