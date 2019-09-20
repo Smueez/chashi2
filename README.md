@@ -29,3 +29,10 @@ The information of the detected disease is given in another activity with pictur
   <img src="/screenshots/5.png" width="150" title="Browsing plants for disease">
   <img src="/screenshots/4.png" width="150" title="Browsing disease">
 </p>
+
+# Shop
+
+The shop consists of seeds, medicines, insecticides and farming equipments. All items can be ordered using bkash or rocket. From a specific disease one can directly order from the suggestion.
+
+
+
