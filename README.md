@@ -1,6 +1,6 @@
 # Chashi
 
-A android app designed for all sort of farmers. Mainly targeted for the farmers who live in rural area where internet is hardly available.
+An android app designed for all sort of farmers. Mainly targeted for the farmers who live in rural area where internet is hardly available.
 Chashi app can be used to:
 
 1. Detect disease of plant in offline
