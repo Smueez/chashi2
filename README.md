@@ -10,7 +10,7 @@ Chashi app can be used to:
 4. Get weather updates
 5. Get agricultural news update 
 
-# Offline disease detectopn
+# Offline disease detection
 
 Disease detection can be done from choosing image from gallery or directly from camera in realtime. Detection disease will be informed with information of the disease.
 
@@ -19,3 +19,8 @@ Disease detection can be done from choosing image from gallery or directly from 
   <img src="/screenshots/2.png" width="150" title="Realtime detection">
   <img src="/screenshots/3.png" width="150" title="Detected disease">
 </p>
+
+# Disease information
+
+The information of the detected disease is given in another activity with picture.
+
