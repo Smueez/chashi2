@@ -129,8 +129,6 @@ public class PurchaseInfo extends AppCompatActivity {
                 // Create the AlertDialog object and return it
                 builder.create();
                 builder.show();
-
-
             }
 
         }).addOnFailureListener(new OnFailureListener() {

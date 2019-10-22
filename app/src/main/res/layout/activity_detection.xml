@@ -133,7 +133,7 @@
         android:layout_width="250dp"
         android:id="@+id/btnOpenGallery"
         android:layout_height="wrap_content"
-        android:drawableLeft="@drawable/ic_camera"
+        android:drawableLeft="@drawable/ic_image"
         android:background="@drawable/rounded_btn_trq"
         android:textColor="@android:color/white"
         android:textStyle="bold"
@@ -152,7 +152,7 @@
         android:layout_marginTop="10dp"
         android:paddingLeft="25dp"
         android:paddingRight="25dp"
-        android:drawableLeft="@drawable/ic_image"
+        android:drawableLeft="@drawable/ic_camera"
         android:layout_gravity="center_horizontal"
         android:text="ক্যামেরা থেকে ছবি বাছুন"/>
 </LinearLayout>
