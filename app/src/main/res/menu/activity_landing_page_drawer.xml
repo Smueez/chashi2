@@ -20,6 +20,17 @@
             android:id="@+id/nav_tools"
             android:icon="@drawable/ic_conversation"
             android:title="@string/menu_tools" />
+
+        <item
+            android:id="@+id/nav_detect"
+            android:icon="@drawable/ic_search_black_24dp"
+            android:title="@string/menu_detect" />
+
+
+        <item
+            android:id="@+id/nav_profile"
+            android:icon="@drawable/ic_perm_identity_black_24dp"
+            android:title="@string/menu_profile" />
     </group>
 
     <item android:title="Communicate">

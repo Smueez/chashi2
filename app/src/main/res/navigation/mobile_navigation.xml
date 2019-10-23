@@ -17,17 +17,29 @@
         android:label="@string/menu_gallery"
         tools:layout="@layout/fragment_gallery" />
 
-    <fragment
+    <activity
         android:id="@+id/nav_slideshow"
-        android:name="com.example.chashi.ui.slideshow.SlideshowFragment"
+        android:name="com.example.chashi.Disease"
         android:label="@string/menu_slideshow"
-        tools:layout="@layout/fragment_slideshow" />
+        tools:layout="@layout/activity_disease" />
 
     <fragment
         android:id="@+id/nav_tools"
-        android:name="com.example.chashi.ui.tools.ToolsFragment"
+        android:name="com.example.chashi.ui.forums.ForumFragment"
         android:label="@string/menu_tools"
-        tools:layout="@layout/fragment_tools" />
+        tools:layout="@layout/fragment_forum" />
+
+    <fragment
+        android:id="@+id/nav_detect"
+        android:name="com.example.chashi.ScanDiseaseCropsFragment"
+        android:label="@string/menu_detect"
+        tools:layout="@layout/fragment_scan_disease_crops" />
+
+    <fragment
+        android:id="@+id/nav_profile"
+        android:name="com.example.chashi.ProfileFragment"
+        android:label="@string/menu_profile"
+        tools:layout="@layout/fragment_profile" />
 
     <fragment
         android:id="@+id/nav_share"

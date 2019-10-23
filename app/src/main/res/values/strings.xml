@@ -13,7 +13,9 @@
     <string name="menu_gallery">কৃষি পণ্য</string>
     <string name="menu_slideshow">রোগ সমূহ</string>
     <string name="menu_tools">কৃষি জিজ্ঞাসা</string>
+    <string name="menu_detect">রোগ চিহ্নিতকরণ</string>
     <string name="menu_share">অ্যাপ তথ্য</string>
+    <string name="menu_profile">প্রোফাইল</string>
     <string name="menu_send">Send</string>
     <string name="disease_agam_dhosha">আলুর আগাম ধ্বসা রোগ</string>
     <string name="disease_morok">আলুর মরক রোগ</string>
