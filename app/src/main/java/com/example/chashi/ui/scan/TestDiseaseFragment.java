@@ -4,9 +4,11 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,7 +46,7 @@ import java.io.IOException;
 import java.util.List;
 
 public class TestDiseaseFragment extends Fragment {
-    private final int PICK_IMAGE = 1, REQ_IMG_READ = 2, PICK_REALTIME = 33;
+    private final int PICK_IMAGE = 1, REQ_IMG_READ = 2, PICK_REALTIME = 33, REQ_CAMERA = 3;
     private final String LATE_BLIGHT = "Potato_Late_blight", EARLY_BLIGHT = "Potato_Early_blight", BACTERIAL_SPOT = "Pepper_bell_Bacterial_spot";
 
     private Button openGlry, openCam, gotoProblem;
@@ -82,9 +84,9 @@ public class TestDiseaseFragment extends Fragment {
         notFound = view.findViewById(R.id.noDiseaseFoundInfo);
         found = view.findViewById(R.id.diseaseFoundInfo);
         loading = view.findViewById(R.id.loadingInfo);
-        gotoProblem=view.findViewById(R.id.moreInfoButton);
+        gotoProblem = view.findViewById(R.id.moreInfoButton);
         init = view.findViewById(R.id.initInfo);
-        openCam=view.findViewById(R.id.btnOpenCamera);
+        openCam = view.findViewById(R.id.btnOpenCamera);
         reset();
 
         openGlry.setOnClickListener(new View.OnClickListener() {
@@ -115,16 +117,23 @@ public class TestDiseaseFragment extends Fragment {
     }
 
     public void openGlry() {
-        if (isReadStoragePermissionGranted()) {
-
+        if (isPermissionGranted(Manifest.permission.READ_EXTERNAL_STORAGE, REQ_IMG_READ)) {
             selectImage();
             reset();
             showLoading();
         }
     }
+
     public void openCam() {
-        Intent intent1 = new Intent(getActivity(), RealTimeActivity.class);
-        startActivityForResult(intent1, PICK_REALTIME);
+        if (isPermissionGranted(Manifest.permission.CAMERA, REQ_CAMERA)) {
+            showLoading();
+            Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            if (takePictureIntent.resolveActivity(getActivity().getPackageManager()) != null) {
+                startActivityForResult(takePictureIntent, PICK_REALTIME);
+            }
+        }
+        //   Intent intent1 = new Intent(getActivity(), RealTimeActivity.class);
+        //  startActivityForResult(intent1, PICK_REALTIME);
     }
 
     private void selectImage() {
@@ -135,16 +144,16 @@ public class TestDiseaseFragment extends Fragment {
     }
 
 
-    public boolean isReadStoragePermissionGranted() {
+    public boolean isPermissionGranted(String permission, final int REQ_CODE) {
         if (Build.VERSION.SDK_INT >= 23) {
-            if (getActivity().checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
+            if (getActivity().checkSelfPermission(permission)
                     == PackageManager.PERMISSION_GRANTED) {
                 // Log.v(TAG,"Permission is granted1");
                 return true;
             } else {
 
                 //  Log.v(TAG,"Permission is revoked1");
-                ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, REQ_IMG_READ);
+                ActivityCompat.requestPermissions(getActivity(), new String[]{permission}, REQ_CODE);
                 return false;
             }
         } else { //permission is automatically granted on sdk<23 upon installation
@@ -158,7 +167,7 @@ public class TestDiseaseFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == PICK_IMAGE) {
             if (data != null) {
-                runML(data);
+                runML(data.getData());
                 openGlry.setText("পুনরায় রোগ নির্নয় করুন");
             } else {
                 reset();
@@ -166,6 +175,11 @@ public class TestDiseaseFragment extends Fragment {
 
         } else if (requestCode == PICK_REALTIME) {
 
+            Bundle extras = data.getExtras();
+            Bitmap imageBitmap = (Bitmap) extras.get("data");
+            runML(imageBitmap);
+            // imageOfCamera.setImageBitmap(imageBitmap);
+            /*   realtime activity
             if (resultCode == Activity.RESULT_OK) {
                 //Toast.makeText(getContext(), "laa", Toast.LENGTH_LONG).show();
                 String result = data.getStringExtra("result");
@@ -174,12 +188,35 @@ public class TestDiseaseFragment extends Fragment {
             }
             if (resultCode == Activity.RESULT_CANCELED) {
                 //Write your code if there's no result
-            }
+            }*/
         }
     }
 
-    private void runML(final Intent data) {
 
+    private void runML(final Bitmap data) {
+        FirebaseVisionImage image = null;
+
+        image = FirebaseVisionImage.fromBitmap(data);
+        img.setImageBitmap(data);
+        doML(image);
+    }
+
+    private void runML(final Uri data) {
+
+        FirebaseVisionImage image = null;
+        try {
+            image = FirebaseVisionImage.fromFilePath(getContext(), data);
+            img.setImageURI(data);
+            doML(image);
+        } catch (IOException e) {
+            Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+            return;
+        }
+
+
+    }
+
+    private void doML(FirebaseVisionImage image) {
         FirebaseVisionOnDeviceAutoMLImageLabelerOptions labelerOptions =
                 new FirebaseVisionOnDeviceAutoMLImageLabelerOptions.Builder()
                         .setLocalModelName("model")    // Skip to not use a local model
@@ -190,10 +227,9 @@ public class TestDiseaseFragment extends Fragment {
         try {
             final FirebaseVisionImageLabeler labeler =
                     FirebaseVision.getInstance().getOnDeviceAutoMLImageLabeler(labelerOptions);
-            final Uri imageURI = data.getData();
+            //    final Uri imageURI = data.getData();
 
-            img.setImageURI(imageURI);
-            final FirebaseVisionImage image = FirebaseVisionImage.fromFilePath(getContext(), imageURI);
+
             labeler.processImage(image).addOnSuccessListener(new OnSuccessListener<List<FirebaseVisionImageLabel>>() {
                 @Override
                 public void onSuccess(List<FirebaseVisionImageLabel> labels) {
@@ -217,12 +253,31 @@ public class TestDiseaseFragment extends Fragment {
         } catch (FirebaseMLException e) {
             e.printStackTrace();
             Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
-        } catch (IOException e) {
-            Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
         }
     }
 
-    private void setMsg(String text) {
+    private void setMsg(final String text) {
+        if(text.equals(getResources().getString(R.string.healthy))){
+            showNotError();
+        }else{
+            showError();
+
+            final String[] str=text.split("_");
+            diseaseName.setText(str[1]);
+
+
+
+            gotoProblem.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    intent.putExtra("item_name", str[0]);
+                    intent.putExtra("disease_name", str[1]);
+                    startActivity(intent);
+                }
+            });
+        }
+
+        /*
         switch (text) {
             case BACTERIAL_SPOT:
                 showError();
@@ -240,9 +295,9 @@ public class TestDiseaseFragment extends Fragment {
                 gotoProblem.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        intent.putExtra("disease_name","আগাম ধ্বসা");
-                        intent.putExtra("item_name","আলু");
-                        intent.putExtra("image_url","https://cropscience.bayer.co.uk/media/102361687/early-blight-potatoes.jpg");
+                        intent.putExtra("disease_name", "আগাম ধ্বসা");
+                        intent.putExtra("item_name", "আলু");
+                        intent.putExtra("image_url", "https://cropscience.bayer.co.uk/media/102361687/early-blight-potatoes.jpg");
                         startActivity(intent);
                     }
                 });
@@ -254,9 +309,9 @@ public class TestDiseaseFragment extends Fragment {
                     @Override
                     public void onClick(View v) {
 
-                        intent.putExtra("disease_name","মড়ক রোগ");
-                        intent.putExtra("item_name","আলু");
-                        intent.putExtra("image_url","http://ais.portal.gov.bd/sites/default/files/files/ais.portal.gov.bd/page/0fd1e9d1_a532_4ebd_a38d_542efb9ac3ee/LBleaf2INIA_0.jpg");
+                        intent.putExtra("disease_name", "মড়ক রোগ");
+                        intent.putExtra("item_name", "আলু");
+                        intent.putExtra("image_url", "http://ais.portal.gov.bd/sites/default/files/files/ais.portal.gov.bd/page/0fd1e9d1_a532_4ebd_a38d_542efb9ac3ee/LBleaf2INIA_0.jpg");
                         startActivity(intent);
                     }
                 });
@@ -265,7 +320,9 @@ public class TestDiseaseFragment extends Fragment {
 
             default:
                 showNotError();
-        }
+
+
+        }*/
     }
 
     private void showError() {
@@ -308,6 +365,7 @@ public class TestDiseaseFragment extends Fragment {
                 //   Log.d(TAG, "External storage2");
                 if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     selectImage();
+
                 } else {
                     //     progress.dismiss();
                 }

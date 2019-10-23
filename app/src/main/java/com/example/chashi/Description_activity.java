@@ -60,13 +60,31 @@ public class Description_activity extends AppCompatActivity {
         button_List = new ArrayList<>();
         cardView = findViewById(R.id.buttons);
         blabla = findViewById(R.id.blabla);
+
+        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     @Override
     protected void onStart() {
         super.onStart();
 
-        Picasso.get().load(image_url).into(imageView);
+        if(image_url!=null){
+            Picasso.get().load(image_url).into(imageView);
+        }else{
+            databaseReference.child("item").child(item_name).child("disease").child(disease_name).child("disease_image_url").addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    String s=dataSnapshot.getValue(String.class);
+                    Picasso.get().load(s).into(imageView);
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+        }
+
 
 
         databaseReference.child("item").child(item_name).child("disease").child(disease_name).child("description").addValueEventListener(new ValueEventListener() {
@@ -80,6 +98,11 @@ public class Description_activity extends AppCompatActivity {
 
             }
         });
+
+
+
+
+
 
         databaseReference.child("item").child(item_name).child("disease").child(disease_name).addValueEventListener(new ValueEventListener() {
             @Override
@@ -117,6 +140,6 @@ public class Description_activity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        startActivity(intent_go_back);
+       // startActivity(intent_go_back);
     }
 }

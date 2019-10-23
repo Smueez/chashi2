@@ -18,4 +18,5 @@
     <string name="disease_agam_dhosha">আলুর আগাম ধ্বসা রোগ</string>
     <string name="disease_morok">আলুর মরক রোগ</string>
     <string name="disease_spot">মরিচের ব্যাক্টেরিয়াজনিত পাতায় দাগ</string>
+    <string name="healthy">healthy</string>
 </resources>
