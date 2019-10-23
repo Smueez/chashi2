@@ -11,31 +11,56 @@
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:orientation="vertical">
 
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="150dp"
             android:scaleType="centerCrop"
-            android:id="@+id/disease_pic"/>
+            android:id="@+id/disease_pic"
+            android:src="@color/colorAccent"/>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="end"
-            android:paddingRight="20dp"
             android:text=""
             android:textColor="@color/colorPrimaryDark"
-            android:textSize="30dp"
+            android:textSize="20dp"
             android:textStyle="bold"
-            android:id="@+id/headings"/>
+            android:id="@+id/headings" />
 
     </LinearLayout>
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="10dp"/>
 
+    <TextView
+        android:id="@+id/blabla"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:text="রোগের কীটনাষক সমূহ"
+        android:textColor="#545E9C"
+        android:textSize="20dp"
+        android:textStyle="bold" />
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_gravity="center"
+        android:id="@+id/buttons">
 
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/fertiliser"
+            android:listSelector="#A0A0A0"
+            android:choiceMode="singleChoice"
+            android:scrollbars="horizontal"
+            />
+
+    </androidx.cardview.widget.CardView>
     <ScrollView
         android:id="@+id/scrollView2"
         android:layout_width="match_parent"
@@ -56,4 +81,5 @@
 
 
     </ScrollView>
+
 </LinearLayout>
