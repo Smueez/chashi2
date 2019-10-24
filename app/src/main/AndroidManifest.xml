@@ -21,7 +21,7 @@
         <activity android:name=".PurchaseInfo"></activity>
         <activity android:name=".Purchase" />
         <activity android:name=".Login_activity" android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
-        <activity android:name=".Description_activity" />
+        <activity android:name=".Description_activity" android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity android:name=".Disease" />
 
         <activity android:name=".Product_category" />

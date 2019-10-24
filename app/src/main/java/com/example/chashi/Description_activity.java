@@ -85,8 +85,6 @@ public class Description_activity extends AppCompatActivity {
             });
         }
 
-
-
         databaseReference.child("item").child(item_name).child("disease").child(disease_name).child("description").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

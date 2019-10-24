@@ -1,6 +1,136 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="240dp"
+        android:layout_gravity="center"
+        android:gravity="center">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:background="@drawable/cover">
+
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/profile_image"
+                android:layout_width="199dp"
+                android:layout_height="199dp"
+                android:src="@drawable/propic"
+                app:civ_border_color="@color/colorAccent"
+                app:civ_border_width="2dp"
+                tools:layout_editor_absoluteX="106dp"
+                tools:layout_editor_absoluteY="64dp" />
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <Button
+                android:layout_width="199dp"
+                android:layout_height="199dp"
+                android:background="@android:color/transparent"
+                android:id="@+id/changepic"
+                android:text="ছবি বাছুন"
+                android:textSize="20dp"
+                android:textStyle="italic"/>
+
+        </LinearLayout>
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/upload_pic"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@android:color/transparent"
+        android:text="ছবি পরিবর্তন করুন"
+        android:textColor="#0023A0" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="মোঃ শীর্ষ মূঈয"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            android:textColor="@color/colorAccent"
+            android:layout_gravity="center"
+            android:id="@+id/person_name"
+            android:visibility="visible"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:id="@+id/edit_name_layout"
+            android:visibility="gone">
+            <EditText
+                android:layout_width="300dp"
+                android:layout_height="40dp"
+                android:textColor="@color/colorBack"
+                android:text=""
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:id="@+id/edit_name"
+                android:hint="নামে লিখুন"/>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:text="পরিবর্তন করুন"
+                android:background="@drawable/rounded_btn_trq"
+                android:id="@+id/change_name"/>
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="01623387246"
+            android:textColor="@color/colorAccent"
+            android:layout_gravity="center"
+            android:textSize="20dp"
+            android:id="@+id/phn_number"/>
+
+    </LinearLayout>
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="20dp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="বিগত ওর্ডার লিস্ট:"
+        android:textSize="20dp"
+        android:layout_gravity="center"/>
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="5dp"/>
+
+    <ListView
+        android:layout_width="370dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:id="@+id/order_history"
+        android:listSelector="#A0A0A0"
+        android:choiceMode="singleChoice"/>
 
 </LinearLayout>
