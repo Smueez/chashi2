@@ -142,6 +142,8 @@ public class ProfileFragment extends Fragment {
         });
     }
 
+
+
     private String getFileExtention(Uri imguri) {
         ContentResolver contentResolver = getActivity().getContentResolver();
         MimeTypeMap mimeTypeMap = MimeTypeMap.getSingleton();
