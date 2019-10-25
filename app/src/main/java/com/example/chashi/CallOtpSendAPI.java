@@ -1,6 +1,7 @@
 package com.example.chashi;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 
 import org.json.JSONException;
@@ -25,6 +26,7 @@ public class CallOtpSendAPI extends AsyncTask<String, String, DOBTransaction> {
 
         this.phnNo = phnNo;
         this.onOTPSent = onOTPSent;
+        this.amount=amount;
         //set context variables if required
     }
 
@@ -101,6 +103,7 @@ public class CallOtpSendAPI extends AsyncTask<String, String, DOBTransaction> {
 
             Response response2 = client2.newCall(request2).execute();
             String res2 = response2.body().string();
+         //   Log.d("hi22", "done");
             JSONObject userObject2 = new JSONObject(res2);
             if (userObject2.has("code")) {
                 String code = userObject.getString("code");
@@ -111,7 +114,7 @@ public class CallOtpSendAPI extends AsyncTask<String, String, DOBTransaction> {
             } else {
                 String time = userObject2.getJSONObject("accessInfo").getString("timestamp");
                 String OTPtranId = userObject2.getJSONObject("data").getString("otpTrasactionId");
-                //   Log.d("hi22-s2s3", s2+" "+s3);
+                   Log.d("hi22-s2s3", time+" "+OTPtranId);
                 return new DOBTransaction(OTPtranId, time, acToken); //s3=transaction, s2=time, s=bearer
             }
 
