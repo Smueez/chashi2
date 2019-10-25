@@ -40,6 +40,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.chashi.Disease;
+import com.example.chashi.FirebaseUtilClass;
 import com.example.chashi.LandingPage;
 import com.example.chashi.News;
 import com.example.chashi.News_adapter;
@@ -192,7 +193,7 @@ public class HomeFragment extends Fragment {
         findWeather();
 
 
-        databaseReference.child("news").addValueEventListener(new ValueEventListener() {
+        FirebaseUtilClass.getDatabaseReference().child("news").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 listView.setAdapter(null);

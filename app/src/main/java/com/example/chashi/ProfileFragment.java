@@ -110,7 +110,7 @@ public class ProfileFragment extends Fragment {
                             @Override
                             public void onSuccess(Uri uri) {
                                 download_uri = uri;
-                                databaseReference.child("profile").child(phon_no_str).child("image_url").setValue(download_uri.toString());
+                                FirebaseUtilClass.getDatabaseReference().child("profile").child(phon_no_str).child("image_url").setValue(download_uri.toString());
                                 Picasso.get().load(download_uri.toString()).into(imageView_propic);
 
                             }
@@ -132,7 +132,7 @@ public class ProfileFragment extends Fragment {
                 //edit name
                 String new_name = edit_name.getText().toString().trim();
                 if (!new_name.isEmpty()) {
-                    databaseReference.child("profile").child(phon_no_str).child("name").setValue(new_name);
+                    FirebaseUtilClass.getDatabaseReference().child("profile").child(phon_no_str).child("name").setValue(new_name);
                     linearLayout_edit.setVisibility(View.GONE);
                     textView_name.setVisibility(View.VISIBLE);
                 } else {
@@ -180,7 +180,7 @@ public class ProfileFragment extends Fragment {
             startActivity(intent);
             return;
         }
-        databaseReference.child("profile").child(phon_no_str).addValueEventListener(new ValueEventListener() {
+        FirebaseUtilClass.getDatabaseReference().child("profile").child(phon_no_str).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 img_url_str = dataSnapshot.child("image_url").getValue(String.class);
@@ -196,7 +196,7 @@ public class ProfileFragment extends Fragment {
 
             }
         });
-        databaseReference.child("profile").child(phon_no_str).child("personal_orders").addValueEventListener(new ValueEventListener() {
+        FirebaseUtilClass.getDatabaseReference().child("profile").child(phon_no_str).child("personal_orders").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 listView_orders.setAdapter(null);

@@ -282,12 +282,12 @@ public class Login_activity extends AppCompatActivity {
                             FirebaseUser user = task.getResult().getUser();
                             // [START_EXCLUDE]
                             // [END_EXCLUDE]
-                            databaseReference.child("profile").addValueEventListener(new ValueEventListener() {
+                            FirebaseUtilClass.getDatabaseReference().child("profile").addValueEventListener(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                     if (!dataSnapshot.hasChild(string_phone_no)) {
                                         ProfileClass profileClass = new ProfileClass("Anonymous", string_phone_no, "empty");
-                                        databaseReference.child("profile").child(string_phone_no).setValue(profileClass);
+                                        FirebaseUtilClass.getDatabaseReference().child("profile").child(string_phone_no).setValue(profileClass);
                                     }
 
                                 }

@@ -69,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onFinish() {
                         if(auth.getCurrentUser() == null) {
-                            startActivity(intent);
+                            startActivity(intent1);
                         }
                         else {
                             startActivity(intent1);

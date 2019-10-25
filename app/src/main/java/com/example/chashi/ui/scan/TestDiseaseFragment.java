@@ -126,8 +126,11 @@ public class TestDiseaseFragment extends Fragment {
 
 
         FirebaseLocalModel localModel = new FirebaseLocalModel.Builder("model")
-                .setAssetFilePath(cropName + "/manifest.json")
+                .setFilePath(file_dir_final + "/model.tflite")
                 .build();
+
+        Log.d("pathyy",file_dir_final);
+
         FirebaseModelManager.getInstance().
 
                 registerLocalModel(localModel);
@@ -159,7 +162,7 @@ public class TestDiseaseFragment extends Fragment {
         //download start....
         Log.d("ok", "download: 1");
         final ProgressDialog progressDialog = new ProgressDialog(getContext());
-        progressDialog.setTitle("Downloading..."+fileNameArr[0]);
+        progressDialog.setTitle("(১/৩) ডাউনলোড হচ্ছে...");
         progressDialog.show();
         //notificationDownload();
         File rootPath = new File(Environment.getExternalStorageDirectory(), "চাষি");
@@ -173,9 +176,7 @@ public class TestDiseaseFragment extends Fragment {
         if (!cropFile.exists()){
             cropFile.mkdir();
         }
-        /*else {
-            return;
-        }*/
+
         final File localFile = new File(cropFile,fileNameArr[0]);
 
 
@@ -189,7 +190,7 @@ public class TestDiseaseFragment extends Fragment {
                 Log.d("downloaded file", "onSuccess: downloaded! "+fileNameArr[0]);
                 Log.d("ok", "download: 1");
                 final ProgressDialog progressDialog = new ProgressDialog(getContext());
-                progressDialog.setTitle("Downloading..."+fileNameArr[1]);
+                progressDialog.setTitle("(২/৩) ডাউনলোড হচ্ছে...");
                 progressDialog.show();
                 //notificationDownload();
                 /*File rootPath = new File(Environment.getExternalStorageDirectory(), "চাষি");
@@ -218,7 +219,7 @@ public class TestDiseaseFragment extends Fragment {
                         Log.d("downloaded file", "onSuccess: downloaded! "+fileNameArr[1]);
                         Log.d("ok", "download: 1");
                         final ProgressDialog progressDialog = new ProgressDialog(getContext());
-                        progressDialog.setTitle("Downloading..."+fileNameArr[2]);
+                        progressDialog.setTitle("(৩/৩) ডাউনলোড হচ্ছে... ");
                         progressDialog.show();
                         //notificationDownload();
                         /*File rootPath = new File(Environment.getExternalStorageDirectory(), "চাষি");

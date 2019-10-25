@@ -4,14 +4,22 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
+
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -31,14 +39,21 @@ import java.util.List;
 
 public class Description_activity extends AppCompatActivity {
 
-    String image_url,item_name,disease_name;
+    String image_url, item_name, disease_name;
     ImageView imageView;
-    TextView textView_headings,textView_description,blabla;
+    TextView textView_headings, textView_description, blabla;
     DatabaseReference databaseReference;
     Intent intent_go_back;
-    ListView listView_buttons;
-    List<Disease_item> button_List;
+
+
+
     CardView cardView;
+
+
+
+    private RecyclerView inventoryItemRecyclerView;
+    private List<Product_item> itemList = new ArrayList<>();
+    private InsecticideAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,28 +68,52 @@ public class Description_activity extends AppCompatActivity {
         textView_description = findViewById(R.id.description_text);
         textView_headings = findViewById(R.id.headings);
 
-        textView_headings.setText(item_name+" এর "+ disease_name +" রোগ");
+        textView_headings.setText(item_name + " এর " + disease_name + " রোগ");
         databaseReference = FirebaseDatabase.getInstance().getReference();
-        intent_go_back = new Intent(this,Disease.class);
-        listView_buttons = findViewById(R.id.fertiliser);
-        button_List = new ArrayList<>();
+        intent_go_back = new Intent(this, Disease.class);
+    //    listView_buttons = findViewById(R.id.fertiliser);
+     //   button_List = new ArrayList<>();
         cardView = findViewById(R.id.buttons);
         blabla = findViewById(R.id.blabla);
 
+
+
+
+
+     //   insecticideAdapter=new InsecticideAdapter(button_List);
+
+     //   LinearLayoutManager mLayoutManager = new LinearLayoutManager(this);
+     //   mLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+     //   listView_buttons.setLayoutManager(mLayoutManager);
+
+    //    listView_buttons.setAdapter(insecticideAdapter);
         //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+initializeRecyclerView();
+
     }
 
+    private void initializeRecyclerView() {
+        inventoryItemRecyclerView = findViewById(R.id.fertiliser);
+
+        mAdapter = new InsecticideAdapter(itemList, this);
+        LinearLayoutManager mLayoutManager = new LinearLayoutManager(this);
+        mLayoutManager.setOrientation(RecyclerView.HORIZONTAL);
+        inventoryItemRecyclerView.setLayoutManager(mLayoutManager);
+        inventoryItemRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        inventoryItemRecyclerView.setAdapter(mAdapter);
+    }
     @Override
     protected void onStart() {
         super.onStart();
 
-        if(image_url!=null){
+        if (image_url != null) {
             Picasso.get().load(image_url).into(imageView);
-        }else{
-            databaseReference.child("item").child(item_name).child("disease").child(disease_name).child("disease_image_url").addListenerForSingleValueEvent(new ValueEventListener() {
+        } else {
+            FirebaseUtilClass.getDatabaseReference().child("item").child(item_name).child("disease").child(disease_name).child("disease_image_url").addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    String s=dataSnapshot.getValue(String.class);
+                    String s = dataSnapshot.getValue(String.class);
                     Picasso.get().load(s).into(imageView);
                 }
 
@@ -84,7 +123,6 @@ public class Description_activity extends AppCompatActivity {
                 }
             });
         }
-
 
 
         FirebaseUtilClass.getDatabaseReference().child("item").child(item_name).child("disease").child(disease_name).child("description").addValueEventListener(new ValueEventListener() {
@@ -100,24 +138,45 @@ public class Description_activity extends AppCompatActivity {
         });
 
 
+//01311830024
 
-
-
-
-        FirebaseUtilClass.getDatabaseReference().child("item").child(item_name).child("disease").child(disease_name).addValueEventListener(new ValueEventListener() {
+        FirebaseUtilClass.getDatabaseReference().child("item").child(item_name).child("disease").child(disease_name).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                listView_buttons.setAdapter(null);
-                button_List.clear();
-                if (dataSnapshot.hasChild("fertiliser")){
-                    for (DataSnapshot ds : dataSnapshot.child("fertiliser").getChildren()){
-                        Disease_item diseaseItem = ds.getValue(Disease_item.class);
-                        button_List.add(diseaseItem);
+
+
+                if (dataSnapshot.hasChild("fertiliser")) {
+                    for (DataSnapshot ds : dataSnapshot.child("fertiliser").getChildren()) {
+                        String str = ds.getKey();
+                        Log.d("gg33-fer",str);
+                        FirebaseUtilClass.getDatabaseReference().child("Products").child("বীজ").child("আলু").child(str).addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                Product_item p = dataSnapshot.getValue(Product_item.class);
+                                if(p!=null){
+                                    Log.d("gg33-pro",p.getName());
+                                    itemList.add(p);
+
+
+                                    mAdapter.notifyDataSetChanged();
+
+                                  //  Log.d("gg33-sz",String.valueOf(insecticideAdapter.getItemCount()));
+                                }else {
+                                    Log.d("gg33-pro","null");
+                                }
+
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                            }
+                        });
+                        //button_List.add(str);
                     }
-                    Disease_item_adapter diseaseItemAdapter = new Disease_item_adapter(Description_activity.this,button_List);
-                    listView_buttons.setAdapter(diseaseItemAdapter);
-                }
-                else {
+                  //  Disease_item_adapter diseaseItemAdapter = new Disease_item_adapter(Description_activity.this, button_List);
+                    //listView_buttons.setAdapter(diseaseItemAdapter);
+                } else {
                     cardView.setVisibility(View.GONE);
                     blabla.setVisibility(View.GONE);
                 }
@@ -128,18 +187,13 @@ public class Description_activity extends AppCompatActivity {
 
             }
         });
-        listView_buttons.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                // item clicked function
-            }
-        });
+
 
     }
 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-       // startActivity(intent_go_back);
+        // startActivity(intent_go_back);
     }
 }
