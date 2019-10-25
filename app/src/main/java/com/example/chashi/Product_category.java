@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -71,6 +72,7 @@ public class Product_category extends AppCompatActivity {
         expandableLayout.addSection(getSection());*/
 
         readDataFromFirebase();
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     private void readDataFromFirebase() {
@@ -125,6 +127,17 @@ public class Product_category extends AppCompatActivity {
 
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
     private Section<SubCatagory,Product_item> getSection(){
         Section<SubCatagory,Product_item> section = new Section<>();
         SubCatagory subCatagory = new SubCatagory("ধান",R.drawable.ic_wheat);
@@ -148,4 +161,6 @@ public class Product_category extends AppCompatActivity {
         categoryRecyclerView.setItemAnimator(new DefaultItemAnimator());
         categoryRecyclerView.setAdapter(mAdapter);
     }
+
+
 }

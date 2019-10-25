@@ -46,9 +46,7 @@ public class Description_activity extends AppCompatActivity {
     Intent intent_go_back;
 
 
-
     CardView cardView;
-
 
 
     private RecyclerView inventoryItemRecyclerView;
@@ -71,25 +69,22 @@ public class Description_activity extends AppCompatActivity {
         textView_headings.setText(item_name + " এর " + disease_name + " রোগ");
         databaseReference = FirebaseDatabase.getInstance().getReference();
         intent_go_back = new Intent(this, Disease.class);
-    //    listView_buttons = findViewById(R.id.fertiliser);
-     //   button_List = new ArrayList<>();
+        //    listView_buttons = findViewById(R.id.fertiliser);
+        //   button_List = new ArrayList<>();
         cardView = findViewById(R.id.buttons);
         blabla = findViewById(R.id.blabla);
 
 
+        //   insecticideAdapter=new InsecticideAdapter(button_List);
 
+        //   LinearLayoutManager mLayoutManager = new LinearLayoutManager(this);
+        //   mLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        //   listView_buttons.setLayoutManager(mLayoutManager);
 
-
-     //   insecticideAdapter=new InsecticideAdapter(button_List);
-
-     //   LinearLayoutManager mLayoutManager = new LinearLayoutManager(this);
-     //   mLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
-     //   listView_buttons.setLayoutManager(mLayoutManager);
-
-    //    listView_buttons.setAdapter(insecticideAdapter);
+        //    listView_buttons.setAdapter(insecticideAdapter);
         //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-initializeRecyclerView();
+        initializeRecyclerView();
 
     }
 
@@ -103,6 +98,7 @@ initializeRecyclerView();
         inventoryItemRecyclerView.setItemAnimator(new DefaultItemAnimator());
         inventoryItemRecyclerView.setAdapter(mAdapter);
     }
+
     @Override
     protected void onStart() {
         super.onStart();
@@ -144,26 +140,34 @@ initializeRecyclerView();
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-
+                itemList.clear();
                 if (dataSnapshot.hasChild("fertiliser")) {
                     for (DataSnapshot ds : dataSnapshot.child("fertiliser").getChildren()) {
-                        String str = ds.getKey();
-                        Log.d("gg33-fer",str);
-                        FirebaseUtilClass.getDatabaseReference().child("Products").child("বীজ").child("আলু").child(str).addListenerForSingleValueEvent(new ValueEventListener() {
+                        final String str = ds.getKey();
+                        Log.d("gg33-fer", str);
+                        FirebaseUtilClass.getDatabaseReference().child("Products").child("কীটনাশক").addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                Product_item p = dataSnapshot.getValue(Product_item.class);
-                                if(p!=null){
-                                    Log.d("gg33-pro",p.getName());
-                                    itemList.add(p);
+                                for(DataSnapshot dsp: dataSnapshot.getChildren()){
+                                    for(DataSnapshot dsp2: dsp.getChildren()){
+                                        String k=dsp2.getKey();
+                                        if(k.equals(str)){
+                                            Product_item p = dsp2.getValue(Product_item.class);
+                                            if (p != null) {
+                                                Log.d("gg33-pro", p.getName());
+                                                itemList.add(p);
 
 
-                                    mAdapter.notifyDataSetChanged();
+                                                mAdapter.notifyDataSetChanged();
 
-                                  //  Log.d("gg33-sz",String.valueOf(insecticideAdapter.getItemCount()));
-                                }else {
-                                    Log.d("gg33-pro","null");
+                                                //  Log.d("gg33-sz",String.valueOf(insecticideAdapter.getItemCount()));
+                                            } else {
+                                                Log.d("gg33-pro", "null");
+                                            }
+                                        }
+                                    }
                                 }
+
 
                             }
 
@@ -174,7 +178,7 @@ initializeRecyclerView();
                         });
                         //button_List.add(str);
                     }
-                  //  Disease_item_adapter diseaseItemAdapter = new Disease_item_adapter(Description_activity.this, button_List);
+                    //  Disease_item_adapter diseaseItemAdapter = new Disease_item_adapter(Description_activity.this, button_List);
                     //listView_buttons.setAdapter(diseaseItemAdapter);
                 } else {
                     cardView.setVisibility(View.GONE);

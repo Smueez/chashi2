@@ -3,6 +3,7 @@ package com.example.chashi;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,6 +38,7 @@ public class InsecticideAdapter extends RecyclerView.Adapter<InsecticideAdapter.
             codeTextView = view.findViewById(R.id.insecticideName);
             inMachineTextView = view.findViewById(R.id.amount);
             img=view.findViewById(R.id.img);
+            parent=view.findViewById(R.id.parent);
 
             //     parent=view.findViewById(R.id.dataContainer);
         }
@@ -72,6 +74,15 @@ public class InsecticideAdapter extends RecyclerView.Adapter<InsecticideAdapter.
         holder.codeTextView.setText(item.getName());
         holder.inMachineTextView.setText(String.valueOf(item.getPrice()));
         Picasso.get().load(item.getImage()).into(holder.img);
+
+        holder.parent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context,Purchase.class);
+                intent.putExtra("itemData",item);
+                context.startActivity(intent);
+            }
+        });
 
         holder.setItem(item);
     }

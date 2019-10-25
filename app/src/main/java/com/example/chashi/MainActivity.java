@@ -70,9 +70,11 @@ public class MainActivity extends AppCompatActivity {
                     public void onFinish() {
                         if(auth.getCurrentUser() == null) {
                             startActivity(intent1);
+                            finish();
                         }
                         else {
                             startActivity(intent1);
+                            finish();
                         }
 
                       // startActivity(intent);

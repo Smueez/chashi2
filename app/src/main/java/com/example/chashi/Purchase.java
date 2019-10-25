@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -52,7 +53,7 @@ public class Purchase extends AppCompatActivity {
                 tryWriteData();
             }
         });
-
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     private void tryWriteData(){
@@ -74,4 +75,16 @@ public class Purchase extends AppCompatActivity {
             this.startActivity(intent);
         }
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
 }
