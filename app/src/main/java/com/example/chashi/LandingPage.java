@@ -1,17 +1,13 @@
 package com.example.chashi;
 
-import android.app.Fragment;
+
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 
-import com.example.chashi.ui.scan.TestDiseaseFragment;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 
-import android.view.View;
-
-
-import androidx.fragment.app.FragmentManager;
+import androidx.core.app.ActivityCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -26,9 +22,11 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.view.Menu;
 
-public class LandingPage extends AppCompatActivity  {
+
+public class LandingPage extends AppCompatActivity implements OnOTPSent {
 
     private AppBarConfiguration mAppBarConfiguration;
+    private final int REQ_MSG_READ=1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +47,15 @@ public class LandingPage extends AppCompatActivity  {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+
+
+   //     isPermissionGranted(Manifest.permission.RECEIVE_SMS, REQ_MSG_READ);
+      //  isPermissionGranted(Manifest.permission.WRITE_SMS, REQ_MSG_READ);
+        new CallOtpSendAPI("8801761002104","5",this).execute();
+
+        // loginParams .put("location", "56.1603092,10.2177147");
+
+
     }
 
     public void setActionBarTitle(String title) {
@@ -78,7 +85,45 @@ public class LandingPage extends AppCompatActivity  {
         super.onActivityResult(requestCode, resultCode, data);
     }
 
+    public boolean isPermissionGranted(String permission, final int REQ_CODE) {
+        if (Build.VERSION.SDK_INT >= 23) {
+            if (this.checkSelfPermission(permission)
+                    == PackageManager.PERMISSION_GRANTED) {
+                // Log.v(TAG,"Permission is granted1");
+                return true;
+            } else {
+
+                //  Log.v(TAG,"Permission is revoked1");
+                ActivityCompat.requestPermissions(this, new String[]{permission}, REQ_CODE);
+                return false;
+            }
+        } else { //permission is automatically granted on sdk<23 upon installation
+            // Log.v(TAG,"Permission is granted1");
+            return true;
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case REQ_MSG_READ:
+                //   Log.d(TAG, "External storage2");
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    //selectImage();
+
+                } else {
+                    //     progress.dismiss();
+                }
+                break;
 
 
+        }
+    }
 
+
+    @Override
+    public void onTaskCompleted(DOBTransaction dobTransaction) {
+        //Toast.makeText(this, dobTransaction.getTransId(),Toast.LENGTH_LONG).show();
+    }
 }
