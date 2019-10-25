@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,6 +35,10 @@ import com.squareup.picasso.Picasso;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import de.hdodenhof.circleimageview.CircleImageView;
 
 import static android.app.Activity.RESULT_OK;
@@ -58,10 +63,14 @@ public class ProfileFragment extends Fragment {
     Uri uri, download_uri;
     FirebaseAuth auth;
     FirebaseUser user;
+    ListView listView_orders;
+    List<Order_list> orderLists;
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        orderLists = new ArrayList<>();
+        listView_orders = view.findViewById(R.id.order_history);
         button_changePic = view.findViewById(R.id.changepic);
         imageView_propic = view.findViewById(R.id.profile_image);
         textView_name = view.findViewById(R.id.person_name);
@@ -75,8 +84,15 @@ public class ProfileFragment extends Fragment {
         databaseReference = FirebaseDatabase.getInstance().getReference();
         auth = FirebaseAuth.getInstance();
         user = auth.getCurrentUser();
-        phon_no_str = user.getPhoneNumber();
-
+        if (user != null) {
+            phon_no_str = user.getPhoneNumber();
+        }
+        else {
+            Toast.makeText(getContext(),"Log in first",Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(getContext(),Login_activity.class);
+            startActivity(intent);
+            return;
+        }
         textView_phn.setText(phon_no_str);
 
 
@@ -94,6 +110,8 @@ public class ProfileFragment extends Fragment {
                             @Override
                             public void onSuccess(Uri uri) {
                                 download_uri = uri;
+                                databaseReference.child("profile").child(phon_no_str).child("image_url").setValue(download_uri.toString());
+                                Picasso.get().load(download_uri.toString()).into(imageView_propic);
 
                             }
                         });
@@ -153,7 +171,15 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-
+        if (user != null) {
+            phon_no_str = user.getPhoneNumber();
+        }
+        else {
+            Toast.makeText(getContext(),"Log in first",Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(getContext(),Login_activity.class);
+            startActivity(intent);
+            return;
+        }
         databaseReference.child("profile").child(phon_no_str).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -163,6 +189,24 @@ public class ProfileFragment extends Fragment {
                 textView_name.setText(name_str);
                 edit_name.setText(name_str);
                 Picasso.get().load(img_url_str).into(imageView_propic);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+        databaseReference.child("profile").child(phon_no_str).child("personal_orders").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                listView_orders.setAdapter(null);
+                orderLists.clear();
+               for (DataSnapshot ds : dataSnapshot.getChildren()){
+                   Order_list order_list = ds.getValue(Order_list.class);
+                   orderLists.add(order_list);
+               }
+               Order_list_adapter orderListAdapter = new Order_list_adapter(getActivity(),orderLists);
+               listView_orders.setAdapter(orderListAdapter);
             }
 
             @Override

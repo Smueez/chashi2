@@ -2,27 +2,36 @@ package com.example.chashi.ui.home;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
+import android.icu.text.SimpleDateFormat;
+import android.icu.util.Calendar;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
+import androidx.viewpager.widget.ViewPager;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -55,31 +64,35 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.Executor;
 
 public class HomeFragment extends Fragment {
 
+    Dialog dialog_news,dialog_weather;
     private HomeViewModel homeViewModel;
     protected static final int REQUEST_CHECK_SETTINGS = 0x1;
     private FusedLocationProviderClient fusedLocationClient;
     double lattitude;
     double longitude;
-    ListView listView;
+    ViewPager listView;
     List<News> newsList;
     DatabaseReference databaseReference;
     private TextView txt_temp_min, txt_temp_max, txt_humidity;
     private LinearLayout linearLayout_product, linearLayout_disease;
     int position_item = -1;
     String news_link, news_heading, news_description;
-
-
+    Button button_news,button_weather;
+    TextView textView_date;
+    ImageView imageView_weather;
     private LinearLayout linearLayout_scan, linearLayout_forum;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -99,8 +112,10 @@ public class HomeFragment extends Fragment {
     }
 
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-
+    public void onViewCreated(@NonNull final View view, @Nullable Bundle savedInstanceState) {
+        dialog_news = new Dialog(getActivity());
+        textView_date = view.findViewById(R.id.date);
+        imageView_weather = view.findViewById(R.id.weather_icon);
         txt_temp_min = (TextView) view.findViewById(R.id.temp_min);
         txt_temp_max = (TextView) view.findViewById(R.id.temp_max);
         txt_humidity = (TextView) view.findViewById(R.id.humidity);
@@ -186,8 +201,9 @@ public class HomeFragment extends Fragment {
                     News news = ds.getValue(News.class);
                     newsList.add(news);
                 }
-                News_adapter news_adapter = new News_adapter(getActivity(), newsList);
+                News_adapter news_adapter = new News_adapter(getContext(), newsList);
                 listView.setAdapter(news_adapter);
+
 
             }
 
@@ -197,13 +213,56 @@ public class HomeFragment extends Fragment {
             }
         });
 
+        button_news = view.findViewById(R.id.subcription_new);
+        button_weather = view.findViewById(R.id.subcription_weather);
+
+        button_news.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //news subscription button action
+                dialog_news.setContentView(R.layout.pop_ups_news);
+                dialog_news.show();
+                TextView textView;
+                ImageView button_hide_news_popup;
+                button_hide_news_popup = dialog_news.findViewById(R.id.hide_news_popup);
+                textView = dialog_news.findViewById(R.id.news_pop_text);
+                textView.setText("this is a news pop up");
+                button_hide_news_popup.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog_news.dismiss();
+                    }
+                });
+            }
+        });
+
+        final Dialog dialog_weather = new Dialog(getContext());
+        button_weather.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog_weather.setContentView(R.layout.pop_ups_news);
+                dialog_weather.show();
+                TextView textView;
+                ImageView button_hide_weather_popup;
+                button_hide_weather_popup = dialog_news.findViewById(R.id.hide_weather_popup);
+                textView = dialog_weather.findViewById(R.id.weather_pop_text);
+                textView.setText("this is a weather pop up");
+                button_hide_weather_popup.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog_weather.dismiss();
+                    }
+                });
+            }
+        });
+
         super.onViewCreated(view, savedInstanceState);
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        /*listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 if (position_item == -1) {
@@ -217,12 +276,19 @@ public class HomeFragment extends Fragment {
 
                 startActivity(httpIntent);
             }
-        });
+        });*/
+
     }
 
+    String TAG = "home activity";
+    @RequiresApi(api = Build.VERSION_CODES.N)
     private void findWeather() {
 
+        Date c = Calendar.getInstance().getTime();
 
+        SimpleDateFormat df = new SimpleDateFormat("dd MMM");
+        final String formattedDate = df.format(c);
+        Log.d(TAG, "findWeather: "+formattedDate);
         String url = "https://api.openweathermap.org/data/2.5/weather?lat=" + lattitude + "&lon=" + longitude + "&appid=8eded5f15907ac059aebe4f4faeeef9a&units=imperial";
         JsonObjectRequest jobj = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
@@ -230,23 +296,27 @@ public class HomeFragment extends Fragment {
                 try {
                     JSONObject mainObject = response.getJSONObject("main");
                     JSONArray jsonArray = response.getJSONArray("weather");
+                    JSONArray jsonArray_date = response.getJSONArray("date");
                     JSONObject object = jsonArray.getJSONObject(0);
                     String temp_min = String.valueOf(mainObject.getDouble("temp_min"));
                     String temp_max = String.valueOf(mainObject.getDouble("temp_max"));
                     String humidity = String.valueOf(mainObject.getDouble("humidity"));
                     String description = object.getString("description");
                     String city = response.getString("name");
-
+                    String icon = response.getString("icon");
+                    String icon_url = "http://api.openweathermap.org/img/wn/"+icon+"@2x.png";
+                    Log.d(TAG, "onResponse: "+icon_url);
+                    Picasso.get().load(icon_url).into(imageView_weather);
                     double temp_min_int = Double.parseDouble(temp_min);
                     double centi = (temp_min_int - 32) / 1.8;
                     centi = Math.round(centi);
                     txt_temp_min.setText(String.valueOf(centi));
-
+                    textView_date.setText("১০ কার্তিক । "+formattedDate);
                     double temp_max_int = Double.parseDouble(temp_max);
-                    centi = (temp_min_int - 32) / 1.8;
+                    centi = (temp_max_int - 32) / 1.8;
                     centi = Math.round(centi);
                     txt_temp_max.setText(String.valueOf(centi));
-                    txt_humidity.setText(humidity);
+                    txt_humidity.setText(humidity+'%');
                     //Toast.makeText(getContext(), "hocche", Toast.LENGTH_LONG).show();
 
                 } catch (JSONException e) {

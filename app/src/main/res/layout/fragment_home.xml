@@ -7,7 +7,7 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:fillViewport="true">
         <LinearLayout
             android:layout_width="match_parent"
@@ -36,8 +36,8 @@
                             <ImageView
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:src="@drawable/ic_sunny"
-                                />
+                                android:src="@drawable/ic_storm"
+                                android:id="@+id/weather_icon"/>
                         </LinearLayout>
                         <LinearLayout
                             android:layout_width="0dp"
@@ -56,7 +56,8 @@
                                     <TextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="২৩ ভাদ্র। 7 september"/>
+                                        android:text="১০ কার্তিক । 25 October "
+                                        android:id="@+id/date"/>
                                 </LinearLayout>
                                 <LinearLayout
                                     android:layout_width="match_parent"
@@ -75,7 +76,7 @@
                                         <TextView
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
-                                            android:text="৩০"
+                                            android:text="২২"
                                             android:id="@+id/temp_min"/>
 
                                     </LinearLayout>
@@ -92,7 +93,7 @@
                                         <TextView
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
-                                            android:text="৩০"
+                                            android:text="২৬"
                                             android:id="@+id/temp_max"/>
 
                                     </LinearLayout>
@@ -109,7 +110,7 @@
                                         <TextView
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
-                                            android:text="৩০"
+                                            android:text="৮৯%"
                                             android:id="@+id/humidity"/>
 
                                     </LinearLayout>
@@ -275,7 +276,7 @@
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:paddingStart="10dp"
                 android:paddingEnd="10dp"
                 android:orientation="vertical">
@@ -285,7 +286,7 @@
                     android:text="কৃষি সংবাদ"
                     android:paddingLeft="40dp"
                     android:textSize="22sp"/>
-                <ListView
+                <androidx.viewpager.widget.ViewPager
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="top"
@@ -294,7 +295,40 @@
                     android:id="@+id/news_view"
                     android:choiceMode="singleChoice"/>
             </LinearLayout>
-
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_gravity="center">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_gravity="center">
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="মোবাইলে কৃষি টিপস পেতে ক্লিক করুন"
+                        android:id="@+id/subcription_new"
+                        android:background="@android:color/transparent"
+                        android:textColor="@android:color/holo_red_dark"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:layout_weight="1"
+                        android:textSize="18dp"/>
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="মোবাইলে আবহাওয়া পেতে ক্লিক করুন"
+                        android:id="@+id/subcription_weather"
+                        android:background="@android:color/transparent"
+                        android:textColor="@android:color/holo_red_dark"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:layout_weight="1"
+                        android:textSize="18dp"/>
+                </LinearLayout>
+            </LinearLayout>
         </LinearLayout>
     </ScrollView>
 

@@ -306,4 +306,8 @@ public class Login_activity extends AppCompatActivity {
                     }
                 });
     }
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
 }
