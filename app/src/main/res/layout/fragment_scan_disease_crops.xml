@@ -2,5 +2,32 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingLeft="30dp"
+        android:paddingRight="30dp">
 
+
+
+        <TextView
+            android:id="@+id/highlight"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="ফসল বাছুনঃ"
+            android:textSize="30dp"
+            android:textColor="#155819"/>
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="15dp"/>
+
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/item_recycleView"
+            android:listSelector="#A0A0A0"
+            android:choiceMode="singleChoice"/>
+
+    </LinearLayout>
 </LinearLayout>

@@ -36,6 +36,7 @@ import com.example.chashi.News;
 import com.example.chashi.News_adapter;
 import com.example.chashi.PurchaseInfo;
 import com.example.chashi.R;
+import com.example.chashi.ScanDiseaseCropsFragment;
 import com.example.chashi.ui.forums.ForumFragment;
 import com.example.chashi.ui.gallery.GalleryFragment;
 import com.example.chashi.ui.scan.TestDiseaseFragment;
@@ -73,13 +74,13 @@ public class HomeFragment extends Fragment {
     ListView listView;
     List<News> newsList;
     DatabaseReference databaseReference;
-    private TextView txt_temp_min,txt_temp_max,txt_humidity;
-    private LinearLayout linearLayout_product,linearLayout_disease;
+    private TextView txt_temp_min, txt_temp_max, txt_humidity;
+    private LinearLayout linearLayout_product, linearLayout_disease;
     int position_item = -1;
-    String news_link,news_heading,news_description;
+    String news_link, news_heading, news_description;
 
 
-    private LinearLayout  linearLayout_scan, linearLayout_forum;
+    private LinearLayout linearLayout_scan, linearLayout_forum;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -106,11 +107,11 @@ public class HomeFragment extends Fragment {
         listView = view.findViewById(R.id.news_view);
         newsList = new ArrayList<>();
         databaseReference = FirebaseDatabase.getInstance().getReference();
-        txt_temp_min = (TextView)view.findViewById(R.id.temp_min);
-        txt_temp_max = (TextView)view.findViewById(R.id.temp_max);
-        txt_humidity = (TextView)view.findViewById(R.id.humidity);
+        txt_temp_min = (TextView) view.findViewById(R.id.temp_min);
+        txt_temp_max = (TextView) view.findViewById(R.id.temp_max);
+        txt_humidity = (TextView) view.findViewById(R.id.humidity);
         linearLayout_product = view.findViewById(R.id.product_btn);
-        linearLayout_forum=view.findViewById(R.id.forum_btn);
+        linearLayout_forum = view.findViewById(R.id.forum_btn);
         linearLayout_scan = view.findViewById(R.id.diseaseCheck_btn);
         linearLayout_disease = view.findViewById(R.id.disease_btn);
         linearLayout_product.setOnClickListener(new View.OnClickListener() {
@@ -134,7 +135,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 // Create new fragment and transaction
-                Fragment newFragment = new TestDiseaseFragment();
+                Fragment newFragment = new ScanDiseaseCropsFragment();
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
 
                 // Replace whatever is in the fragment_container view with this fragment,
@@ -181,11 +182,11 @@ public class HomeFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 listView.setAdapter(null);
                 newsList.clear();
-                for (DataSnapshot ds : dataSnapshot.getChildren()){
+                for (DataSnapshot ds : dataSnapshot.getChildren()) {
                     News news = ds.getValue(News.class);
                     newsList.add(news);
                 }
-                News_adapter news_adapter = new News_adapter(getActivity(),newsList);
+                News_adapter news_adapter = new News_adapter(getActivity(), newsList);
                 listView.setAdapter(news_adapter);
 
             }
@@ -205,10 +206,9 @@ public class HomeFragment extends Fragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                if (position_item == -1){
+                if (position_item == -1) {
                     position_item = i;
-                }
-                else {
+                } else {
                     return;
                 }
                 news_link = newsList.get(i).getLinks();

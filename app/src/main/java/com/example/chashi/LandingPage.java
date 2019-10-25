@@ -55,6 +55,10 @@ public class LandingPage extends AppCompatActivity  {
         getSupportActionBar().setTitle(title);
     }
 
+    public void setTitleActivity(String text){
+        getSupportActionBar().setTitle(text);
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -73,6 +77,8 @@ public class LandingPage extends AppCompatActivity  {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
     }
+
+
 
 
 }

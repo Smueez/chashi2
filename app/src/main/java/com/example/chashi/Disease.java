@@ -29,7 +29,7 @@ public class Disease extends AppCompatActivity {
     List<Item_list> item_lists;
     List<Disease_list> disease_lists;
     DatabaseReference databaseReference;
-    String TAG = "disease page ",item_name,disease_name,image_url_selected;
+    String TAG = "disease page ", item_name, disease_name, image_url_selected;
     boolean item_tabbed = true;
     TextView textView_highlight;
     Intent intent;
@@ -43,52 +43,55 @@ public class Disease extends AppCompatActivity {
         recyclerView = findViewById(R.id.item_recycleView);
         item_lists = new ArrayList<>();
         disease_lists = new ArrayList<>();
-        intent = new Intent(this,Description_activity.class);
+        intent = new Intent(this, Description_activity.class);
         databaseReference = FirebaseDatabase.getInstance().getReference();
         item_list_function();
     }
-    public void item_list_function(){
+
+    public void item_list_function() {
         recyclerView.setAdapter(null);
         item_lists.clear();
-        databaseReference.child("item").addValueEventListener(new ValueEventListener() {
+        FirebaseUtilClass.getDatabaseReference().child("item").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot ds : dataSnapshot.getChildren()){
+                for (DataSnapshot ds : dataSnapshot.getChildren()) {
                     Item_list itemList = ds.getValue(Item_list.class);
                     item_lists.add(itemList);
                 }
 
-                Item_list_adapter item_list_adapter = new Item_list_adapter(Disease.this,item_lists);
+                Item_list_adapter item_list_adapter = new Item_list_adapter(Disease.this, item_lists);
                 recyclerView.setAdapter(item_list_adapter);
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(getApplicationContext(),"Something went wrong!",Toast.LENGTH_SHORT).show();
-                Log.d(TAG, "onCancelled: "+databaseError.getMessage());
+                Toast.makeText(getApplicationContext(), "Something went wrong!", Toast.LENGTH_SHORT).show();
+                Log.d(TAG, "onCancelled: " + databaseError.getMessage());
             }
         });
     }
-    public void disease_list_function(String item_name_selected){
+
+    public void disease_list_function(String item_name_selected) {
         recyclerView.setAdapter(null);
         item_lists.clear();
         disease_lists.clear();
-        Log.d(TAG, "disease_list_function: "+item_name_selected);;
-        databaseReference.child("item").child(item_name_selected).child("disease").addValueEventListener(new ValueEventListener() {
+        Log.d(TAG, "disease_list_function: " + item_name_selected);
+        ;
+        FirebaseUtilClass.getDatabaseReference().child("item").child(item_name_selected).child("disease").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot ds : dataSnapshot.getChildren()){
+                for (DataSnapshot ds : dataSnapshot.getChildren()) {
                     Disease_list diseaseList = ds.getValue(Disease_list.class);
                     disease_lists.add(diseaseList);
                 }
-                Disease_list_adapter disease_list_adapter = new Disease_list_adapter(Disease.this,disease_lists);
+                Disease_list_adapter disease_list_adapter = new Disease_list_adapter(Disease.this, disease_lists);
                 recyclerView.setAdapter(disease_list_adapter);
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(getApplicationContext(),"Something went wrong!",Toast.LENGTH_SHORT).show();
-                Log.d(TAG, "onCancelled: "+databaseError.getMessage());
+                Toast.makeText(getApplicationContext(), "Something went wrong!", Toast.LENGTH_SHORT).show();
+                Log.d(TAG, "onCancelled: " + databaseError.getMessage());
             }
         });
     }
@@ -100,24 +103,23 @@ public class Disease extends AppCompatActivity {
         recyclerView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                if (item_tabbed){
+                if (item_tabbed) {
 
 
                     item_name = item_lists.get(i).getName();
                     //image_url_selected= item_lists.get(i).getImage_url();
-                    Log.d(TAG, "onItemClick: "+item_name);
-                    textView_highlight.setText(item_name+" এর রোগ");
+                    Log.d(TAG, "onItemClick: " + item_name);
+                    textView_highlight.setText(item_name + " এর রোগ");
                     disease_list_function(item_name);
                     item_tabbed = false;
 
-                }
-                else {
+                } else {
 
                     disease_name = disease_lists.get(i).getDisease_name();
-                    image_url_selected= disease_lists.get(i).getDisease_image_url();
-                    intent.putExtra("disease_name",disease_name);
-                    intent.putExtra("item_name",item_name);
-                    intent.putExtra("image_url",image_url_selected);
+                    image_url_selected = disease_lists.get(i).getDisease_image_url();
+                    intent.putExtra("disease_name", disease_name);
+                    intent.putExtra("item_name", item_name);
+                    intent.putExtra("image_url", image_url_selected);
                     startActivity(intent);
 
                 }
@@ -125,18 +127,17 @@ public class Disease extends AppCompatActivity {
         });
 
     }
-
+/*
     @Override
     public void onBackPressed() {
-        if (!item_tabbed){
+        if (!item_tabbed) {
             item_tabbed = true;
-            Intent intent_back = new Intent(this,Disease.class);
+            Intent intent_back = new Intent(this, Disease.class);
             startActivity(intent_back);
-        }
-        else {
+        } else {
             // intent here to go to home activity
-            Intent intent1 = new Intent(this,LandingPage.class);
+            Intent intent1 = new Intent(this, LandingPage.class);
             startActivity(intent1);
         }
-    }
+    }*/
 }

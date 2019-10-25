@@ -85,7 +85,9 @@ public class Description_activity extends AppCompatActivity {
             });
         }
 
-        databaseReference.child("item").child(item_name).child("disease").child(disease_name).child("description").addValueEventListener(new ValueEventListener() {
+
+
+        FirebaseUtilClass.getDatabaseReference().child("item").child(item_name).child("disease").child(disease_name).child("description").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 textView_description.setText(dataSnapshot.getValue(String.class));
@@ -102,7 +104,7 @@ public class Description_activity extends AppCompatActivity {
 
 
 
-        databaseReference.child("item").child(item_name).child("disease").child(disease_name).addValueEventListener(new ValueEventListener() {
+        FirebaseUtilClass.getDatabaseReference().child("item").child(item_name).child("disease").child(disease_name).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 listView_buttons.setAdapter(null);

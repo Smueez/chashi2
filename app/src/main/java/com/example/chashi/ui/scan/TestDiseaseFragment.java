@@ -48,17 +48,20 @@ import java.util.List;
 public class TestDiseaseFragment extends Fragment {
     private final int PICK_IMAGE = 1, REQ_IMG_READ = 2, PICK_REALTIME = 33, REQ_CAMERA = 3;
     private final String LATE_BLIGHT = "Potato_Late_blight", EARLY_BLIGHT = "Potato_Early_blight", BACTERIAL_SPOT = "Pepper_bell_Bacterial_spot";
-
+    private String cropName;
     private Button openGlry, openCam, gotoProblem;
     private ImageView img;
     private LinearLayout found, notFound, loading, init;
     private TestDiseaseViewModel galleryViewModel;
-    private TextView diseaseName;
+    private TextView diseaseName, cropNameTextView;
     private Intent intent;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
+        cropName = getArguments().getString("name");
+
+        //  .setTitle();
         galleryViewModel =
                 ViewModelProviders.of(this).get(TestDiseaseViewModel.class);
         View root = inflater.inflate(R.layout.activity_detection, container, false);
@@ -87,6 +90,7 @@ public class TestDiseaseFragment extends Fragment {
         gotoProblem = view.findViewById(R.id.moreInfoButton);
         init = view.findViewById(R.id.initInfo);
         openCam = view.findViewById(R.id.btnOpenCamera);
+        cropNameTextView = view.findViewById(R.id.crop_name_textView);
         reset();
 
         openGlry.setOnClickListener(new View.OnClickListener() {
@@ -107,13 +111,18 @@ public class TestDiseaseFragment extends Fragment {
 
 
         FirebaseLocalModel localModel = new FirebaseLocalModel.Builder("model")
-                .setAssetFilePath("plants/manifest.json")
+                .setAssetFilePath(cropName + "/manifest.json")
                 .build();
         FirebaseModelManager.getInstance().
 
                 registerLocalModel(localModel);
 
         intent = new Intent(getContext(), Description_activity.class);
+        cropNameTextView.setText(cropName);
+        //((LandingPage) getActivity()).setTitleActivity(cropName+"র রোগ চিহ্নিতকরণ");
+        //   getActivity().ge.setTitle();
+
+        // Toast.makeText(getContext(), cropName+"র রোগ চিহ্নিতকরণ", Toast.LENGTH_LONG).show();
     }
 
     public void openGlry() {
@@ -257,14 +266,13 @@ public class TestDiseaseFragment extends Fragment {
     }
 
     private void setMsg(final String text) {
-        if(text.equals(getResources().getString(R.string.healthy))){
+        if (text.equals(getResources().getString(R.string.healthy))) {
             showNotError();
-        }else{
+        } else {
             showError();
 
-            final String[] str=text.split("_");
+            final String[] str = text.split("_");
             diseaseName.setText(str[1]);
-
 
 
             gotoProblem.setOnClickListener(new View.OnClickListener() {
