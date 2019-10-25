@@ -125,15 +125,7 @@ public class TestDiseaseFragment extends Fragment {
         });
 
 
-        FirebaseLocalModel localModel = new FirebaseLocalModel.Builder("model")
-                .setFilePath(file_dir_final + "/model.tflite")
-                .build();
 
-        Log.d("pathyy",file_dir_final);
-
-        FirebaseModelManager.getInstance().
-
-                registerLocalModel(localModel);
 
         intent = new Intent(getContext(), Description_activity.class);
         cropNameTextView.setText(cropName);
@@ -147,7 +139,7 @@ public class TestDiseaseFragment extends Fragment {
             {
                 // Code for above or equal 23 API Oriented Device
                 // Your Permission granted already .Do next code
-                Toast.makeText(getContext(),"check permission ok",Toast.LENGTH_SHORT).show();
+              //  Toast.makeText(getContext(),"check permission ok",Toast.LENGTH_SHORT).show();
             } else {
                 requestPermission(); // Code for permission
 
@@ -161,9 +153,7 @@ public class TestDiseaseFragment extends Fragment {
         }
         //download start....
         Log.d("ok", "download: 1");
-        final ProgressDialog progressDialog = new ProgressDialog(getContext());
-        progressDialog.setTitle("(১/৩) ডাউনলোড হচ্ছে...");
-        progressDialog.show();
+
         //notificationDownload();
         File rootPath = new File(Environment.getExternalStorageDirectory(), "চাষি");
         if(!rootPath.exists()) {
@@ -173,26 +163,28 @@ public class TestDiseaseFragment extends Fragment {
         final File cropFile = new File(rootPath,cropName);
         file_dir_final = cropFile.toString();
         Log.d("disease detection", "onViewCreated: "+file_dir_final);
-        if (!cropFile.exists()){
+        if (!cropFile.exists()) {
             cropFile.mkdir();
-        }
+            final ProgressDialog progressDialog = new ProgressDialog(getContext());
+            progressDialog.setTitle("(১/৩) ডাউনলোড হচ্ছে...");
+            progressDialog.show();
 
-        final File localFile = new File(cropFile,fileNameArr[0]);
+            final File localFile = new File(cropFile, fileNameArr[0]);
 
 
-        storageReference.child("models").child(cropName).child(fileNameArr[0]).getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
-                // Log.e("firebase ",";local tem file created  created " +localFile.toString());
-                //  updateDb(timestamp,localFile.toString(),position);
-                progressDialog.dismiss();
-                //Toast.makeText(getContext(),"ডাউনলোড শেষ!",Toast.LENGTH_LONG).show();
-                Log.d("downloaded file", "onSuccess: downloaded! "+fileNameArr[0]);
-                Log.d("ok", "download: 1");
-                final ProgressDialog progressDialog = new ProgressDialog(getContext());
-                progressDialog.setTitle("(২/৩) ডাউনলোড হচ্ছে...");
-                progressDialog.show();
-                //notificationDownload();
+            storageReference.child("models").child(cropName).child(fileNameArr[0]).getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                    // Log.e("firebase ",";local tem file created  created " +localFile.toString());
+                    //  updateDb(timestamp,localFile.toString(),position);
+                    progressDialog.dismiss();
+                    //Toast.makeText(getContext(),"ডাউনলোড শেষ!",Toast.LENGTH_LONG).show();
+                    Log.d("downloaded file", "onSuccess: downloaded! " + fileNameArr[0]);
+                    Log.d("ok", "download: 1");
+                    final ProgressDialog progressDialog = new ProgressDialog(getContext());
+                    progressDialog.setTitle("(২/৩) ডাউনলোড হচ্ছে...");
+                    progressDialog.show();
+                    //notificationDownload();
                 /*File rootPath = new File(Environment.getExternalStorageDirectory(), "চাষি");
                 if(!rootPath.exists()) {
                     rootPath.mkdirs();
@@ -206,22 +198,22 @@ public class TestDiseaseFragment extends Fragment {
                 else {
                     return;
                 }*/
-                final File localFile = new File(cropFile,fileNameArr[1]);
+                    final File localFile = new File(cropFile, fileNameArr[1]);
 
 
-                storageReference.child("models").child(cropName).child(fileNameArr[1]).getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
-                    @Override
-                    public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
-                        // Log.e("firebase ",";local tem file created  created " +localFile.toString());
-                        //  updateDb(timestamp,localFile.toString(),position);
-                        progressDialog.dismiss();
-                        //Toast.makeText(getContext(),"ডাউনলোড শেষ!",Toast.LENGTH_LONG).show();
-                        Log.d("downloaded file", "onSuccess: downloaded! "+fileNameArr[1]);
-                        Log.d("ok", "download: 1");
-                        final ProgressDialog progressDialog = new ProgressDialog(getContext());
-                        progressDialog.setTitle("(৩/৩) ডাউনলোড হচ্ছে... ");
-                        progressDialog.show();
-                        //notificationDownload();
+                    storageReference.child("models").child(cropName).child(fileNameArr[1]).getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                            // Log.e("firebase ",";local tem file created  created " +localFile.toString());
+                            //  updateDb(timestamp,localFile.toString(),position);
+                            progressDialog.dismiss();
+                            //Toast.makeText(getContext(),"ডাউনলোড শেষ!",Toast.LENGTH_LONG).show();
+                            Log.d("downloaded file", "onSuccess: downloaded! " + fileNameArr[1]);
+                            Log.d("ok", "download: 1");
+                            final ProgressDialog progressDialog = new ProgressDialog(getContext());
+                            progressDialog.setTitle("(৩/৩) ডাউনলোড হচ্ছে... ");
+                            progressDialog.show();
+                            //notificationDownload();
                         /*File rootPath = new File(Environment.getExternalStorageDirectory(), "চাষি");
                         if(!rootPath.exists()) {
                             rootPath.mkdirs();
@@ -235,39 +227,45 @@ public class TestDiseaseFragment extends Fragment {
                         else {
                             return;
                         }*/
-                        final File localFile = new File(cropFile,fileNameArr[2]);
+                            final File localFile = new File(cropFile, fileNameArr[2]);
 
 
-                        storageReference.child("models").child(cropName).child(fileNameArr[2]).getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
-                            @Override
-                            public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
-                                // Log.e("firebase ",";local tem file created  created " +localFile.toString());
-                                //  updateDb(timestamp,localFile.toString(),position);
-                                progressDialog.dismiss();
-                                Toast.makeText(getContext(),"ডাউনলোড শেষ!",Toast.LENGTH_LONG).show();
-                                Log.d("downloaded file", "onSuccess: downloaded! "+fileNameArr[2]);
-                            }
-                        }).addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception exception) {
-                                Log.e("firebase ",";local tem file not created  created " +exception.toString());
-                            }
-                        });
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception exception) {
-                        Log.e("firebase ",";local tem file not created  created " +exception.toString());
-                    }
-                });
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception exception) {
-                Log.e("firebase ",";local tem file not created  created " +exception.toString());
-            }
-        });
+                            storageReference.child("models").child(cropName).child(fileNameArr[2]).getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+                                @Override
+                                public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                                    // Log.e("firebase ",";local tem file created  created " +localFile.toString());
+                                    //  updateDb(timestamp,localFile.toString(),position);
+                                    progressDialog.dismiss();
+                                    Toast.makeText(getContext(), "ডাউনলোড শেষ!", Toast.LENGTH_LONG).show();
+                                    Log.d("downloaded file", "onSuccess: downloaded! " + fileNameArr[2]);
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception exception) {
+                                    Log.e("firebase ", ";local tem file not created  created " + exception.toString());
+                                }
+                            });
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception exception) {
+                            Log.e("firebase ", ";local tem file not created  created " + exception.toString());
+                        }
+                    });
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception exception) {
+                    Log.e("firebase ", ";local tem file not created  created " + exception.toString());
+                }
+            });
+        }
+        FirebaseLocalModel localModel = new FirebaseLocalModel.Builder("model")
+                .setFilePath(file_dir_final + "/manifest.json")
+                .build();
+        FirebaseModelManager.getInstance().
 
+                registerLocalModel(localModel);
     }
 
     private boolean checkPermission() {
