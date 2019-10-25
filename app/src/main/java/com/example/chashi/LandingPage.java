@@ -1,7 +1,7 @@
 package com.example.chashi;
 
 
-import android.app.AlertDialog;
+import android.app.ActionBar;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -9,6 +9,7 @@ import android.os.Build;
 import android.os.Bundle;
 
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ActivityCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -23,13 +24,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 import android.widget.EditText;
 
 
-public class LandingPage extends AppCompatActivity implements OnOTPSent {
+public class LandingPage extends AppCompatActivity implements OnOTPSent,OnChargeDone {
 
     private AppBarConfiguration mAppBarConfiguration;
     private final int REQ_MSG_READ=1;
@@ -55,9 +55,11 @@ public class LandingPage extends AppCompatActivity implements OnOTPSent {
         NavigationUI.setupWithNavController(navigationView, navController);
 
 
+
+
    //     isPermissionGranted(Manifest.permission.RECEIVE_SMS, REQ_MSG_READ);
       //  isPermissionGranted(Manifest.permission.WRITE_SMS, REQ_MSG_READ);
-        new CallOtpSendAPI("8801761002104","5",this).execute();
+        //new CallOtpSendAPI("8801761002104","5",this).execute();
 
         // loginParams .put("location", "56.1603092,10.2177147");
 
@@ -129,32 +131,13 @@ public class LandingPage extends AppCompatActivity implements OnOTPSent {
 
 
     @Override
-    public void onTaskCompleted(DOBTransaction dobTransaction) {
-        AlertDialog.Builder alert = new AlertDialog.Builder(this);
-        alert.setTitle("Title");
-        alert.setMessage("Message :");
+    public void onTaskCompleted(final DOBTransaction dobTransaction) {
 
-// Set an EditText view to get user input
-        final EditText input = new EditText(this);
-        alert.setView(input);
+        //Toast.makeText(this, dobTransaction.getTransId(),Toast.LENGTH_LONG).show();
+    }
 
-        alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {
-                String value = input.getText().toString();
+    @Override
+    public void onChargeDone(DOBTransaction dobTransaction) {
 
-                Log.d("", "Pin Value : " + value);
-                return;
-            }
-        });
-
-        alert.setNegativeButton("Cancel",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        // TODO Auto-generated method stub
-                        return;
-                    }
-                });
-        alert.show();
-        //action.getTransId(),Toast.LENGTH_LONG).show();
     }
 }

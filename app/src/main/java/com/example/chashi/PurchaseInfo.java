@@ -9,6 +9,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -17,9 +18,11 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 
-public class PurchaseInfo extends AppCompatActivity {
+public class PurchaseInfo extends AppCompatActivity implements OnOTPSent,OnChargeDone {
 
+    private final int REQ_MSG_READ=1;
     private Product_item item;
+    private String transId;
     private String prod_name,price,des,amount;
     private EditText editTextName,editTextPhnNo,editTextVillage,editTextDistrict,editTextUpozila,editTextDivision;
     private Button confirm;
@@ -107,9 +110,24 @@ public class PurchaseInfo extends AppCompatActivity {
 
         if(!error){
 
-            transaction transaction = new transaction(prod_name,price,des,amount,name,phone,village,upozila,district,division);
 
-            writeDataToFirebase(transaction);
+            AlertDialog.Builder builder = new AlertDialog.Builder(PurchaseInfo.this);
+            builder.setMessage("আপনি কি নিশ্চিত ক্রয় করতে চান?")
+                    .setPositiveButton("হ্যা", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            new CallOtpSendAPI("8801761002104","5",PurchaseInfo.this).execute();
+                        }
+                    }).setNegativeButton("না", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    finish();
+                }
+            }).setCancelable(false);
+            // Create the AlertDialog object and return it
+            builder.create();
+            builder.show();
+            transaction transaction = new transaction(prod_name,price,des,amount,name,phone,village,upozila,district,division);
+            //writeDataToFirebase(transaction);
 
         }
     }
@@ -137,6 +155,72 @@ public class PurchaseInfo extends AppCompatActivity {
                 Toast.makeText(PurchaseInfo.this, e.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+
+
+    }
+
+    @Override
+    public void onTaskCompleted(final DOBTransaction dobTransaction) {
+        transId = dobTransaction.getTransId();
+        androidx.appcompat.app.AlertDialog.Builder alert = new androidx.appcompat.app.AlertDialog.Builder(this);
+        alert.setTitle("Title");
+        alert.setMessage("Message :");
+
+// Set an EditText view to get user input
+        final EditText input = new EditText(this);
+        alert.setView(input);
+
+        alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                String value = input.getText().toString().trim();
+                Log.d("access token", "AccessToken: " + dobTransaction.getAccessToken() +" " + value);
+                new CallChargeAPI("8801761002104",value,dobTransaction.getAccessToken(),transId,PurchaseInfo.this).execute();
+                return;
+            }
+        });
+
+        alert.setNegativeButton("Cancel",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // TODO Auto-generated method stub
+                        return;
+                    }
+                });
+        alert.show();
+    }
+
+    @Override
+    public void onPointerCaptureChanged(boolean hasCapture) {
+
+    }
+
+    @Override
+    public void onChargeDone(DOBTransaction dobTransaction) {
+
+        if(dobTransaction.hasError()){
+            AlertDialog.Builder builder = new AlertDialog.Builder(PurchaseInfo.this);
+            builder.setMessage(dobTransaction.getErrorMessage())
+                    .setPositiveButton("ঠিক আছে", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            finish();
+                        }
+                    }).setCancelable(false);
+            // Create the AlertDialog object and return it
+            builder.create();
+            builder.show();
+        }else{
+            AlertDialog.Builder builder = new AlertDialog.Builder(PurchaseInfo.this);
+            builder.setMessage("আপনার ক্রয়টি সম্পন্ন হয়েছে।ধন্যবাদ")
+                    .setPositiveButton("ঠিক আছে", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            finish();
+                        }
+                    }).setCancelable(false);
+            // Create the AlertDialog object and return it
+            builder.create();
+            builder.show();
+        }
+
 
 
     }

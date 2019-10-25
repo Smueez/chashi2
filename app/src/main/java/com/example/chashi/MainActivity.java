@@ -1,7 +1,7 @@
 package com.example.chashi;
 
-import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
@@ -44,10 +44,13 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
+
+
         auth = FirebaseAuth.getInstance();
         intent = new Intent(this,Login_activity.class);
         intent1 = new Intent(this,LandingPage.class);
         imageView_logo = findViewById(R.id.imageView);
+
 
         new CountDownTimer(2000, 1000) {
             @Override
@@ -81,8 +84,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-    }
+
+
 }

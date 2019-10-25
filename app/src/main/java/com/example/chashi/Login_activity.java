@@ -1,6 +1,7 @@
 package com.example.chashi;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
@@ -14,6 +15,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -38,6 +40,7 @@ public class Login_activity extends AppCompatActivity {
     LinearLayout linearLayout_login, linearLayout_pin;
     EditText editText_phone_no, editText_pin1, editText_pin2, editText_pin3, editText_pin4, editText_pin5, editText_pin6;
     String string_phone_no, string_pin, TAG = "log in page", mVerificationId;
+    TextView textView ;
     PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallbacks;
     PhoneAuthProvider.ForceResendingToken mResendToken;
     FirebaseAuth mAuth;
@@ -59,6 +62,15 @@ public class Login_activity extends AppCompatActivity {
         editText_pin5 = findViewById(R.id.editText6);
         editText_pin6 = findViewById(R.id.editText7);
         editText_phone_no = findViewById(R.id.editText);
+
+        textView = findViewById(R.id.login_button);
+
+        textView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                login_button();
+            }
+        });
 
 
         editText_pin1.addTextChangedListener(new TextWatcher() {
@@ -224,7 +236,7 @@ public class Login_activity extends AppCompatActivity {
         finish();
     }
 
-    public void login_button(View view) {
+    public void login_button() {
         String phone_no = editText_phone_no.getText().toString().trim();
         if (!phone_no.isEmpty()) {
             string_phone_no = "+88" + phone_no;
@@ -306,8 +318,10 @@ public class Login_activity extends AppCompatActivity {
                     }
                 });
     }
+
     @Override
     public void onBackPressed() {
+        finishAffinity();
         super.onBackPressed();
     }
 }

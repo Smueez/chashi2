@@ -4,19 +4,41 @@ import java.io.Serializable;
 
 public class Product_item implements Serializable {
 
-   private String desc;
-   private String name;
-   private String price;
-   private String image;
+    private String id;
+    private String desc;
+    private String name;
+    private String price;
+    private String image;
+    private String quantity;
 
-    public Product_item(String desc, String name, String price, String image) {
+    public Product_item(String id,String desc, String name, String price, String image,String quantity) {
+        this.id = id;
         this.desc = desc;
         this.name = name;
         this.price = price;
         this.image = image;
+        this.quantity = quantity;
     }
 
+
+
     public Product_item() {
+    }
+
+    public String getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(String quantity) {
+        this.quantity = quantity;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getDesc() {

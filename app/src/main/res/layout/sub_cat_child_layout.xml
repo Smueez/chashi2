@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp"
+    android:id="@+id/product_layout">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="150dp">
+        <LinearLayout
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent">
+            <ImageView
+                android:id="@+id/product_child_image"
+                android:layout_gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="130dp"
+                android:src="@drawable/rice"/>
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_weight="2"
+            android:layout_width="0dp"
+            android:layout_height="match_parent">
+            <TextView
+                android:id="@+id/product_child_name"
+                android:paddingStart="10dp"
+                android:gravity="center|start"
+                android:textSize="30sp"
+                android:text="ধান"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"/>
+            <TextView
+                android:id="@+id/product_child_price"
+                android:paddingStart="10dp"
+                android:gravity="center|start"
+                android:textSize="30sp"
+                android:text="১০০ টাকা"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"/>
+            <TextView
+                android:id="@+id/product_child_desc"
+                android:padding="5dp"
+                android:textSize="20sp"
+                android:text=" asjaksljfklasjdfkljas dfas;kdjf as;kldjf asjf"
+                android:layout_weight="2"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"/>
+
+        </LinearLayout>
+        <TextView
+            android:textColor="#4CAF50"
+            android:textSize="20sp"
+            android:gravity="center"
+            android:text="কিনুন"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"/>
+    </LinearLayout>
+
+</LinearLayout>

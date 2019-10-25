@@ -24,7 +24,7 @@
 
         <activity android:name=".PurchaseInfo"></activity>
         <activity android:name=".Purchase" />
-        <activity android:name=".Login_activity" android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
+        <activity android:name=".Login_activity" android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity android:name=".Description_activity" android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity android:name=".Disease" />
 
@@ -39,7 +39,7 @@
 
         <activity
             android:name=".MainActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
