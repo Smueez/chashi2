@@ -1,7 +1,7 @@
 package com.example.chashi;
 
 
-import android.app.ActionBar;
+import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -9,7 +9,6 @@ import android.os.Build;
 import android.os.Bundle;
 
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ActivityCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -24,12 +23,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 import android.widget.EditText;
 
 
-public class LandingPage extends AppCompatActivity implements OnOTPSent,OnChargeDone {
+public class LandingPage extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
     private final int REQ_MSG_READ=1;
@@ -55,11 +55,9 @@ public class LandingPage extends AppCompatActivity implements OnOTPSent,OnCharge
         NavigationUI.setupWithNavController(navigationView, navController);
 
 
-
-
    //     isPermissionGranted(Manifest.permission.RECEIVE_SMS, REQ_MSG_READ);
       //  isPermissionGranted(Manifest.permission.WRITE_SMS, REQ_MSG_READ);
-        //new CallOtpSendAPI("8801761002104","5",this).execute();
+       // new CallOtpSendAPI("8801761002104","5",this).execute();
 
         // loginParams .put("location", "56.1603092,10.2177147");
 
@@ -129,15 +127,4 @@ public class LandingPage extends AppCompatActivity implements OnOTPSent,OnCharge
         }
     }
 
-
-    @Override
-    public void onTaskCompleted(final DOBTransaction dobTransaction) {
-
-        //Toast.makeText(this, dobTransaction.getTransId(),Toast.LENGTH_LONG).show();
-    }
-
-    @Override
-    public void onChargeDone(DOBTransaction dobTransaction) {
-
-    }
 }

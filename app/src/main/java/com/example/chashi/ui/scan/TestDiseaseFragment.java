@@ -68,7 +68,7 @@ public class TestDiseaseFragment extends Fragment {
     String file_dir_final;
     int file_count = 0;
     StorageReference storageReference;
-    String[] fileNameArr = {" manifest.json","dict.txt","model.tflite"};
+    String[] fileNameArr = {"manifest.json","dict.txt","model.tflite"};
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -156,10 +156,116 @@ public class TestDiseaseFragment extends Fragment {
             // Code for Below 23 API Oriented Device
             // Do next code
         }
-        while (file_count < 3){
-
-            download(fileNameArr[file_count]);
+        //download start....
+        Log.d("ok", "download: 1");
+        final ProgressDialog progressDialog = new ProgressDialog(getContext());
+        progressDialog.setTitle("Downloading..."+fileNameArr[0]);
+        progressDialog.show();
+        //notificationDownload();
+        File rootPath = new File(Environment.getExternalStorageDirectory(), "চাষি");
+        if(!rootPath.exists()) {
+            rootPath.mkdirs();
         }
+
+        final File cropFile = new File(rootPath,cropName);
+        file_dir_final = cropFile.toString();
+        Log.d("disease detection", "onViewCreated: "+file_dir_final);
+        if (!cropFile.exists()){
+            cropFile.mkdir();
+        }
+        /*else {
+            return;
+        }*/
+        final File localFile = new File(cropFile,fileNameArr[0]);
+
+
+        storageReference.child("models").child(cropName).child(fileNameArr[0]).getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                // Log.e("firebase ",";local tem file created  created " +localFile.toString());
+                //  updateDb(timestamp,localFile.toString(),position);
+                progressDialog.dismiss();
+                //Toast.makeText(getContext(),"ডাউনলোড শেষ!",Toast.LENGTH_LONG).show();
+                Log.d("downloaded file", "onSuccess: downloaded! "+fileNameArr[0]);
+                Log.d("ok", "download: 1");
+                final ProgressDialog progressDialog = new ProgressDialog(getContext());
+                progressDialog.setTitle("Downloading..."+fileNameArr[1]);
+                progressDialog.show();
+                //notificationDownload();
+                /*File rootPath = new File(Environment.getExternalStorageDirectory(), "চাষি");
+                if(!rootPath.exists()) {
+                    rootPath.mkdirs();
+                }
+
+                final File cropFile = new File(rootPath,cropName);
+                file_dir_final = cropFile.toString();
+                if (!cropFile.exists()){
+                    cropFile.mkdir();
+                }
+                else {
+                    return;
+                }*/
+                final File localFile = new File(cropFile,fileNameArr[1]);
+
+
+                storageReference.child("models").child(cropName).child(fileNameArr[1]).getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                        // Log.e("firebase ",";local tem file created  created " +localFile.toString());
+                        //  updateDb(timestamp,localFile.toString(),position);
+                        progressDialog.dismiss();
+                        //Toast.makeText(getContext(),"ডাউনলোড শেষ!",Toast.LENGTH_LONG).show();
+                        Log.d("downloaded file", "onSuccess: downloaded! "+fileNameArr[1]);
+                        Log.d("ok", "download: 1");
+                        final ProgressDialog progressDialog = new ProgressDialog(getContext());
+                        progressDialog.setTitle("Downloading..."+fileNameArr[2]);
+                        progressDialog.show();
+                        //notificationDownload();
+                        /*File rootPath = new File(Environment.getExternalStorageDirectory(), "চাষি");
+                        if(!rootPath.exists()) {
+                            rootPath.mkdirs();
+                        }
+
+                        File cropFile = new File(rootPath,cropName);
+                        file_dir_final = cropFile.toString();
+                        if (!cropFile.exists()){
+                            cropFile.mkdir();
+                        }
+                        else {
+                            return;
+                        }*/
+                        final File localFile = new File(cropFile,fileNameArr[2]);
+
+
+                        storageReference.child("models").child(cropName).child(fileNameArr[2]).getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+                            @Override
+                            public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                                // Log.e("firebase ",";local tem file created  created " +localFile.toString());
+                                //  updateDb(timestamp,localFile.toString(),position);
+                                progressDialog.dismiss();
+                                Toast.makeText(getContext(),"ডাউনলোড শেষ!",Toast.LENGTH_LONG).show();
+                                Log.d("downloaded file", "onSuccess: downloaded! "+fileNameArr[2]);
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception exception) {
+                                Log.e("firebase ",";local tem file not created  created " +exception.toString());
+                            }
+                        });
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception exception) {
+                        Log.e("firebase ",";local tem file not created  created " +exception.toString());
+                    }
+                });
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                Log.e("firebase ",";local tem file not created  created " +exception.toString());
+            }
+        });
 
     }
 
@@ -179,7 +285,7 @@ public class TestDiseaseFragment extends Fragment {
             ActivityCompat.requestPermissions(getActivity(), new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE}, PERMISSION_REQUEST_CODE);
         }
     }
-    public void download(final String filename){
+   /* public void download(final String filename){
         Log.d("ok", "download: 1");
         final ProgressDialog progressDialog = new ProgressDialog(getContext());
         progressDialog.setTitle("Downloading...");
@@ -190,7 +296,7 @@ public class TestDiseaseFragment extends Fragment {
             rootPath.mkdirs();
         }
 
-        File cropFile = new File(rootPath,filename);
+        File cropFile = new File(rootPath,cropName);
         file_dir_final = cropFile.toString();
         if (!cropFile.exists()){
             cropFile.mkdir();
@@ -217,7 +323,7 @@ public class TestDiseaseFragment extends Fragment {
                 Log.e("firebase ",";local tem file not created  created " +exception.toString());
             }
         });
-    }
+    }*/
     public void openGlry() {
         if (isPermissionGranted(Manifest.permission.READ_EXTERNAL_STORAGE, REQ_IMG_READ)) {
             selectImage();
