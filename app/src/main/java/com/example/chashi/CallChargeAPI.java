@@ -19,14 +19,16 @@ public class CallChargeAPI extends AsyncTask<String, String, DOBTransaction> {
     private String phnNo;
     private String otp;
     private String accessToken;
+    private String otpTranId;
     private OnChargeDone onChargeDone;
 
-    public CallChargeAPI(String phnNo, String otp, String accessToken, OnChargeDone onChargeDone) {
+    public CallChargeAPI(String phnNo, String otp, String accessToken, String otpTranId, OnChargeDone onChargeDone) {
 
         this.phnNo = phnNo;
         this.onChargeDone = onChargeDone;
         this.otp = otp;
         this.accessToken = accessToken;
+        this.otpTranId = otpTranId;
         //set context variables if required
     }
 
@@ -59,7 +61,7 @@ public class CallChargeAPI extends AsyncTask<String, String, DOBTransaction> {
             OkHttpClient client = new OkHttpClient();
 
             MediaType mediaType = MediaType.parse("application/json");
-            RequestBody body = RequestBody.create(mediaType, "{ \"sourceId\": \"AGWKuetG\", \"idType\": \"MSISDN\",\"serviceId\": \"PPU00021805630\", \"transactionPin\": \"" + otp + "\", \"otpTransactionId\": \"5620211161571993438039419\", \"category\": \"app\", \"description\": \"pay first\" }");
+            RequestBody body = RequestBody.create(mediaType, "{ \"sourceId\": \"AGWKuetG\", \"idType\": \"MSISDN\",\"serviceId\": \"PPU00021805630\", \"transactionPin\": \"" + otp + "\", \"otpTransactionId\": \""+otpTranId+"\", \"category\": \"app\", \"description\": \"pay first\" }");
             Request request = new Request.Builder()
                     .url("https://apigw.grameenphone.com:9001/payments/v2/customers/" + phnNo + "/chargeotp")
                     .post(body)
@@ -79,13 +81,13 @@ public class CallChargeAPI extends AsyncTask<String, String, DOBTransaction> {
             Response response = client.newCall(request).execute();
             String res = response.body().string();
             JSONObject userObject = new JSONObject(res);
-            if(userObject.has("code")){
+            if (userObject.has("code")) {
                 String code = userObject.getString("code");
                 String message = userObject.getString("message");
                 String transactionId = userObject.getString("transactionId");
                 String time = userObject.getJSONObject("accessInfo").getString("timestamp");
                 return new DOBTransaction(true, code, message, transactionId, time);
-            }else {
+            } else {
                 String time = userObject.getJSONObject("accessInfo").getString("timestamp");
                 String tranid = userObject.getJSONObject("data").getString("transactionId");
                 return new DOBTransaction(tranid, time, accessToken);

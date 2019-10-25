@@ -1,6 +1,8 @@
 package com.example.chashi;
 
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
@@ -20,7 +22,11 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.View;
+import android.widget.EditText;
 
 
 public class LandingPage extends AppCompatActivity implements OnOTPSent {
@@ -124,6 +130,31 @@ public class LandingPage extends AppCompatActivity implements OnOTPSent {
 
     @Override
     public void onTaskCompleted(DOBTransaction dobTransaction) {
-        //Toast.makeText(this, dobTransaction.getTransId(),Toast.LENGTH_LONG).show();
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+        alert.setTitle("Title");
+        alert.setMessage("Message :");
+
+// Set an EditText view to get user input
+        final EditText input = new EditText(this);
+        alert.setView(input);
+
+        alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                String value = input.getText().toString();
+
+                Log.d("", "Pin Value : " + value);
+                return;
+            }
+        });
+
+        alert.setNegativeButton("Cancel",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // TODO Auto-generated method stub
+                        return;
+                    }
+                });
+        alert.show();
+        //action.getTransId(),Toast.LENGTH_LONG).show();
     }
 }
