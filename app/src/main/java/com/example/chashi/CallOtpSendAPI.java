@@ -29,7 +29,6 @@ public class CallOtpSendAPI extends AsyncTask<String, String, DOBTransaction> {
     }
 
 
-
     @Override
     protected void onPostExecute(DOBTransaction s) {
         super.onPostExecute(s);
@@ -75,15 +74,15 @@ public class CallOtpSendAPI extends AsyncTask<String, String, DOBTransaction> {
                     .build();
             Response response = client.newCall(request).execute();
             String res1 = response.body().string();
-           // Log.d("hi22-res1", res1);
+            // Log.d("hi22-res1", res1);
 
 
             OkHttpClient client2 = new OkHttpClient();
             JSONObject userObject = new JSONObject(res1);
-            String acToken= userObject.getString("accessToken");
+            String acToken = userObject.getString("accessToken");
 
             MediaType mediaType2 = MediaType.parse("application/json");
-            RequestBody body2 = RequestBody.create(mediaType2, "{ \"sourceId\":\"AGWKuetG\", \"idType\":\"MSISDN\", \"amount\":\""+amount+"\", \"priceCode\":\"PPU00021805630191022841\", \"serviceId\":\"PPU00021805630\", \"description\":\"pay first\" }");
+            RequestBody body2 = RequestBody.create(mediaType2, "{ \"sourceId\":\"AGWKuetG\", \"idType\":\"MSISDN\", \"amount\":\"" + amount + "\", \"priceCode\":\"PPU00021805630191022841\", \"serviceId\":\"PPU00021805630\", \"description\":\"pay first\" }");
             Request request2 = new Request.Builder()
                     .url("https://apigw.grameenphone.com:9001/payments/v2/customers/" + phnNo + "/pushotp")
                     .post(body2)
@@ -103,12 +102,18 @@ public class CallOtpSendAPI extends AsyncTask<String, String, DOBTransaction> {
             Response response2 = client2.newCall(request2).execute();
             String res2 = response2.body().string();
             JSONObject userObject2 = new JSONObject(res2);
-            String time = userObject2.getJSONObject("accessInfo").getString("timestamp");
-            String OTPtranId = userObject2.getJSONObject("data").getString("otpTrasactionId");
-         //   Log.d("hi22-s2s3", s2+" "+s3);
-            return new DOBTransaction(OTPtranId,time,acToken); //s3=transaction, s2=time, s=bearer
-
-
+            if (userObject2.has("code")) {
+                String code = userObject.getString("code");
+                String message = userObject.getString("message");
+                String transactionId = userObject.getString("transactionId");
+                String time = userObject.getJSONObject("accessInfo").getString("timestamp");
+                return new DOBTransaction(true, code, message, transactionId, time);
+            } else {
+                String time = userObject2.getJSONObject("accessInfo").getString("timestamp");
+                String OTPtranId = userObject2.getJSONObject("data").getString("otpTrasactionId");
+                //   Log.d("hi22-s2s3", s2+" "+s3);
+                return new DOBTransaction(OTPtranId, time, acToken); //s3=transaction, s2=time, s=bearer
+            }
 
 
         } catch (IOException e) {
@@ -116,6 +121,6 @@ public class CallOtpSendAPI extends AsyncTask<String, String, DOBTransaction> {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        return null;
+        return new DOBTransaction(true);
     }
 }

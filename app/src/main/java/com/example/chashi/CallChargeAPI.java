@@ -79,14 +79,23 @@ public class CallChargeAPI extends AsyncTask<String, String, DOBTransaction> {
             Response response = client.newCall(request).execute();
             String res = response.body().string();
             JSONObject userObject = new JSONObject(res);
-            String time = userObject.getJSONObject("accessInfo").getString("timestamp");
-            String tranid = userObject.getJSONObject("data").getString("transactionId");
-            return new DOBTransaction(tranid, time, accessToken);
+            if(userObject.has("code")){
+                String code = userObject.getString("code");
+                String message = userObject.getString("message");
+                String transactionId = userObject.getString("transactionId");
+                String time = userObject.getJSONObject("accessInfo").getString("timestamp");
+                return new DOBTransaction(true, code, message, transactionId, time);
+            }else {
+                String time = userObject.getJSONObject("accessInfo").getString("timestamp");
+                String tranid = userObject.getJSONObject("data").getString("transactionId");
+                return new DOBTransaction(tranid, time, accessToken);
+            }
+
         } catch (IOException e) {
             e.printStackTrace();
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        return null;
+        return new DOBTransaction(true);
     }
 }
