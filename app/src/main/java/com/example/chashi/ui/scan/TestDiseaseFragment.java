@@ -260,7 +260,7 @@ public class TestDiseaseFragment extends Fragment {
                 }
             });
         }
-        FirebaseLocalModel localModel = new FirebaseLocalModel.Builder("model")
+        FirebaseLocalModel localModel = new FirebaseLocalModel.Builder("model"+cropName)
                 .setFilePath(file_dir_final + "/manifest.json")
                 .build();
         FirebaseModelManager.getInstance().
@@ -426,7 +426,7 @@ public class TestDiseaseFragment extends Fragment {
     private void doML(FirebaseVisionImage image) {
         FirebaseVisionOnDeviceAutoMLImageLabelerOptions labelerOptions =
                 new FirebaseVisionOnDeviceAutoMLImageLabelerOptions.Builder()
-                        .setLocalModelName("model")    // Skip to not use a local model
+                        .setLocalModelName("model"+cropName)    // Skip to not use a local model
 
                         .setConfidenceThreshold(0)  // Evaluate your model in the Firebase console
                         // to determine an appropriate value.
