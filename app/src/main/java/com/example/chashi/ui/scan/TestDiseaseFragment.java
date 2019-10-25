@@ -2,13 +2,16 @@ package com.example.chashi.ui.scan;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +24,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
@@ -41,9 +45,15 @@ import com.google.firebase.ml.vision.common.FirebaseVisionImage;
 import com.google.firebase.ml.vision.label.FirebaseVisionImageLabel;
 import com.google.firebase.ml.vision.label.FirebaseVisionImageLabeler;
 import com.google.firebase.ml.vision.label.FirebaseVisionOnDeviceAutoMLImageLabelerOptions;
+import com.google.firebase.storage.FileDownloadTask;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
+
+import static com.otaliastudios.cameraview.CameraView.PERMISSION_REQUEST_CODE;
 
 public class TestDiseaseFragment extends Fragment {
     private final int PICK_IMAGE = 1, REQ_IMG_READ = 2, PICK_REALTIME = 33, REQ_CAMERA = 3;
@@ -55,6 +65,10 @@ public class TestDiseaseFragment extends Fragment {
     private TestDiseaseViewModel galleryViewModel;
     private TextView diseaseName, cropNameTextView;
     private Intent intent;
+    String file_dir_final;
+    int file_count = 0;
+    StorageReference storageReference;
+    String[] fileNameArr = {" manifest.json","dict.txt","model.tflite"};
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -82,6 +96,7 @@ public class TestDiseaseFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         img = view.findViewById(R.id.imgevw);
+        storageReference = FirebaseStorage.getInstance().getReference();
         openGlry = view.findViewById(R.id.btnOpenGallery);
         diseaseName = view.findViewById(R.id.diseaseName);
         notFound = view.findViewById(R.id.noDiseaseFoundInfo);
@@ -123,8 +138,86 @@ public class TestDiseaseFragment extends Fragment {
         //   getActivity().ge.setTitle();
 
         // Toast.makeText(getContext(), cropName+"র রোগ চিহ্নিতকরণ", Toast.LENGTH_LONG).show();
+        if (Build.VERSION.SDK_INT >= 23)
+        {
+            if (checkPermission())
+            {
+                // Code for above or equal 23 API Oriented Device
+                // Your Permission granted already .Do next code
+                Toast.makeText(getContext(),"check permission ok",Toast.LENGTH_SHORT).show();
+            } else {
+                requestPermission(); // Code for permission
+
+            }
+        }
+        else
+        {
+
+            // Code for Below 23 API Oriented Device
+            // Do next code
+        }
+        while (file_count < 3){
+
+            download(fileNameArr[file_count]);
+        }
+
     }
 
+    private boolean checkPermission() {
+        int result = ContextCompat.checkSelfPermission(getContext(), android.Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        if (result == PackageManager.PERMISSION_GRANTED) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    private void requestPermission() {
+
+        if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(), android.Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+            Toast.makeText(getContext(), "Write External Storage permission allows us to do store images. Please allow this permission in App Settings.", Toast.LENGTH_LONG).show();
+        } else {
+            ActivityCompat.requestPermissions(getActivity(), new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE}, PERMISSION_REQUEST_CODE);
+        }
+    }
+    public void download(final String filename){
+        Log.d("ok", "download: 1");
+        final ProgressDialog progressDialog = new ProgressDialog(getContext());
+        progressDialog.setTitle("Downloading...");
+        progressDialog.show();
+        //notificationDownload();
+        File rootPath = new File(Environment.getExternalStorageDirectory(), "চাষি");
+        if(!rootPath.exists()) {
+            rootPath.mkdirs();
+        }
+
+        File cropFile = new File(rootPath,filename);
+        file_dir_final = cropFile.toString();
+        if (!cropFile.exists()){
+            cropFile.mkdir();
+        }
+        else {
+            return;
+        }
+        final File localFile = new File(cropFile,filename);
+
+
+        storageReference.child("models").getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                // Log.e("firebase ",";local tem file created  created " +localFile.toString());
+                //  updateDb(timestamp,localFile.toString(),position);
+                progressDialog.dismiss();
+                Toast.makeText(getContext(),"ডাউনলোড শেষ!",Toast.LENGTH_LONG).show();
+                file_count++;
+                Log.d("downloaded file", "onSuccess: downloaded! "+filename);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                Log.e("firebase ",";local tem file not created  created " +exception.toString());
+            }
+        });
+    }
     public void openGlry() {
         if (isPermissionGranted(Manifest.permission.READ_EXTERNAL_STORAGE, REQ_IMG_READ)) {
             selectImage();
