@@ -1,26 +1,21 @@
 package com.example.chashi.ui.home;
 
 import android.Manifest;
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
 import android.icu.text.SimpleDateFormat;
 import android.icu.util.Calendar;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListAdapter;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,8 +25,9 @@ import androidx.annotation.RequiresApi;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.Observer;
-import androidx.viewpager.widget.ViewPager;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -43,13 +39,11 @@ import com.example.chashi.Disease;
 import com.example.chashi.FirebaseUtilClass;
 import com.example.chashi.LandingPage;
 import com.example.chashi.News;
-import com.example.chashi.News_adapter;
-import com.example.chashi.PurchaseInfo;
+import com.example.chashi.NewsAdapter;
 import com.example.chashi.R;
 import com.example.chashi.ScanDiseaseCropsFragment;
 import com.example.chashi.ui.forums.ForumFragment;
 import com.example.chashi.ui.gallery.GalleryFragment;
-import com.example.chashi.ui.scan.TestDiseaseFragment;
 import com.google.android.gms.common.api.ResolvableApiException;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationRequest;
@@ -74,7 +68,6 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.concurrent.Executor;
 
 public class HomeFragment extends Fragment {
 
@@ -84,8 +77,9 @@ public class HomeFragment extends Fragment {
     private FusedLocationProviderClient fusedLocationClient;
     double lattitude;
     double longitude;
-    ViewPager listView;
+    RecyclerView listView;
     List<News> newsList;
+    NewsAdapter newsAdapter;
     DatabaseReference databaseReference;
     private TextView txt_temp_min, txt_temp_max, txt_humidity;
     private LinearLayout linearLayout_product, linearLayout_disease;
@@ -192,6 +186,12 @@ public class HomeFragment extends Fragment {
 
         findWeather();
 
+        newsAdapter = new NewsAdapter(newsList,getContext());
+        LinearLayoutManager mLayoutManager = new LinearLayoutManager(getContext());
+        mLayoutManager.setOrientation(RecyclerView.HORIZONTAL);
+        listView.setLayoutManager(mLayoutManager);
+        listView.setItemAnimator(new DefaultItemAnimator());
+        listView.setAdapter(newsAdapter);
 
         FirebaseUtilClass.getDatabaseReference().child("news").addValueEventListener(new ValueEventListener() {
             @Override
@@ -199,13 +199,10 @@ public class HomeFragment extends Fragment {
                 listView.setAdapter(null);
                 newsList.clear();
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                    News news = ds.getValue(News.class);
+                    News news = dataSnapshot.getValue(News.class);
                     newsList.add(news);
+                    newsAdapter.notifyDataSetChanged();
                 }
-                News_adapter news_adapter = new News_adapter(getContext(), newsList);
-                listView.setAdapter(news_adapter);
-
-
             }
 
             @Override

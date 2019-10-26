@@ -1,12 +1,13 @@
 package com.example.chashi;
 
 public class News {
-    String headings,description,links;
+    String headings,description,links,img_url;
 
-    public News(String headings, String description, String links) {
+    public News(String headings, String description, String links,String img_url) {
         this.headings = headings;
         this.description = description;
         this.links = links;
+        this.img_url = img_url;
     }
 
     public News() {
@@ -34,5 +35,13 @@ public class News {
 
     public String getLinks() {
         return links;
+    }
+
+    public String getImg_url() {
+        return img_url;
+    }
+
+    public void setImg_url(String img_url) {
+        this.img_url = img_url;
     }
 }
