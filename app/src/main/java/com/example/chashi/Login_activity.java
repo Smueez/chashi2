@@ -39,7 +39,7 @@ import java.util.concurrent.TimeUnit;
 public class Login_activity extends AppCompatActivity {
     LinearLayout linearLayout_login, linearLayout_pin;
     EditText editText_phone_no, editText_pin1, editText_pin2, editText_pin3, editText_pin4, editText_pin5, editText_pin6;
-    String string_phone_no, string_pin, TAG = "log in page", mVerificationId;
+    String string_phone_no, string_pin, TAG = "log in page", mVerificationId,phon_no_str;
     TextView textView ;
     PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallbacks;
     PhoneAuthProvider.ForceResendingToken mResendToken;
@@ -238,7 +238,12 @@ public class Login_activity extends AppCompatActivity {
 
     public void login_button() {
         String phone_no = editText_phone_no.getText().toString().trim();
+
         if (!phone_no.isEmpty()) {
+            if (phone_no.charAt(2) != '3' && phone_no.charAt(2) != '7'){
+                Toast.makeText(getApplicationContext(), "গ্রামীনফোন নম্বর ব্যাবহার জরে", Toast.LENGTH_SHORT).show();
+                return;
+            }
             string_phone_no = "+88" + phone_no;
             PhoneAuthProvider.getInstance().verifyPhoneNumber(
                     string_phone_no,        // Phone number to verify
