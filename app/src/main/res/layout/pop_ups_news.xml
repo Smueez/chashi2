@@ -27,11 +27,39 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="news pop ups"
+                android:text="কৃষি সাবস্ক্রিপ্সহন"
                 android:id="@+id/news_pop_text"
-                android:textSize="20dp"
+                android:textColor="@color/colorPrimary"
+                android:textSize="25dp"
                 android:layout_gravity="center"
                 android:gravity="center"/>
+            <ImageView
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:src="@drawable/news"
+                android:cropToPadding="true"
+                android:layout_gravity="center"/>
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="15dp"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="প্রতিনিয়ত কৃষি আপডেট ও কৃষি টিপস পেতে সাবস্ক্রাইব করুন । এর জন্য প্রতিমাসে আপনার ব্যালেন্স থেকে ৬.৩৫ টাকা কেটে নেয়া হবে । আপনি কি নিশ্চিত করবেন?"
+                android:padding="5dp"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:textColor="@android:color/black"/>
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="15dp"/>
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="নিশ্চিত করুন"
+                android:id="@+id/subscription_done_news"
+                android:background="@android:color/holo_green_light"/>
+
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 

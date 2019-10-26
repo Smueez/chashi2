@@ -196,10 +196,10 @@ public class HomeFragment extends Fragment {
         FirebaseUtilClass.getDatabaseReference().child("news").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                listView.setAdapter(null);
-                newsList.clear();
+                //listView.setAdapter(null);
+                //newsList.clear();
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                    News news = dataSnapshot.getValue(News.class);
+                    News news = ds.getValue(News.class);
                     newsList.add(news);
                     newsAdapter.notifyDataSetChanged();
                 }
@@ -220,34 +220,48 @@ public class HomeFragment extends Fragment {
                 //news subscription button action
                 dialog_news.setContentView(R.layout.pop_ups_news);
                 dialog_news.show();
-                TextView textView;
+                Button button_done;
                 ImageView button_hide_news_popup;
                 button_hide_news_popup = dialog_news.findViewById(R.id.hide_news_popup);
-                textView = dialog_news.findViewById(R.id.news_pop_text);
-                textView.setText("this is a news pop up");
+                button_done = dialog_news.findViewById(R.id.subscription_done_news);
                 button_hide_news_popup.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         dialog_news.dismiss();
                     }
                 });
+                button_done.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //subscription done here
+                        Toast.makeText(getContext(),"News subscription done!",Toast.LENGTH_SHORT).show();
+                        dialog_news.dismiss();
+                    }
+                });
             }
         });
 
-        final Dialog dialog_weather = new Dialog(getContext());
+        dialog_weather = new Dialog(getContext());
         button_weather.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dialog_weather.setContentView(R.layout.pop_ups_news);
+                dialog_weather.setContentView(R.layout.pop_ups_weather);
                 dialog_weather.show();
-                TextView textView;
+                Button button_done;
                 ImageView button_hide_weather_popup;
-                button_hide_weather_popup = dialog_news.findViewById(R.id.hide_weather_popup);
-                textView = dialog_weather.findViewById(R.id.weather_pop_text);
-                textView.setText("this is a weather pop up");
+                button_hide_weather_popup = dialog_weather.findViewById(R.id.hide_weather_popup);
+                button_done = dialog_weather.findViewById(R.id.subscription_done_weather);
                 button_hide_weather_popup.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        dialog_weather.dismiss();
+                    }
+                });
+                button_done.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //subscribe done here
+                        Toast.makeText(getContext(),"Weather update subscription done!",Toast.LENGTH_SHORT).show();
                         dialog_weather.dismiss();
                     }
                 });

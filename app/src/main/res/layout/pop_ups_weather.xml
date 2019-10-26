@@ -27,11 +27,33 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="weather pop ups"
+                android:text="আবহাওয়া আপডেট"
                 android:id="@+id/weather_pop_text"
                 android:textSize="20dp"
                 android:layout_gravity="center"
-                android:gravity="center"/>
+                android:gravity="center"
+                android:textColor="@color/colorPrimary"
+                />
+            <ImageView
+                android:layout_width="250dp"
+                android:layout_height="200dp"
+                android:src="@drawable/weatherrain"
+                android:cropToPadding="true"
+                android:layout_gravity="center"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="আপনার মোবাইলে প্রতিদিন আবহাওয়া আপডেট এবং আবহাওয়া পূর্বাভাস পেতে সাবস্ক্রাইব করুন । সাবস্ক্রাইব করতে আপনার মোবাইল থেকে প্রতি মাসে ৬.৩৫ টাকা কেটে নেয়া হবে । আপনি কি নিশ্চিত করবেন?"
+                android:layout_gravity="center"
+                android:padding="5dp"
+                android:gravity="center"
+                android:textColor="@android:color/black"/>
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="নিশ্চিত করুন"
+                android:id="@+id/subscription_done_weather"
+                android:background="@android:color/holo_green_light"/>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 

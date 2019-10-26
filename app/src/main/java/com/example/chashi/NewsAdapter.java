@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -26,7 +27,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
 
         TextView textView_heading,textView_description;
         ImageView imageView_head;
-        CardView cardView_news;
+        LinearLayout cardView_news;
         News news;
 
         public NewsViewHolder(@NonNull View itemView) {
@@ -68,7 +69,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
 
         image_url = item.getImg_url();
         news_link = item.getLinks();
-        if (!image_url.isEmpty()){
+        if (image_url != null){
             Picasso.get().load(image_url).into(holder.imageView_head);
         }
         holder.cardView_news.setOnClickListener(new View.OnClickListener() {
