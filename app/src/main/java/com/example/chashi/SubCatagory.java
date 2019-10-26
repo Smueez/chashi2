@@ -2,10 +2,11 @@ package com.example.chashi;
 
 import android.graphics.drawable.Drawable;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SubCatagory {
+public class SubCatagory implements Serializable {
 
     private String sub_cat_name;
     private int icon;
@@ -14,9 +15,10 @@ public class SubCatagory {
     public SubCatagory() {
     }
 
-    public SubCatagory(String sub_cat_name, int icon) {
+    public SubCatagory(String sub_cat_name, int icon,List<Product_item> product_items) {
         this.sub_cat_name = sub_cat_name;
         this.icon = icon;
+        this.product_items = product_items;
     }
 
     public List<Product_item> getProduct_items() {

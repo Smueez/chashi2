@@ -1,6 +1,9 @@
 package com.example.chashi;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,7 +19,9 @@ import com.squareup.picasso.Picasso;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 public class Purchase extends AppCompatActivity {
 
@@ -24,7 +29,13 @@ public class Purchase extends AppCompatActivity {
     private TextView name,price,description;
     private ImageView imageView;
     private EditText editText;
-    private Button button;
+    private Button button,plus,minus;
+
+    private RecyclerView inventoryItemRecyclerView;
+    private String product_id;
+    private SubCatagory subCatagory;
+    private List<Product_item> itemList = new ArrayList<>();
+    private InsecticideAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +43,15 @@ public class Purchase extends AppCompatActivity {
         setContentView(R.layout.activity_purchase);
 
 
-        item = (Product_item) getIntent().getExtras().getSerializable("itemData");
+        subCatagory = (SubCatagory) getIntent().getExtras().getSerializable("itemData");
+        product_id = getIntent().getExtras().getString("itemId");
+        itemList = subCatagory.getProduct_items();
+
+        for(int i = 0;i< itemList.size();i++){
+            if(product_id.equals(itemList.get(i).getId())){
+                item = itemList.get(i);
+            }
+        }
 
         name = findViewById(R.id.product_name);
         price = findViewById(R.id.product_price);
@@ -41,10 +60,46 @@ public class Purchase extends AppCompatActivity {
         editText = findViewById(R.id.amount);
         button = findViewById(R.id.next);
 
+
         name.setText(item.getName());
-        price.setText("দামঃ "+item.getPrice());
+        price.setText("দামঃ "+item.getPrice()+" টাকা");
         description.setText(item.getDesc());
         Picasso.get().load(item.getImage()).into(imageView);
+
+        plus = findViewById(R.id.plus_btn);
+        minus = findViewById(R.id.minus_btn);
+
+        plus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int crntValue;
+                if(editText.getText().toString().isEmpty()){
+                    crntValue = 0;
+                }else{
+                    crntValue = Integer.parseInt(editText.getText().toString());
+                }
+
+                crntValue++;
+                editText.setText(String.valueOf(crntValue));
+            }
+        });
+
+        minus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int crntValue;
+                if(editText.getText().toString().isEmpty()){
+                    crntValue = 0;
+                }else{
+                    crntValue = Integer.parseInt(editText.getText().toString());
+                }
+                if(crntValue != 0){
+                    crntValue--;
+                }
+
+                editText.setText(String.valueOf(crntValue));
+            }
+        });
 
 
         button.setOnClickListener(new View.OnClickListener() {
@@ -54,6 +109,22 @@ public class Purchase extends AppCompatActivity {
             }
         });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        initializeRecyclerView();
+
+
+        mAdapter.notifyDataSetChanged();
+    }
+
+    private void initializeRecyclerView() {
+        inventoryItemRecyclerView = findViewById(R.id.moreProduct);
+
+        mAdapter = new InsecticideAdapter(subCatagory,itemList, this);
+        LinearLayoutManager mLayoutManager = new LinearLayoutManager(this);
+        mLayoutManager.setOrientation(RecyclerView.HORIZONTAL);
+        inventoryItemRecyclerView.setLayoutManager(mLayoutManager);
+        inventoryItemRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        inventoryItemRecyclerView.setAdapter(mAdapter);
     }
 
     private void tryWriteData(){

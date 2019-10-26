@@ -24,7 +24,7 @@
         android:layout_marginBottom="165dp"
         android:gravity="center"
         android:orientation="vertical"
-        android:visibility="gone"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -90,7 +90,7 @@
                 <LinearLayout
                     android:layout_weight="1"
                     android:layout_margin="5dp"
-                    android:background="?attr/selectableItemBackgroundBorderless"
+
                     android:layout_gravity="center"
                     android:layout_width="wrap_content"
                     android:layout_height="0dp">
@@ -144,7 +144,7 @@
         android:layout_marginBottom="165dp"
         android:gravity="center"
         android:orientation="vertical"
-        android:visibility="visible"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -308,7 +308,7 @@
                     android:layout_height="wrap_content"
                     android:background="@android:color/transparent"
                     android:onClick="resend_pin"
-                    android:text="কোনও পিন নম্বর পাই নি"
+                    android:text="কোনও পিন/ নম্বর পাই নি"
                     android:textColor="@color/cardview_light_background"
                     android:textSize="18dp"
                     android:textStyle="bold" />

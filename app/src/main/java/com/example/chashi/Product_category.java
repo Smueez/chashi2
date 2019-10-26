@@ -51,25 +51,6 @@ public class Product_category extends AppCompatActivity {
 
         initializeRecyclerView();
 
-        /*expandableLayout.setRenderer(new ExpandableLayout.Renderer<SubCatagory,Product_item>() {
-            @Override
-            public void renderParent(View view, SubCatagory subCatagory, boolean b, int i) {
-                ((TextView)view.findViewById(R.id.sub_cat_name)).setText(subCatagory.getSub_cat_name());
-                ((ImageView)view.findViewById(R.id.sub_cat_image)).setImageResource(R.drawable.ic_potato);
-                ((ImageView)view.findViewById(R.id.sub_cat_arrow)).setImageResource(b?R.drawable.ic_up_arrow:R.drawable.ic_angle_arrow_down);
-            }
-
-            @Override
-            public void renderChild(View view, Product_item product_item, int i, int i1) {
-                ((ImageView)view.findViewById(R.id.product_child_image)).setImageResource(R.drawable.rice);
-                ((TextView)view.findViewById(R.id.product_child_name)).setText(product_item.getName());
-                ((TextView)view.findViewById(R.id.product_child_desc)).setText(product_item.getDesc());
-                ((TextView)view.findViewById(R.id.product_child_price)).setText(product_item.getPrice());
-            }
-        });
-
-
-        expandableLayout.addSection(getSection());*/
 
         readDataFromFirebase();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -77,7 +58,7 @@ public class Product_category extends AppCompatActivity {
 
     private void readDataFromFirebase() {
         Toast.makeText(Product_category.this,"hocche",Toast.LENGTH_SHORT).show();
-        FirebaseUtilClass.getDatabaseReference().child("Products").child("বীজ").addValueEventListener(new ValueEventListener() {
+        FirebaseUtilClass.getDatabaseReference().child("Products").child(category).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot dsp : dataSnapshot.getChildren()) {
@@ -138,19 +119,6 @@ public class Product_category extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private Section<SubCatagory,Product_item> getSection(){
-        Section<SubCatagory,Product_item> section = new Section<>();
-        SubCatagory subCatagory = new SubCatagory("ধান",R.drawable.ic_wheat);
-
-        List<Product_item> product_items = new ArrayList<>();
-        //product_items.add(new Product_item("1","description1","name1","price1","image1"));
-        //product_items.add(new Product_item("2","description2","name2","price2","image2"));
-
-        section.parent = subCatagory;
-        section.children.addAll(product_items);
-        return section;
-
-    }
 
     private void initializeRecyclerView() {
         categoryRecyclerView = findViewById(R.id.catagory_rclrvw);

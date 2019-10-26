@@ -25,6 +25,7 @@ public class InsecticideAdapter extends RecyclerView.Adapter<InsecticideAdapter.
 
     private List<Product_item> itemList;
     private Context context;
+    private SubCatagory subCatagories;
     //  private List<InventoryItem> itemListFiltered;
 
     public class ProductViewHolder extends RecyclerView.ViewHolder {
@@ -53,7 +54,8 @@ public class InsecticideAdapter extends RecyclerView.Adapter<InsecticideAdapter.
     }
 
 
-    public InsecticideAdapter(List<Product_item> moviesList, Context context) {
+    public InsecticideAdapter(SubCatagory subCatagories,List<Product_item> moviesList, Context context) {
+        this.subCatagories = subCatagories;
         this.itemList = moviesList;
         // this.itemListFiltered = itemList;
         this.context = context;
@@ -79,7 +81,8 @@ public class InsecticideAdapter extends RecyclerView.Adapter<InsecticideAdapter.
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context,Purchase.class);
-                intent.putExtra("itemData",item);
+                intent.putExtra("itemData",subCatagories);
+                intent.putExtra("itemId",item.getId());
                 context.startActivity(intent);
             }
         });

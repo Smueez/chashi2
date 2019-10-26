@@ -13,13 +13,16 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+
 import com.squareup.picasso.Picasso;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import iammert.com.expandablelib.ExpandableLayout;
 import iammert.com.expandablelib.Section;
+
 
 public class Product_Category_Adapter extends RecyclerView.Adapter<Product_Category_Adapter.CategoryViewHolder>{
 
@@ -71,7 +74,6 @@ public class Product_Category_Adapter extends RecyclerView.Adapter<Product_Categ
             @Override
             public void renderParent(View view, SubCatagory subCatagory, boolean b, int i) {
                 ((TextView)view.findViewById(R.id.sub_cat_name)).setText(subCatagory.getSub_cat_name());
-                ((ImageView)view.findViewById(R.id.sub_cat_image)).setImageResource(R.drawable.ic_potato);
                 ((ImageView)view.findViewById(R.id.sub_cat_arrow)).setImageResource(b?R.drawable.ic_up_arrow:R.drawable.ic_angle_arrow_down);
             }
 
@@ -81,14 +83,14 @@ public class Product_Category_Adapter extends RecyclerView.Adapter<Product_Categ
                 ImageView imageView = (ImageView)view.findViewById(R.id.product_child_image);
                 Picasso.get().load(product_item.getImage()).into(imageView);
                 ((TextView)view.findViewById(R.id.product_child_name)).setText(product_item.getName());
-                ((TextView)view.findViewById(R.id.product_child_desc)).setText(product_item.getDesc());
-                ((TextView)view.findViewById(R.id.product_child_price)).setText(product_item.getPrice());
+                ((TextView)view.findViewById(R.id.product_child_price)).setText(product_item.getPrice()+" টাকা");
 
                 linearLayout.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         Intent intent = new Intent(context,Purchase.class);
-                        intent.putExtra("itemData",product_item);
+                        intent.putExtra("itemData", item);
+                        intent.putExtra("itemId",product_item.getId());
                         context.startActivity(intent);
                     }
                 });

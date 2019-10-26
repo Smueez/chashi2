@@ -9,6 +9,8 @@
         android:id="@+id/expandable_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
         app:parentLayout="@layout/sub_cat_parent_layout"
         app:childLayout="@layout/sub_cat_child_layout"/>
 </LinearLayout>

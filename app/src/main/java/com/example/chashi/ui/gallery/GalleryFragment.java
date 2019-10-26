@@ -53,7 +53,7 @@ public class GalleryFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), Product_category.class);
-                intent.putExtra("type","fertilizer");
+                intent.putExtra("type","সার");
                 startActivity(intent);
             }
         });
@@ -62,7 +62,7 @@ public class GalleryFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), Product_category.class);
-                intent.putExtra("type","seeds");
+                intent.putExtra("type","বীজ");
                 startActivity(intent);
             }
         });
@@ -71,7 +71,7 @@ public class GalleryFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), Product_category.class);
-                intent.putExtra("type","equipment");
+                intent.putExtra("type","কৃষি যন্ত্রপাতি");
                 startActivity(intent);
             }
         });
@@ -80,7 +80,7 @@ public class GalleryFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), Product_category.class);
-                intent.putExtra("type","insecticide");
+                intent.putExtra("type","কীটনাশক");
                 startActivity(intent);
             }
         });

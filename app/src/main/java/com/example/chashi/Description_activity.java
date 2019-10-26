@@ -51,6 +51,7 @@ public class Description_activity extends AppCompatActivity {
 
     private RecyclerView inventoryItemRecyclerView;
     private List<Product_item> itemList = new ArrayList<>();
+    private SubCatagory subCatagories;
     private InsecticideAdapter mAdapter;
 
     @Override
@@ -91,7 +92,8 @@ public class Description_activity extends AppCompatActivity {
     private void initializeRecyclerView() {
         inventoryItemRecyclerView = findViewById(R.id.fertiliser);
 
-        mAdapter = new InsecticideAdapter(itemList, this);
+        subCatagories = new SubCatagory("nothing",1,itemList);
+        mAdapter = new InsecticideAdapter(subCatagories,itemList, this);
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(this);
         mLayoutManager.setOrientation(RecyclerView.HORIZONTAL);
         inventoryItemRecyclerView.setLayoutManager(mLayoutManager);
