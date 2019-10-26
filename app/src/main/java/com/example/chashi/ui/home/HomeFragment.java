@@ -198,6 +198,8 @@ public class HomeFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 //listView.setAdapter(null);
                 //newsList.clear();
+                //listView.setAdapter(null);
+                newsList.clear();
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
                     News news = ds.getValue(News.class);
                     newsList.add(news);

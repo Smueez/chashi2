@@ -31,6 +31,9 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:background="?attr/selectableItemBackground"
+                        android:clickable="true"
+                        android:focusable="true"
                         android:orientation="horizontal">
 
                         <LinearLayout
@@ -67,7 +70,7 @@
                                         android:id="@+id/date"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="১০ কার্তিক । 25 October " />
+                                        android:text="১১ কার্তিক । 26 October " />
                                 </LinearLayout>
 
                                 <LinearLayout
@@ -187,6 +190,9 @@
                                 android:id="@+id/product_btn"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
+                                android:background="?attr/selectableItemBackground"
+                                android:clickable="true"
+                                android:focusable="true"
                                 android:gravity="center"
                                 android:orientation="vertical">
 
@@ -223,6 +229,9 @@
                                 android:id="@+id/disease_btn"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
+                                android:background="?attr/selectableItemBackground"
+                                android:clickable="true"
+                                android:focusable="true"
                                 android:gravity="center"
                                 android:orientation="vertical">
 
@@ -265,6 +274,9 @@
                                 android:id="@+id/forum_btn"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
+                                android:background="?attr/selectableItemBackground"
+                                android:clickable="true"
+                                android:focusable="true"
                                 android:gravity="center"
                                 android:orientation="vertical">
 
@@ -300,6 +312,9 @@
                                 android:id="@+id/diseaseCheck_btn"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
+                                android:background="?attr/selectableItemBackground"
+                                android:clickable="true"
+                                android:focusable="true"
                                 android:gravity="center"
                                 android:orientation="vertical">
 
